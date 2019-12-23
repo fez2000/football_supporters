@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="theme-color" content="#FFF" />
+        <meta name="google" content="notranslate" />
+
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes" />
+        <!-- fallback for manifest.json -->
+
+        <!-- Add to homescreen for Safari on iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#FFF" />
+
+        <!-- Homescreen icons. -->
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="/assets/favicons/apple-icon.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="/assets/img/png/homescreen-72.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="96x96"
+            href="/assets/img/png/homescreen-96.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="/assets/img/png/homescreen-144.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="192x192"
+            href="/assets/img/png/homescreen-192.png"
+        />
+        <link href="/assets/css/emoji.css" rel="stylesheet" />
+        <!-- Tile icon for Win8 (144x144 + tile color) -->
+        <meta
+            name="msapplication-TileImage"
+            content="/assets/img/png/homescreen-144.png"
+        />
+        <meta name="msapplication-TileColor" content="#FFF" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!--  Fonts and icons     -->
+        <link rel="manifest" href="/manifest.json" />
+        <link
+            rel="stylesheet"
+            href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
+        />
+        <link
+            rel="stylesheet"
+            href="//fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <link
+            href="//use.fontawesome.com/releases/v5.0.8/css/all.css"
+            rel="stylesheet"
+        />
+        <script
+            src="https://apis.google.com/js/client:platform.js?onload=start"
+            async
+            defer
+        ></script>
+        <script>
+            var secureSocket = null;
+            function start() {
+                gapi.load("auth2", function() {
+                    window.auth2 = gapi.auth2.init({
+                        client_id:
+                            "16265415928-d547h0ua7d1b8t24mdm83bj5n2t79epr.apps.googleusercontent.com"
+                        // Scopes to request in addition to 'profile' and 'email'
+                        //scope: 'additional_scope'
+                    });
+                });
+            }
+        </script>
+        <link
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+            rel="stylesheet"
+        />
+    </head>
+
+    <body>
+        <noscript>
+            You need to enable JavaScript to run this app.
+        </noscript>
+
+        <div id="app"></div>
+
+        <!-- built files will be auto injected -->
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/config.js"></script>
+        <script src="/assets/js/util.js"></script>
+        <script src="/assets/js/jquery.emojiarea.js"></script>
+        <script src="/assets/js/emoji-picker.js"></script>
+        <script type="text/javascript" src="/sw-precache.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script
+            type="text/javascript"
+            src="https://fr.monetbil.com/widget/v2/monetbil.min.js"
+        ></script>
+        <script
+            src="https://www.paypal.com/sdk/js?client-id=ATPOXO5gEo-aL7_mCsyHbXmRvZ574dJxl7iJbvYvzrRR_0pvDW4eh09naeVMWbjOGE8MfvvwDGg7K5Ma"
+        >
+            // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+        </script>
+    </body>
+</html>

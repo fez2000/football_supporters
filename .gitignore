@@ -1,0 +1,15 @@
+/.idea
+/.sublime
+/.vscode
+
+node_modules
+**/node_modules/*
+
+**/*.log
+*.log
+images/*/**/*
+public
+public/**/*
+
+coverage/
+/.env

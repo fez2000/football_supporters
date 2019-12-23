@@ -1,0 +1,53 @@
+{ 
+  "@context" : "http://schema.org",
+  "@type" : "Organization",
+  "url" : "jesusKing",
+  "contactPoint" : [
+    { "@type" : "ContactPoint",
+      "telephone" : "+1-877-746-0909",
+      "contactType" : "customer service",
+      "contactOption" : "TollFree",
+      "areaServed" : ["US","CA","FR","CM"],
+      "availableLanguage" : ["English","French"]
+    }  , {
+      "@type" : "ContactPoint",
+      "telephone" : "+1-877-453-1304",
+      "contactType" : "technical support",
+      "contactOption" : "TollFree",
+      "areaServed" : ["US","CA","FR","CM"],
+      "availableLanguage" : ["English","French"]
+    } , {
+      "@type" : "ContactPoint",
+      "telephone" : "+1-877-453-1304",
+      "contactType" : "bill payment",
+      "contactOption" : "TollFree",
+      "areaServed" : ["US","CA","FR","CM"],
+      "availableLanguage" : ["English","French"]
+    } ],
+  "member": [
+    {
+      "@type": "Organization"
+    },
+    {
+      "@type": "Organization"
+    }
+  ],
+  "funder": {
+    "@type": "Person",
+    "name": "Jack Dan"
+  },
+  "image": "/favicon.ico",
+  "logo": "/favicon.ico",
+  "alumni": [
+    {
+      "@type": "Person",
+      "name": "Jack Dan"
+    },
+    {
+      "@type": "Person",
+      "name": "John Smith"
+    }
+  ],
+  "email": "jk@gmail.com",
+  "name": "jesusKing"
+}
