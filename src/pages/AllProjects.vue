@@ -132,7 +132,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("../assets/img/bg1.jpeg")
+      default: require("../assets/img/can_background_1.jpeg")
     }
   },
   computed: {

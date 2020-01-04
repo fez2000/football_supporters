@@ -215,7 +215,7 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("../assets/img/Photo_by_Tyck_via_Iwaria.jpeg")
+      default: require("../assets/img/can_signup_background.jpeg")
     }
   },
   mounted() {

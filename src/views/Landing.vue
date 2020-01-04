@@ -24,16 +24,14 @@
         <div class="container">
           <div class="md-layout">
             <div class="md-layout-item md-size-66 md-xsmall-size-100 mx-auto">
-              <h2 class="title text-center">{{$t('navbar.projet')}}</h2>
+              <h2 class="title text-center">{{$t('landing_lg.m_title')}}</h2>
               <h5 class="text-center">{{$t("landing_lg.j_question")}}</h5>
-              <p class="description" style="text-align:justify">{{$t("landing_lg.j_reason1")}}</p>
-              <p class="description" style="text-align:justify">
-                {{$t("landing_lg.j_reason2_1")}}
-                <strong>{{$t("landing_lg.j_reason2_2")}}</strong>
-                {{$t("landing_lg.j_reason2_3")}}
-                <strong>{{$t("landing_lg.j_reason2_4")}}</strong>
+              <p class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason1')"></p>
+              <p class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason2')">
+                
+                
               </p>
-              <p class="description" style="text-align:justify">{{$t("landing_lg.j_reason3")}}</p>
+              <p class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason3')"></p>
             </div>
           </div>
           <div class="features text-center">
@@ -43,11 +41,10 @@
                   <div class="icon icon-info">
                     <md-icon>flash_on</md-icon>
                   </div>
-                  <h4 class="info-title" v-t="'landing_lg.t_electricity'"></h4>
-                  <p>
-                    {{$t("landing_lg.d_electricity1")}}
-                    <br />
-                    {{$t("landing_lg.d_electricity2")}}
+                  <h4 class="info-title" v-t="'landing_lg.t_format'"></h4>
+                  <p v-html="$t('landing_lg.d_format')">
+                    
+                    
                   </p>
                 </div>
               </div>
@@ -56,11 +53,9 @@
                   <div class="icon icon-success">
                     <md-icon>nature</md-icon>
                   </div>
-                  <h4 class="info-title" v-t="'landing_lg.t_agriculture'"></h4>
-                  <p>
-                    {{$t("landing_lg.d_agriculture1")}}
-                    <br />
-                    {{$t("landing_lg.d_agriculture2")}}
+                  <h4 class="info-title" v-t="'landing_lg.t_qualification'"></h4>
+                  <p v-html="$t('landing_lg.d_qualification')">
+                   
                   </p>
                 </div>
               </div>
@@ -69,64 +64,11 @@
                   <div class="icon icon-danger">
                     <md-icon>home_work</md-icon>
                   </div>
-                  <h4 class="info-title">Education</h4>
-                  <p>Construction et rehabilitation des infrastructures scolaires( ecoles, universites).</p>
+                  <h4 class="info-title" v-t="'landing_lg.t_lieux'"></h4>
+                  <p v-html="$t('landing_lg.d_lieux')"></p>
                 </div>
               </div>
-              <div class="md-layout-item md-medium-size-33 md-small-size-100">
-                <div class="info">
-                  <div class="icon icon-info">
-                    <md-icon>airline_seat_flat</md-icon>
-                  </div>
-                  <h4 class="info-title">Santé</h4>
-                  <p>Construction et rehabilitation des centres de sante de reference.</p>
-                </div>
-              </div>
-              <div class="md-layout-item md-medium-size-33 md-small-size-100">
-                <div class="info">
-                  <div class="icon icon-danger">
-                    <md-icon>map</md-icon>
-                  </div>
-                  <h4 class="info-title">Infrastructure routière</h4>
-                  <p>
-                    Construction et rehabilitation des routes dans les zones enclavees.
-                    <br />Construction des infrastructures aeoronautiques.
-                  </p>
-                </div>
-              </div>
-              <div class="md-layout-item md-medium-size-33 md-small-size-100">
-                <div class="info">
-                  <div class="icon icon-info">
-                    <md-icon>emoji_symbols</md-icon>
-                  </div>
-                  <h4 class="info-title">Media</h4>
-                  <p>Conception et construction d'une chaine de télévision.</p>
-                </div>
-              </div>
-              <div class="md-layout-item md-medium-size-33 md-small-size-100">
-                <div class="info">
-                  <div class="icon icon-info">
-                    <md-icon>deck</md-icon>
-                  </div>
-                  <h4 class="info-title">Hygiène et salubrité</h4>
-                  <p>
-                    Construction des douches publiques à gerer par les handicapes.
-                    <br />Offrande de 2 poubelles par famille avec pour objectif la transformation des dechets ménagers
-                  </p>
-                </div>
-              </div>
-              <div class="md-layout-item md-medium-size-33 md-small-size-100">
-                <div class="info">
-                  <div class="icon icon-success">
-                    <md-icon>public</md-icon>
-                  </div>
-                  <h4 class="info-title">Gospel</h4>
-                  <p>
-                    les caravanes mobile d'évangelisation.
-                    <br />Construction d'un autel de priere par région.
-                  </p>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -149,7 +91,7 @@
                     <h4 class="card-title">
                       Amour Travail et Developement
                       <br />
-                      <small class="card-description text-muted">Association</small>
+                      <small class="card-description text-muted">Confederation</small>
                     </h4>
 
                     <md-card-content>
@@ -327,46 +269,61 @@
 <script>
 import i18n from "@/plugins/i18n";
 export default {
+  destroyed() {
+    this.stop = true;
+  },
   bodyClass: "landing-page",
   props: {
     header: {
       type: String,
-      default: require("../assets/img/bg1.jpeg")
+      default: require("../assets/img/can_background_1.jpeg")
     },
     teamImg1: {
       type: String,
-      default: require("../assets/img/Jk_logo.png")
-    },
-    teamImg2: {
-      type: String,
-      default: require("../assets/img/faces/christian.jpg")
-    },
-    teamImg3: {
-      type: String,
-      default: require("../assets/img/faces/kendall.jpg")
+      default: require("../assets/img/caf_logo.png")
     }
   },
   data() {
     return {
+      allBackground: [
+        require("../assets/img/can_2.jpg"),
+        require("../assets/img/can_1.jpg"),
+        require("../assets/img/can_3.jpg"),
+        require("../assets/img/can_background_1.jpeg")
+      ],
+      header1: "",
+      index: 0,
+      stop: false,
       name: null,
       email: null,
       message: null,
       subject: null,
-      submiting: false
+      submiting: false,
+      speed: process.env.LANDING_BACKGROUND_SPEED || 8000
     };
   },
   computed: {
     headerStyle() {
       return {
-        backgroundImage: `url(${this.header})`
+        backgroundImage: `url(${this.header1})`
       };
     }
+  },
+  created() {
+    this.setBackground();
   },
   methods: {
     clean() {
       this.message = "";
       this.subject = "";
     },
+    setBackground() {
+      this.header1 = this.allBackground[this.index];
+      this.index = ++this.index == this.allBackground.length ? 0 : this.index;
+
+      if (!this.stop) setTimeout(this.setBackground, this.speed);
+    },
+
     submit() {
       this.submiting = true;
       this.$axios
@@ -470,5 +427,11 @@ export default {
 
 .md-has-textarea + .md-layout {
   margin-top: 15px;
+}
+.page-header {
+  transition-delay: 0s;
+  transition-property: background-image;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
 }
 </style>

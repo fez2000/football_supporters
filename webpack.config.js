@@ -253,7 +253,7 @@ module.exports = {
         ...entries.map(
             entry => new HtmlWebpackPlugin({
                 title: 'vue',
-                favicon: 'src/assets/favicons/favicon.ico',
+                favicon: 'src/assets/img/favicon.png',
                 template: `${SRC_DIR}/index.html`,
                 filename: 'index.html',
                 chunks: ['vendor', 'index', entry.name],
@@ -262,11 +262,6 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: path.resolve(__dirname, 'src/assets'),
             to: path.resolve(__dirname, 'public/assets'),
-            toType: 'dir',
-        },
-        {
-            from: path.resolve(__dirname, 'src/emoji-data'),
-            to: path.resolve(__dirname, 'public/emoji-data'),
             toType: 'dir',
         },
         {

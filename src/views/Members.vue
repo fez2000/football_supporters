@@ -116,11 +116,11 @@ export default {
   props: {
     header: {
       type: String,
-      default: require("../assets/img/bg1.jpeg")
+      default: require("../assets/img/can_supporter.jpg")
     },
     teamImg1: {
       type: String,
-      default: require("../assets/img/Jk_logo.png")
+      default: require("../assets/img/caf_logo.png")
     }
   },
   computed: {

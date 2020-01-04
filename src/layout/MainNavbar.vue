@@ -286,7 +286,7 @@ export default {
       extraNavClasses: "",
       toggledClass: false,
       appName: process.env.APP_NAME,
-      logo: require("../assets/img/Jk_logo.png"),
+      logo: require("../assets/img/caf_logo.png"),
       selected: [],
       notifs: [],
       seeNbNotif: 0,

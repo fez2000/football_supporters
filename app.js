@@ -95,7 +95,7 @@ if (process.env.NODE_ENV === "production") {
     app.use(compression({ threshold: 1 }));
     app.use(minify());
 }
-app.use(favicon(path.join(__dirname, "public/favicon.ico")));
+app.use(favicon(path.join(__dirname, "public/favicon.png")));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.locals = {
