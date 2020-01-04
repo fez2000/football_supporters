@@ -4,7 +4,7 @@ import Dashboard from '@/pages/Dashboard.vue';
 import UserProfile from '@/pages/UserProfile.vue';
 import Notifications from '@/pages/Notifications.vue';
 import Landing from '@/views/Landing.vue';
-import Singup from '@/views/Singup.vue';
+import Signup from '@/views/Signup.vue';
 import Login from '@/views/Login.vue';
 import Profil from '@/views/Profil.vue';
 import MainNavbar from '@/layout/MainNavbar.vue';
@@ -67,10 +67,10 @@ const routes = [
     },
   },
   {
-    path: '/singup',
-    name: 'singup',
+    path: '/signup',
+    name: 'signup',
     components: {
-      default: Singup, header: MainNavbar, footer: MainFooter,
+      default: Signup, header: MainNavbar, footer: MainFooter,
     },
     props: {
       header: { colorOnScroll: 50 },
@@ -206,7 +206,7 @@ const routes = [
             path: 'poll',
             name: 'Vote',
             component: Poll,
-          }
+          },
         ],
       },
       {

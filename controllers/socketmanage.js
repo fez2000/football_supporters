@@ -16,8 +16,8 @@ function getCookie(cname, cookie) {
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(encodeURIComponent(cname)+'=' ) == 0) {
-            return decodeURIComponent(c.substring((encodeURIComponent(cname)+'=').length, c.length));
+        if (c.indexOf(`${encodeURIComponent(cname)}=`) == 0) {
+            return decodeURIComponent(c.substring((`${encodeURIComponent(cname)}=`).length, c.length));
         }
     }
     return '';

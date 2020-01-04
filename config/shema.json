@@ -1,24 +1,26 @@
 { 
   "@context" : "http://schema.org",
   "@type" : "Organization",
-  "url" : "jesusKing",
+  "url" : "https://jesusking.me",
+  "ethicsPolicy": "https://jesusking.me/terms/comunity",
+  "slogan": "Construire et developer le Cameroun par le corps du Christ.",
   "contactPoint" : [
     { "@type" : "ContactPoint",
-      "telephone" : "+1-877-746-0909",
+      "telephone" : "+237-697-898-466",
       "contactType" : "customer service",
       "contactOption" : "TollFree",
-      "areaServed" : ["US","CA","FR","CM"],
+      "areaServed" : ["CM"],
       "availableLanguage" : ["English","French"]
     }  , {
       "@type" : "ContactPoint",
-      "telephone" : "+1-877-453-1304",
+      "telephone" : "+237-697-898-466",
       "contactType" : "technical support",
       "contactOption" : "TollFree",
-      "areaServed" : ["US","CA","FR","CM"],
+      "areaServed" : ["CM"],
       "availableLanguage" : ["English","French"]
     } , {
       "@type" : "ContactPoint",
-      "telephone" : "+1-877-453-1304",
+      "telephone" : "+237-697-898-466",
       "contactType" : "bill payment",
       "contactOption" : "TollFree",
       "areaServed" : ["US","CA","FR","CM"],
@@ -38,16 +40,19 @@
   },
   "image": "/favicon.ico",
   "logo": "/favicon.ico",
+  "alternateName": "JK",
+  "description":"Aider les couches les plus vulnerables à avoir accès à l'éducation, à la sante, à leau potable, à lenergie , à une alimentation saine et au bien être gratuitement ou à vil prix. Tel est notre leitmotiv",
   "alumni": [
     {
       "@type": "Person",
-      "name": "Jack Dan"
+      "name": "Tsasse élisée"
     },
     {
       "@type": "Person",
-      "name": "John Smith"
+      "name": "Bertrand"
     }
   ],
-  "email": "jk@gmail.com",
+  "telephone":"+237-697-898-466",
+  "email": "jesusking.jk.groups@gmail.com",
   "name": "jesusKing"
 }

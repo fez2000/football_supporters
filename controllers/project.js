@@ -10,7 +10,7 @@ const Project = mongoose.model('Project');
 const Doc = mongoose.model('Doc');
 const tokenGenerator = require('uuid-token-generator');
 const { removeSpace } = require('../util/fonctions');
-
+const i18n = require('i18n');
 const mintoken = new tokenGenerator(128);
 const validState = ['accepted', 'voted', 'start', 'end'];
 
@@ -78,11 +78,16 @@ exports.removeDoc = (req, res) => {
                     };
                    
                         let mail = mailTemplate.getTemplate('activity');
-                        mail.subject = 'Project update'
-                        mail.html = mail.html
-                            .replace('<%title%>', 'Project: ' + project.short_description)
+                    mail.subject = res.__('project_update.subject', project.name);
+                    mail.html = mail.html
+                        .replace('<%the%>', res.__('the'))
+                        .replace('<%on%>', res.__('on'))
+                        .replace('<%and%>', res.__('and'))
+                        .replace('<%follow%>', res.__('follow'))
+                        .replace('<%home%>', res.__('home'))
+                        .replace('<%title%>', res.__('project_update.title', project.short_description))
                             .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
-                            .replace('<%description%>', 'Doc was removed from this project. '+ project.description)
+                            .replace('<%description%>', res.__('project_update.description', project.description) )
                             
                             
                         sendMailOrNotification(mail, notif, { followers: true, ignore: [req.session.auth._id] }, {
@@ -95,11 +100,12 @@ exports.removeDoc = (req, res) => {
                         Event.create({
                             type: 'project',
                             time_create: date,
+                            language: req.getLocale(),
                             link: project.url,
                             time_update: date,
-                            tags: 'project_update',
-                            title: 'One doc was removed from this project',
-                            description: '<b>short description</b>: '+ project.short_description,
+                            tags: 'project,project_update',
+                            title: res.__('project_update.d_r_title', project.name),
+                            description: res.__('project_update.d_r_description', project.short_description, project.description),
                             document: project.image._id,
                         }).then((event)=>{
                             let t= event;
@@ -155,16 +161,21 @@ exports.addDoc = (req, res) => {
                     };
                    
                         let mail = mailTemplate.getTemplate('activity');
-                        mail.subject = 'Project update';
+                    mail.subject = res.__('project_update.subject', project.name);
                         const src = path.join(__dirname, '../images', doc.src);
                         mail.attachments = [{
                             filename: doc.name+doc.type,
                             path: src
                         }];
-                        mail.html = mail.html
-                            .replace('<%title%>', 'Project: ' + project.short_description)
+                    mail.html = mail.html
+                        .replace('<%the%>', res.__('the'))
+                        .replace('<%on%>', res.__('on'))
+                        .replace('<%and%>', res.__('and'))
+                        .replace('<%follow%>', res.__('follow'))
+                        .replace('<%home%>', res.__('home'))
+                        .replace('<%title%>', res.__("project_update.title", project.short_description))
                             .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
-                            .replace('<%description%>', 'Doc was added to this project. '+ project.description)
+                        .replace('<%description%>', res.__('project_update.a_description', project.description) )
                             
                             
                         sendMailOrNotification(mail, notif, { followers: true, ignore: [req.session.auth._id] }, {
@@ -179,9 +190,10 @@ exports.addDoc = (req, res) => {
                             time_create: date,
                             link: project.url,
                             time_update: date,
-                            tags: 'project_update',
-                            title: 'One doc was added to this project',
-                            description: '<b>short description</b>: '+ project.short_description,
+                            language: req.getLocale(),
+                            tags: 'project,project_update',
+                            title: res.__('project_update.d_a_title'),
+                            description: res.__('project_update.d_r_description', project.short_description, project.description),
                             document: project.image._id,
                         }).then((event)=>{
                             let t= event;
@@ -304,9 +316,15 @@ exports.accept = (req, res) => {
                 target: project.voter._id,
             };    
             let mail2 = mailTemplate.getTemplate('activity');  
-            mail2.subject = 'Project accepted by ' + process.env.APP_NAME;
-            mail2.html = mail2.html
-                .replace('<%title%>', `Project: ${project.short_description}`)
+        mail2.subject = i18n. __({ phrase: 'project_update.p_accepted', locale: project.voter.language }, process.env.APP_NAME);
+        
+        mail2.html = mail2.html
+            .replace('<%the%>', i18n.__({ phrase: 'the', locale: project.voter.language }))
+            .replace('<%on%>', i18n.__({ phrase: 'on', locale: project.voter.language }))
+            .replace('<%follow%>', i18n.__({ phrase: 'follow', locale: project.voter.language }))
+            .replace('<%and%>', i18n.__({ phrase: 'and', locale: project.voter.language }))
+            .replace('<%home%>', i18n.__({ phrase: 'home', locale: project.voter.language }))
+            .replace('<%title%>', i18n.__({ phrase: 'project_update.title', locale: project.voter.language }, project.short_description) )
                 .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
                 .replace('<%description%>', ` <img width="280px" heigth="280px" src="${process.env.BASE_URL+'api/img/'+ project.image.src} alt="${project.image.src}"> <br/>${project.description}`);  
             sendMailOrNotification(mail2, notif2, { single: true, _id: project.voter._id, email: project.voter.email }, {
@@ -326,10 +344,15 @@ exports.accept = (req, res) => {
             };
             
                 let mail = mailTemplate.getTemplate('activity');
-                mail.subject = 'New Project';
+        mail.subject = res.__('project_update.n_subject');
                 mail.attachments = attachments;
                 mail.html = mail.html
-                    .replace('<%title%>', `Project: ${project.short_description}`)
+                    .replace('<%the%>', res.__('the'))
+                    .replace('<%on%>', res.__('on'))
+                    .replace('<%and%>', res.__('and'))
+                    .replace('<%follow%>', res.__('follow'))
+                    .replace('<%home%>', res.__('home'))
+                    .replace('<%title%>', res.__('project_update.n_description', project.name, project.short_description, project.description))
                     .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
                     .replace('<%description%>', ` <img width="280px" heigth="280px" src="${process.env.BASE_URL+'api/img/'+ project.image.src} alt="${project.image.src}"> <br/>${project.description}`)
                        
@@ -345,9 +368,10 @@ exports.accept = (req, res) => {
                     time_create: date,
                     link: project.url,
                     time_update: date,
-                    tags: 'projret,project_update',
-                    title: 'new project: '+project.name,
-                    description:  project.short_description,
+                    language: req.getLocale(),
+                    tags: 'project,project_update',
+                    title: res.__('project_update.n_subject'),
+                    description: res.__('project_update.n_subject', project.name, project.short_description, project.description),
                     document: project.image._id,
                 }).then((event)=>{
                     let t= event;
@@ -382,12 +406,17 @@ exports.decline = (req, res) => {
                 target: project.voter._id,
             };
         let mail = mailTemplate.getTemplate('activity');
-        mail.subject = 'Project not accepted by admin';
+        mail.subject = i18n.__({ phrase: 'project_update.r_subject', locale: project.voter.language }, process.env.APP_NAME);
         
         mail.html = mail.html
-        .replace('<%title%>', `Project: ${project.short_description}`)
-                    .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
-                    .replace('<%description%>', `Doc was removed from this project. ${project.description}`)
+            .replace('<%the%>', i18n.__({ phrase: 'the', locale: project.voter.language }))
+            .replace('<%on%>', i18n.__({ phrase: 'on', locale: project.voter.language }))
+            .replace('<%follow%>', i18n.__({ phrase: 'follow', locale: project.voter.language }))
+            .replace('<%and%>', i18n.__({ phrase: 'and', locale: project.voter.language }))
+            .replace('<%home%>', i18n.__({ phrase: 'home', locale: project.voter.language }))
+            .replace('<%title%>', i18n.__({ phrase: 'project_update.r_title', locale: project.voter.language }, project.name))
+        .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
+        .replace('<%description%>', `${project.description}`)
         sendMailOrNotification(mail, notif, { single: true, email: project.voter.email, _id: project.voter._id }, {
             names: ['project'],
             data: {
@@ -657,10 +686,15 @@ exports.submitProject = (req, res) => {
                     };
                     
                         let mail = mailTemplate.getTemplate('activity');
-                        mail.subject = 'New Project';
+                    mail.subject = res.__('project_update.n_subject');
                         
-                        mail.html = mail.html
-                            .replace('<%title%>', `Project: ${project.short_description}`)
+                    mail.html = mail.html
+                        .replace('<%the%>', res.__('the'))
+                        .replace('<%on%>', res.__('on'))
+                        .replace('<%follow%>', res.__('follow'))
+                        .replace('<%and%>', res.__('and'))
+                        .replace('<%home%>', res.__('home'))
+                            .replace('<%title%>', res.__('project_update.n_description', project.name, project.short_description, project.description))
                             .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
                             .replace('<%description%>', ` <img width="280px" heigth="280px" src="${process.env.BASE_URL+'api/img/'+ project.image.src} alt="${project.image.src}"> <br/>${project.description}`)
                                
@@ -676,9 +710,10 @@ exports.submitProject = (req, res) => {
                             time_create: date,
                             link: project.url,
                             time_update: date,
+                            language: req.getLocale(),
                             tags: 'project',
-                            title: 'new project: '+project.name,
-                            description:  project.short_description,
+                            title: res.__('project_update.n_subject'),
+                            description: res.__('project_update.n_subject', project.name, project.short_description, project.description),
                             document: project.image._id,
                         }).then((event)=>{
                             const t= event;
@@ -707,12 +742,17 @@ exports.submitProject = (req, res) => {
                         target: admin._id,
                     };
                         let mail = mailTemplate.getTemplate('activity');
-                        mail.subject = 'Project to check';
+                        mail.subject = i18n.__({ phrase: 'project_update.c_subject', locale: admin.language });
                         mail.attachments = attachments;
                         mail.html = mail.html
-                        .replace('<%title%>', `Project: ${project.short_description}`)
-                                    .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
-                                    .replace('<%description%>', `new project submit. ${project.description}`)
+                            .replace('<%the%>', i18n.__({ phrase: 'the', locale: admin.language }))
+                            .replace('<%on%>', i18n.__({ phrase: 'on', locale: admin.language }))
+                            .replace('<%follow%>', i18n.__({ phrase: 'follow', locale: admin.language }))
+                            .replace('<%and%>', i18n.__({ phrase: 'and', locale: admin.language }))
+                            .replace('<%home%>', i18n.__({ phrase: 'home', locale: admin.language }))
+                            .replace('<%title%>', i18n.__({ phrase: 'project_update.title', locale: admin.language }, project.name))
+                            .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
+                            .replace('<%description%>', i18n.__({ phrase: 'project_update.d_r_description', locale: admin.language }, project.short_description, project.description,) )
                         sendMailOrNotification(mail, notif, { single: true, email: admin.email, _id: admin._id }, {
                             names: ['project'],
                             data: {
@@ -768,11 +808,16 @@ exports.changeImg = (req, res) => {
                                 target: project.voter,
                             };
                         let mail = mailTemplate.getTemplate('activity');
-                        mail.subject = 'Project update';
+                        mail.subject = res.__('project_update.subject', project.name);
                         mail.html = mail.html
-                        .replace('<%title%>', `Project: ${project.short_description}`)
+                            .replace('<%the%>', res.__('the'))
+                            .replace('<%home%>', res.__('home'))
+                            .replace('<%and%>', res.__('and'))
+                            .replace('<%on%>', res.__('on'))
+                            .replace('<%follow%>', res.__('follow'))
+                            .replace('<%title%>', res.__('project_update.title', project.short_description))
                                     .replace('<%url%>', `${process.env.BASE_URL}project/${project.url}`)
-                                    .replace('<%description%>', `this project has been update. ${project.description}`)
+                                    .replace('<%description%>', `${project.description}`)
                         sendMailOrNotification(mail, notif, { followers: true, ignore: [req.session.auth._id] }, {
                             names: ['project'],
                             data: {
@@ -784,8 +829,9 @@ exports.changeImg = (req, res) => {
                             time_create: date,
                             link: project.url,
                             time_update: date,
-                            tags: 'project_update',
-                            title: 'image has been update to ' + project.name + ' project',
+                            language: req.getLocale(),
+                            tags: 'project,project_update',
+                            title: res.__('project_update.p_title', project.name),
                             description:  project.short_description,
                             document: project.image,
                         }).then((event)=>{
@@ -1198,7 +1244,7 @@ exports.update = function (req, res) {
             project.cathegories = req.body.cathegories;
         }
         project.time_update = new Date();
-        return result.update(project, (err) => {
+        return result.updateOne(project, (err) => {
             if (err) {
                 return res.send({ status: false, errors: err });
             }
@@ -1214,12 +1260,17 @@ exports.update = function (req, res) {
                         target: result.voter,
                     };
                 let mail = mailTemplate.getTemplate('activity');
-                mail.subject = 'Project update';
+                mail.subject = res.__('project_update.subject',result.name);
                 
                 mail.html = mail.html
-                .replace('<%title%>', `Project: ${result.short_description}`)
+                    .replace('<%the%>', res.__('the'))
+                    .replace('<%and%>', res.__('and'))
+                    .replace('<%on%>', res.__('on'))
+                    .replace('<%follow%>', res.__('follow'))
+                    .replace('<%home%>', res.__('home'))
+                .replace('<%title%>', res.__('project_update.title', result.short_description))
                             .replace('<%url%>', `${process.env.BASE_URL}project/${result.url}`)
-                            .replace('<%description%>', `this project infos has been update. ${result.description}`)
+                    .replace('<%description%>', res.__('project_update.i_update', result.description))
                 sendMailOrNotification(mail, notif, { followers: true, ignore: [req.session.auth._id] }, {
                     names: ['project'],
                     data: {
@@ -1231,9 +1282,10 @@ exports.update = function (req, res) {
                     time_create: date,
                     link: project.url,
                     time_update: date,
+                    language: req.getLocale(),
                     tags: 'project,project_update',
-                    title: 'Project info update: '+result.name,
-                    description:  result.short_description,
+                    title: res.__('project_update.i_t_update', result.name),
+                    description: res.__('project_update.n_description',result.short_description, result.description),
                     document: result.image._id,
                 }).then((event)=>{
                     let t= event;
@@ -1243,7 +1295,7 @@ exports.update = function (req, res) {
                 
                 io.emit('synproject', req.session.id)
             }else{
-                console.log(result)
+                
                 gIo.of('/voter/'+result.voter._id).emit('synproject')
             }
             return res.send({ status: true });

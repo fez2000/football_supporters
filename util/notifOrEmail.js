@@ -78,7 +78,7 @@ exports.sendMailOrNotification = (mail, notif, to, extra = null) => {
                 }
             });
     }else {
-        Voter.find({})
+        Voter.find({isVerify: true})
             .populate('image')
             .exec((err, user) => {
                 if (err) {

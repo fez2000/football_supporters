@@ -19,7 +19,7 @@ exports.addOption = (req, res)=>{
     if (req.session.auth.type == 'VOTER') {
         return res.send({ status: null, errors: { auth: 'PermissionDeniet' } });
     }
-    Poll.findOne({ _id: req.body._id}).populate('options').exec( (err, poll)=>{
+    Poll.findOne({ _id: req.body._id}).populate('options').exec((err, poll)=>{
         if (err) {
             return res.send({ status: false, errors: err });
         }

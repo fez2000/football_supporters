@@ -1,15 +1,17 @@
 module.exports = {
     welcome: {
-        title: "<%userName%> join ours community",
+        title: "%s join ours community",
         description:
-            "we are now <%numMembers%> member in the community the more we have many more we laugh"
+            "we are now %s members in the community the more we are, the more we laugh."
     },
     welcomeToNewUser: {
-        title: "Welcomme in JesusKing community <%name%>",
-        description: "Bienvenue"
+        title: "Welcome in JesusKing community %s",
+        description:
+            "Welcome to our community %s together we will help the most vulnerable strata to have access to education, health, drinking water, energy, healthy food and well-being for free or at low cost. This is our leitmotif"
     },
     picture: {
-        title: "<%userName%> change him profil picture",
-        description: "see him profil by click on the link below"
+        title: "%s change him profil picture",
+        description:
+            "Do not miss to see and comment on the new profile photo of %s. Active and dynamic furrows to bring our community to life."
     }
 };

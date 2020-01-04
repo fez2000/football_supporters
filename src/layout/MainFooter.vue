@@ -1,5 +1,6 @@
 <template>
-  <footer v-scroll="onScroll"
+  <footer
+    v-scroll="onScroll"
     class="footer"
     :class="{ [`footer-${type}`]: type }"
     :data-background-color="backgroundColor"
@@ -8,44 +9,31 @@
       <nav>
         <ul>
           <li>
-            <router-link to="/">
-              {{appName}}
-            </router-link>
+            <router-link to="/">{{appName}}</router-link>
           </li>
 
           <li>
-            <a href="#">
-              {{$t("footer.forum")}}
-            </a>
+            <a href="#">{{$t("footer.forum")}}</a>
           </li>
           <li>
-
-            <router-link to="/terms">
-              {{$t("footer.terms")}}
-            </router-link>
+            <router-link to="/terms">{{$t("footer.terms")}}</router-link>
           </li>
         </ul>
       </nav>
       <div class="copyright">
-        &copy; 2019, made with <md-icon>favorite</md-icon> by
-        <a :href="autorRef" target="_blank">{{autor}}</a> AND <a :href="autorRef2" target="_blank">{{autor2}}</a>.
+        &copy; 2019, {{$t("footer.made_with")}}
+        <md-icon>favorite</md-icon>
+        {{$t("footer.by")}}
+        <a :href="autorRef" target="_blank">{{autor}}</a>
+        {{$t("footer.and")}}
+        <a :href="autorRef2" target="_blank">{{autor2}}</a>.
       </div>
     </div>
     <v-fab-transition>
-            <v-btn
-                bottom
-
-                dark
-                fab
-                fixed
-                right
-                v-show="offsetTop>30"
-                @click="goToTop()"
-
-            >
-                <v-icon>mdi-chevron-up</v-icon>
-            </v-btn>
-        </v-fab-transition>
+      <v-btn bottom dark fab fixed right v-show="offsetTop>30" @click="goToTop()">
+        <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </footer>
 </template>
 <script>
@@ -65,11 +53,11 @@ export default {
     };
   },
   methods: {
-    goToTop(){
-            document.documentElement.scrollTo({top:0});
+    goToTop() {
+      document.documentElement.scrollTo({ top: 0 });
     },
-    onScroll (e) {
-        this.offsetTop = document.documentElement.scrollTop;
+    onScroll(e) {
+      this.offsetTop = document.documentElement.scrollTop;
     }
   }
 };

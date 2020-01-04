@@ -3,20 +3,18 @@
     <parallax class="section page-header header-filter" :style="headerStyle">
       <div class="container">
         <div class="md-layout">
-          <div
-            class="md-layout-item md-size-50 md-small-size-70 md-xsmall-size-100"
-          >
+          <div class="md-layout-item md-size-50 md-small-size-70 md-xsmall-size-100">
             <h1 class="title">{{ $t("landing_lg.h_title") }}</h1>
-            <h4>
-              {{ $t("landing_lg.h_description") }}
-            </h4>
+            <h4>{{ $t("landing_lg.h_description") }}</h4>
             <br />
             <md-button
               href="https://www.youtube.com/watch?v=kkjYyXSf2AI"
               class="md-success md-lg"
               target="_blank"
-              ><i class="fas fa-play"></i> {{$t("landing_lg.h_button")}}</md-button
             >
+              <i class="fas fa-play"></i>
+              {{$t("landing_lg.h_button")}}
+            </md-button>
           </div>
         </div>
       </div>
@@ -25,14 +23,17 @@
       <div class="section">
         <div class="container">
           <div class="md-layout">
-            <div
-              class="md-layout-item md-size-66 md-xsmall-size-100 mx-auto"
-            >
-              <h2 class="title text-center">Projets</h2>
-              <h5 class="text-center">POURQUOI ADHERER ?</h5>
-              <p class="description" style="text-align:justify">Alors que certaines couches très aisées ont le moyen de se faire soigner en interne comme en externe et de se déplacer a volonté, la plupart et la grande majorité de nos populations peine a avoir un repas par jour, avoir droit a l’éducation, a avoir accès aux soins de sante, a l’eau potable, a l’électricité et même a se déplacer.</p>
-              <p class="description" style="text-align:justify">Nous avons tous un pourcentage important des membres de nos familles qui en souffrent dans un coin de ce pays. Ce projet <strong>apolitique</strong> et non-denominationnel vise par un mécanisme simple a réaliser que nous pouvons assumer a moindre cout. <strong>Nul na le droit detre heureux tout seul.</strong></p>
-              <p class="description" style="text-align:justify">Par ta participation hebdomadaire, tu peux redonner le sourire a une famille, le salut a une âme perdue, l’espoir a une âme désespérée, etc.</p>
+            <div class="md-layout-item md-size-66 md-xsmall-size-100 mx-auto">
+              <h2 class="title text-center">{{$t('navbar.projet')}}</h2>
+              <h5 class="text-center">{{$t("landing_lg.j_question")}}</h5>
+              <p class="description" style="text-align:justify">{{$t("landing_lg.j_reason1")}}</p>
+              <p class="description" style="text-align:justify">
+                {{$t("landing_lg.j_reason2_1")}}
+                <strong>{{$t("landing_lg.j_reason2_2")}}</strong>
+                {{$t("landing_lg.j_reason2_3")}}
+                <strong>{{$t("landing_lg.j_reason2_4")}}</strong>
+              </p>
+              <p class="description" style="text-align:justify">{{$t("landing_lg.j_reason3")}}</p>
             </div>
           </div>
           <div class="features text-center">
@@ -42,9 +43,11 @@
                   <div class="icon icon-info">
                     <md-icon>flash_on</md-icon>
                   </div>
-                  <h4 class="info-title">Electricité</h4>
+                  <h4 class="info-title" v-t="'landing_lg.t_electricity'"></h4>
                   <p>
-                    Construction des centrales electriques.<br/>Formation et construction des energies renouvelables.
+                    {{$t("landing_lg.d_electricity1")}}
+                    <br />
+                    {{$t("landing_lg.d_electricity2")}}
                   </p>
                 </div>
               </div>
@@ -53,9 +56,11 @@
                   <div class="icon icon-success">
                     <md-icon>nature</md-icon>
                   </div>
-                  <h4 class="info-title">Agriculture</h4>
+                  <h4 class="info-title" v-t="'landing_lg.t_agriculture'"></h4>
                   <p>
-                    Formation à l'agriculture et à l'elevage integré.<br/>Construction des unites de transformation de produits agricoles.
+                    {{$t("landing_lg.d_agriculture1")}}
+                    <br />
+                    {{$t("landing_lg.d_agriculture2")}}
                   </p>
                 </div>
               </div>
@@ -65,9 +70,7 @@
                     <md-icon>home_work</md-icon>
                   </div>
                   <h4 class="info-title">Education</h4>
-                  <p>
-                    Construction et rehabilitation des infrastructures scolaires( ecoles, universites).
-                  </p>
+                  <p>Construction et rehabilitation des infrastructures scolaires( ecoles, universites).</p>
                 </div>
               </div>
               <div class="md-layout-item md-medium-size-33 md-small-size-100">
@@ -76,9 +79,7 @@
                     <md-icon>airline_seat_flat</md-icon>
                   </div>
                   <h4 class="info-title">Santé</h4>
-                  <p>
-                    Construction et rehabilitation des centres de sante de reference.
-                  </p>
+                  <p>Construction et rehabilitation des centres de sante de reference.</p>
                 </div>
               </div>
               <div class="md-layout-item md-medium-size-33 md-small-size-100">
@@ -89,7 +90,7 @@
                   <h4 class="info-title">Infrastructure routière</h4>
                   <p>
                     Construction et rehabilitation des routes dans les zones enclavees.
-                    <br/>Construction des infrastructures aeoronautiques.
+                    <br />Construction des infrastructures aeoronautiques.
                   </p>
                 </div>
               </div>
@@ -99,9 +100,7 @@
                     <md-icon>emoji_symbols</md-icon>
                   </div>
                   <h4 class="info-title">Media</h4>
-                  <p>
-                    Conception et construction d'une chaine de télévision.
-                  </p>
+                  <p>Conception et construction d'une chaine de télévision.</p>
                 </div>
               </div>
               <div class="md-layout-item md-medium-size-33 md-small-size-100">
@@ -112,7 +111,7 @@
                   <h4 class="info-title">Hygiène et salubrité</h4>
                   <p>
                     Construction des douches publiques à gerer par les handicapes.
-                    <br/>Offrande de 2 poubelles par famille avec pour objectif la transformation des dechets ménagers
+                    <br />Offrande de 2 poubelles par famille avec pour objectif la transformation des dechets ménagers
                   </p>
                 </div>
               </div>
@@ -124,7 +123,7 @@
                   <h4 class="info-title">Gospel</h4>
                   <p>
                     les caravanes mobile d'évangelisation.
-                    <br/>Construction d'un autel de priere par région.
+                    <br />Construction d'un autel de priere par région.
                   </p>
                 </div>
               </div>
@@ -282,11 +281,8 @@
         <div class="container">
           <div class="md-layout">
             <div class="md-layout-item md-size-66 md-xsmall-size-100 mx-auto">
-              <h2 class="text-center title">
-Travaille avec nous</h2>
-              <h4 class="text-center description">
-                {{$t("landing_lg.f_contact")}}
-              </h4>
+              <h2 class="text-center title">Travaille avec nous</h2>
+              <h4 class="text-center description">{{$t("landing_lg.f_contact")}}</h4>
               <form class="contact-form">
                 <div class="md-layout">
                   <div class="md-layout-item md-size-50">
@@ -312,7 +308,11 @@ Travaille avec nous</h2>
                 </md-field>
                 <div class="md-layout">
                   <div class="md-layout-item md-size-33 mx-auto text-center">
-                    <md-button :disabled=" !message || !subject || !email || submiting" @click="submit()" class="md-success">{{ (submiting)? 'envoie...' : $t("landing_lg.f_button") }}</md-button>
+                    <md-button
+                      :disabled=" !message || !subject || !email || submiting"
+                      @click="submit()"
+                      class="md-success"
+                    >{{ (submiting)? 'envoie...' : $t("landing_lg.f_button") }}</md-button>
                   </div>
                 </div>
               </form>
@@ -325,7 +325,7 @@ Travaille avec nous</h2>
 </template>
 
 <script>
-
+import i18n from "@/plugins/i18n";
 export default {
   bodyClass: "landing-page",
   props: {
@@ -352,7 +352,7 @@ export default {
       email: null,
       message: null,
       subject: null,
-      submiting: false,
+      submiting: false
     };
   },
   computed: {
@@ -364,63 +364,97 @@ export default {
   },
   methods: {
     clean() {
-      this.message = '';
-      this.subject = '';
+      this.message = "";
+      this.subject = "";
     },
-    submit(){
+    submit() {
       this.submiting = true;
-      this.$axios.post('/api/admin/canal',{
-        name: this.name,
-        email: this.email,
-        message: this.message,
-        subject: this.subject
-      },{
-              headers: {
-                'CSRF-Token': this.$Cookies.get('XSRF-TOKEN'),
-        }
-        }).then(({data}) => {
-          this.submiting = false;
-          if(data.status){
-            this.clean();
-            this.$root.$emit('snackbar', { display: true, text: 'you message was send with success' });
-          } else {
-            this.$root.$emit('snackbar', { display: true, text: 'Send message faillure please Try again later' });
+      this.$axios
+        .post(
+          "/api/admin/canal",
+          {
+            name: this.name,
+            email: this.email,
+            message: this.message,
+            subject: this.subject
+          },
+          {
+            headers: {
+              "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
+            }
           }
-      }).catch(()=>{  
-        this.submiting = false;
-        this.$root.$emit('snackbar', { display: true } );
-      })
+        )
+        .then(({ data }) => {
+          this.submiting = false;
+          if (data.status) {
+            this.clean();
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: "you message was send with success"
+            });
+          } else {
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: "Send message faillure please Try again later"
+            });
+          }
+        })
+        .catch(() => {
+          this.submiting = false;
+          this.$root.$emit("snackbar", { display: true });
+        });
     }
   },
   head: {
-    
-        title: {
-            inner: 'Home' ,
-            separator: ' | ',
-            complement: process.env.APP_NAME
-        },
-        meta: [
-          { name: 'google-signin-client_id', content: '447943189088-u3tai7quivionscm6oe1ddggiu4m2bl6.apps.googleusercontent.com' },
-          { name: "description", content: "presentation of jk" },
-          { name: "twitter:card", content: "summary_large_image" },
-          { name: "twitter:creator", content: "@KofficielJ" },
-          { name: "twitter:title",  content: `Home | ${process.env.APP_NAME}` },
-          { name: "twitter:description",  content: "jk description" },
-          { name: "twitter:image", content: "/assets/img/apple-icon.png" },
-          { property: 'fb:app_id', content: '123456789' },
-          { property: 'og:title', content: `Home | ${process.env.APP_NAME}` },
-          { property: "og:site_name", content: `${process.env.APP_NAME}` },
-          { property: "og:url", content: `${process.env.BASE_URL||''}home/` },
-          { property: "og:description", content:"description" },
-          { property: "og:image", content: "/assets/img/apple-icon.png" },
-          { property: "og:image:type", content: "image/png" },
-          { name: "author", content:`${process.env.AUTOR},${process.env.AUTOR2}` }
-        ],
-        link: [
-            { rel: 'canonical', href: `${process.env.BASE_URL||''}home/`, id: 'canonical' },
-            { rel: 'author', href: `${process.env.AUTORREF},${process.env.AUTORREF2}` }, 
-        ],
-        
+    title: {
+      inner: i18n.tc("landing_lg.title"),
+      separator: " | ",
+      complement: process.env.APP_NAME
+    },
+    meta: [
+      {
+        name: "google-signin-client_id",
+        content:
+          "447943189088-u3tai7quivionscm6oe1ddggiu4m2bl6.apps.googleusercontent.com"
+      },
+      { name: "description", content: i18n.tc("landing_lg.h_description") },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:creator", content: "@KofficielJ" },
+      {
+        name: "twitter:title",
+        content: `${i18n.tc("landing_lg.title")} | ${process.env.APP_NAME}`
+      },
+      {
+        name: "twitter:description",
+        content: i18n.tc("landing_lg.h_description")
+      },
+      { name: "twitter:image", content: "/assets/img/apple-icon.png" },
+      { property: "fb:app_id", content: "123456789" },
+      {
+        property: "og:title",
+        content: `${i18n.tc("landing_lg.title")} | ${process.env.APP_NAME}`
+      },
+      { property: "og:site_name", content: `${process.env.APP_NAME}` },
+      { property: "og:url", content: `${process.env.BASE_URL || ""}home/` },
+      {
+        property: "og:description",
+        content: i18n.tc("landing_lg.h_description")
+      },
+      { property: "og:image", content: "/assets/img/apple-icon.png" },
+      { property: "og:image:type", content: "image/png" },
+      { name: "author", content: `${process.env.AUTOR},${process.env.AUTOR2}` }
+    ],
+    link: [
+      {
+        rel: "canonical",
+        href: `${process.env.BASE_URL || ""}home/`,
+        id: "canonical"
+      },
+      {
+        rel: "author",
+        href: `${process.env.AUTORREF},${process.env.AUTORREF2}`
+      }
+    ]
   }
 };
 </script>

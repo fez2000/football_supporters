@@ -4,7 +4,7 @@
       md-icon="email"
       :md-label="$t('verifyEmail.confirm')"
       :md-description="$t('verifyEmail.description')">
-      <md-button :disabled="loading" @click="resendMessage()" class="md-primary md-raised">{{(loading)?'Sending...':'Resend the confirmation message'}}</md-button>
+      <md-button :disabled="loading" @click="resendMessage()" class="md-primary md-raised">{{(loading)?$t('verifyEmail.btn_sending'):$t('verifyEmail.btn_resend')}}</md-button>
     </md-empty-state>
     <v-btn
 
@@ -16,7 +16,7 @@
         fixed
         @click="$router.go(-1)"
       >
-        Back
+        {{$t('verifyEmail.back')}}
       </v-btn>
 </div>
 
@@ -29,8 +29,9 @@ export default {
     bodyClass: "login-page",
       head: {
         title: {
-            inner: `i18n.tc('verifyEmail.confirm') | ${process.env.APP_NAME}`,
-            separator: ''
+            inner: i18n.tc('verifyEmail.confirm'),
+            separator: '|',
+            complement: process.env.APP_NAME
         },
 
         link: [

@@ -71,7 +71,7 @@
         <v-col class="col-xs-12 col-sm-12 col-md-4 col-lg-3" order="first" order-md="last" order-lg="last" order-sm="first" offset-xl="first" >
       <v-card>
         
-          <v-toolbar elevation="0"><v-toolbar-title>verser du jour</v-toolbar-title></v-toolbar>
+          <v-toolbar elevation="0"><v-toolbar-title>falsh news</v-toolbar-title></v-toolbar>
             <v-card-text>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-text>
 
             <v-card-actions>
@@ -662,7 +662,7 @@ navigator.mediaDevices.getUserMedia({
     },
     _traitement_text(text){
       if(!text) return '';
-      return this.traitement_text(this.$emoji.replace_unified(text))
+      return this.traitement_text(this.$emojione.toImage(text))
     },
     stop(e){
       if(e[0]){

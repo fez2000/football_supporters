@@ -90,7 +90,7 @@ export default {
     blockHtml,
     traitement_text,
     addEmoji(e) {
-      this.valueFiltered += this.$emoji.replace_unified(e.native);
+      this.valueFiltered += this.$emojione.toImage(e.native);
       this.$refs.p.focus();
       a = `${a}${e.native}`;
       // this.$refs.p.value += e.native;
@@ -215,7 +215,7 @@ export default {
 
       this.valueFiltered = this.traitement_text(this.text);
 
-      this.$refs.p.innerHTML = this.$emoji.replace_unified(this.valueFiltered);
+      this.$refs.p.innerHTML = this.emojione.toImage(this.valueFiltered);
 
       this.setCaretPos(this.$refs.p, this.position);
     }

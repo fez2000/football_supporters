@@ -1,5 +1,5 @@
 {
     "verbose": true,
-    "watch": ["test", "util", "controllers" ,"bin", "config", "models", "routes", "app.js", "nodemon.json"]
+    "watch": ["locales", "test", "util", "controllers" ,"bin", "config", "models", "routes", "app.js", "nodemon.json"]
 }
   

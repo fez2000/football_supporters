@@ -12,7 +12,7 @@ exports.check = (req, res) => {
     const url = `https://emailverification.whoisxmlapi.com/api/v1?apiKey=at_xo3haWOOBfeCYBtZi1V2Ae2lIPwqj&emailAddress=${req.body.email}`;
     axios.get(url).then((rep) => {
         if (rep.data.formatCheck && rep.data.dnsCheck) {
-            return Voter.findOne({ email: req.body.email }, (err, rep2) => {
+            return Voter.findOne({ email: req.body.email, isVerify: true }, (err, rep2) => {
                 if (err) {
                     return res.send({ status: false, email: req.body.email, errors: err });
                 }

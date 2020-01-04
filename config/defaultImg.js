@@ -1,6 +1,6 @@
 module.exports = {
     userImg: {
-        name: 'default_user_img',
-        type: 'png',
-    },
+        name: "default_user_img",
+        type: "svg"
+    }
 };

@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 
 import VueI18n from "vue-i18n";
 
-import { EmojiConvertor } from "emoji-js";
+
 import VuePlyr from "vue-plyr";
 import SocialSharing from "vue-social-sharing";
 import App from "./App.vue";
@@ -27,6 +27,8 @@ import Notifications from "./components/NotificationPlugin";
 import MaterialDashboard from "./material-dashboard";
 import MaterialKit from "./plugins/material-kit";
 import "vue-plyr/dist/vue-plyr.css";
+import "emojione/extras/css/emojione.min.css";
+import * as emojione from "emojione"
 import "intersection-observer";
 
 // configure router
@@ -64,14 +66,10 @@ Vue.prototype.$Chartist = Chartist;
 Vue.prototype.$axios = axios;
 Vue.prototype.$Cookies = Cookies;
 Vue.prototype.$socket = socket;
-Vue.prototype.$emoji = new EmojiConvertor();
-Vue.prototype.$emoji.include_title = true;
-Vue.prototype.$emoji.img_set = "emojione";
+Vue.prototype.$emojione = emojione;
 
-// Configure this library to use the sheets defined in `img_sets` (see above)
-Vue.prototype.$emoji.use_sheet = true;
-Vue.prototype.$emoji.img_sets.apple.path =
-    "https://unpkg.com/emoji-datasource-emojione@4.0.4/img/emojione/";
+
+
 Vue.use(VueRouter);
 Vue.use(VueHead);
 Vue.use(MaterialKit);

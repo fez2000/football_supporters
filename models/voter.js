@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 
 const VoterSchema = new Schema(
     {
+        language: { type: String, default: 'fr' },
         time_create: { type: Date },
         time_update: { type: Date },
         name: {
@@ -17,7 +18,7 @@ const VoterSchema = new Schema(
         code: { type: String },
         token: { type: String },
         image: { type: Schema.Types.ObjectId, ref: 'Doc' },
-        location: { type: String, default: ''},
+        location: { type: String, default: '' },
         state: { type: String, enum: ['public', 'private'], default: 'public' },
         token_validity: { type: Date },
         isVerify: { type: Boolean, default: false },
@@ -25,7 +26,7 @@ const VoterSchema = new Schema(
         url: { type: String },
         roleLevel: { type: Number, enum: [1, 2, 3], default: 3 },
         mailNotificationPermission: { type: Boolean, default: true },
-        socials: [ 
+        socials: [
             { type: Schema.Types.ObjectId, ref: 'SocialLink' },
         ],
     },
