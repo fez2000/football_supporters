@@ -26,9 +26,8 @@ const mailTemplate = require('../util/mailTemplateManager');
 const { removeSpace, timeToString } = require('../util/fonctions');
 const { userImg } = require('../config/defaultImg');
 const { get, getDynamic } = require('./socketmanage');
-const SOCIALS = require('../config/socials');
-
 const io = get();
+const SOCIALS = require('../config/socials');
 const dynamicNsp = getDynamic();
 const { sendMailOrNotification } = require('../util/notifOrEmail');
 

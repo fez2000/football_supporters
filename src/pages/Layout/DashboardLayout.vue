@@ -1003,6 +1003,8 @@ export default {
       items: [
         { icon: 'mdi-apps', text: i18n.tc("dashboardL.dashboard"), link: '/dashboard', 'icon-alt': 'dashboard_ico', rolelevel: 3 },
         { icon: 'mdi-vote', text: i18n.tc("dashboardL.contribute"), link: '/dashboard/contribute', 'icon-alt':'contribute_ico',rolevel:3 },
+        { icon: 'mdi-list', text: 'Edition', link: '/dashboard/admin/editions', 'icon-alt':'contribute_ico',rolevel:2 },
+        { icon: 'mdi-list', text: 'Equipes', link: '/dashboard/admin/equipes', 'icon-alt':'contribute_ico',rolevel:2 },
         {
           icon: 'mdi-account-tie',
           text: i18n.tc("dashboardL.admin"),

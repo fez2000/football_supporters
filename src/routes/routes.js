@@ -44,6 +44,14 @@ import ProjectsInProcess from '@/pages/ProjectsInProcess.vue';
 import Poll from '@/pages/Poll.vue';
 import CreatePoll from '@/pages/CreatePoll.vue';
 import LoginApi from '@/pages/LoginApi.vue';
+import EditionsLayout from '@/pages/Layout/EditionsLayout.vue';
+import EditionsList from '@/pages/EditionsList.vue';
+import EditionsCreate from '@/pages/EditionsCreate.vue';
+import EditionsModifier from '@/pages/EditionsModifier.vue';
+import EquipesLayout from '@/pages/EquipesLayout.vue';
+import EquipesList from '@/pages/EquipesList.vue';
+import EquipesCreate from '@/pages/EquipesCreate.vue';
+import EquipesModifier from '@/pages/EquipesModifier.vue';
 
 const routes = [
   {
@@ -186,6 +194,54 @@ const routes = [
             path: 'users',
             name: i18n.tc('dashboardL.manage_users'),
             component: ManageUsers,
+          },
+          {
+            path: 'editions',
+            name: 'Editions',
+            component: EditionsLayout,
+            children: [
+              {
+                path: '',
+                name: 'Equipes list',
+                component: EditionsList,
+              },
+              {
+                path: 'create',
+                name: 'Creer Equipe',
+                component: EditionsCreate,
+              },
+              {
+                path: ':name',
+                name: 'Modifier equipe',
+                component: EditionsModifier,
+              }
+            ],
+
+
+          },
+          {
+            path: 'equipes',
+            name: 'Equipes',
+            component: EquipesLayout,
+            children: [
+              {
+                path: '',
+                name: 'Equipes list',
+                component: EquipesList,
+              },
+              {
+                path: 'create',
+                name: 'Creer Equipe',
+                component: EquipesCreate,
+              },
+              {
+                path: ':name',
+                name: 'Modifier equipe',
+                component: EquipesModifier,
+              }
+            ],
+            
+            
           },
           {
             path: 'projects/submit',

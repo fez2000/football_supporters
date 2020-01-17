@@ -11,3 +11,4 @@ require('./like');
 require('./notification');
 require('./socialLink');
 require('./post');
+require('./edition');
