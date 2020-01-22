@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const axios = require('axios');
 
-
+const Edition = mongoose.model("Edition");
 const Doc = mongoose.model('Doc');
 const Event = mongoose.model('Event');
 const Voter = mongoose.model('Voter');
@@ -26,8 +26,9 @@ const mailTemplate = require('../util/mailTemplateManager');
 const { removeSpace, timeToString } = require('../util/fonctions');
 const { userImg } = require('../config/defaultImg');
 const { get, getDynamic } = require('./socketmanage');
-const io = get();
 const SOCIALS = require('../config/socials');
+
+const io = get();
 const dynamicNsp = getDynamic();
 const { sendMailOrNotification } = require('../util/notifOrEmail');
 
@@ -101,7 +102,7 @@ exports.findAllStart = (req, res) => {
         .where('state').in(states)
         .populate('image')
         .populate('socials')
-        .select('name  url bio short_bio')
+        .select('name  url bio bio_html short_bio')
         // .lean(true)
         .exec((err, results) => {
             if (err) {
@@ -130,7 +131,7 @@ exports.findAllNext = (req, res) => {
         .where('state').in(states)
         .populate('image')
         .populate('socials')
-        .select('name url bio short_bio')
+        .select('name url bio bio_html short_bio')
         // .lean(true)
         .exec((err, results) => {
             if (err) {
@@ -168,7 +169,7 @@ exports.findById = function (req, res) {
         .populate({
             path: 'socials',
         })
-        .select('name email url roleLevel short_bio bio')
+        .select('name email url roleLevel short_bio bio bio_html')
         // .lean(true)
         .exec((err, result) => {
             if (err) {
@@ -409,7 +410,7 @@ exports.updatePassword = (req, res) => {
         }
         voter.password = req.body.password;
         voter.code = mintoken.generate();
-        console.log(req);
+        
         io.of('/voter/' + voter._id).emit('securityLogout', { ignore: req.session });
         voter.save().then((ok) => {
             res.send({ status: true });
@@ -429,6 +430,7 @@ exports.update = function (req, res) {
             time_update: new Date(),
             short_bio: req.body.short_bio,
             bio: req.body.bio,
+            bio_html: req.body.bio_html,
             location: req.body.location,
 
         }).exec((err, result) => {
@@ -695,6 +697,7 @@ exports.synData = (req, res) => {
             mailNotificationPermission: result.mailNotificationPermission,
             short_bio: result.short_bio,
             bio: result.bio,
+            bio_html: result.bio_html,
             socials: result.socials,
             location: result.location,
             language: result.language,
@@ -730,6 +733,7 @@ exports.login = function (req, res) {
                         mailNotificationPermission: result.mailNotificationPermission,
                         short_bio: result.short_bio,
                         bio: result.bio,
+                        bio_html: result.bio_html,
                         socials: result.socials,
                         location: result.location,
                         language: result.language,
@@ -779,6 +783,7 @@ exports.login = function (req, res) {
                         mailNotificationPermission: result.mailNotificationPermission,
                         short_bio: result.short_bio,
                         bio: result.bio,
+                        bio_html: result.bio_html,
                         socials: result.socials,
                         location: result.location,
                         language: result.language,
@@ -851,6 +856,7 @@ exports.googleLogin = (req, res) => {
                                 mailNotificationPermission: voter.mailNotificationPermission,
                                 short_bio: voter.short_bio,
                                 bio: voter.bio,
+                                bio_html: voter.bio_html,
                                 socials: voter.socials,
                                 location: voter.location,
                                 language: voter.language,
@@ -901,7 +907,7 @@ exports.googleLogin = (req, res) => {
                                         language: rep2.language
                                     };
                                     fs.mkdirSync(path.join(__dirname, '../images', `${rep2._id}`));
-                                    
+                                    fs.mkdirSync(path.join(__dirname, '../uploads', `${rep2._id}`));
                                     const pt = `${rep2._id}/${removeSpace(rep2.name) + timeToString(date)}.${userImg.type}`;
 
                                     fs.copyFileSync(path.join(__dirname, '../images', `${userImg.name}.${userImg.type}`), path.join(__dirname, '../images', pt));
@@ -1097,6 +1103,7 @@ axios.get('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elemen
                         mailNotificationPermission: voter.mailNotificationPermission,
                         short_bio: voter.short_bio,
                         bio: voter.bio,
+                        bio_html: voter.bio_html,
                         socials: voter.socials,
                         location: voter.location,
                         language: voter.language,
@@ -1147,7 +1154,7 @@ axios.get('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elemen
                                 language: rep2.language
                             };
                             fs.mkdirSync(path.join(__dirname, '../images', `${rep2._id}`));
-                            
+                            fs.mkdirSync(path.join(__dirname, '../uploads', `${rep2._id}`));                            
                             const pt = `${rep2._id}/${removeSpace(rep2.name) + timeToString(date)}.${userImg.type}`;
 
                             fs.copyFileSync(path.join(__dirname, '../images', `${userImg.name}.${userImg.type}`), path.join(__dirname, '../images', pt));
@@ -1309,6 +1316,7 @@ exports.fbLogin = function (req, res) {
                         mailNotificationPermission: voter.mailNotificationPermission,
                         short_bio: voter.short_bio,
                         bio: voter.bio,
+                        bio_html: voter.bio_html,
                         socials: voter.socials,
                         location: voter.location,
                         language: voter.language
@@ -1363,6 +1371,14 @@ exports.fbLogin = function (req, res) {
                                 language: rep2.language
                             };
                             fs.mkdirSync(path.join(__dirname, '../images', `${rep2._id}`));
+                            fs.mkdirSync(path.join(__dirname, '../uploads', `${rep2._id}`));
+                            fs.mkdirSync(
+                                path.join(
+                                    __dirname,
+                                    "../uploads",
+                                    `${ad._id}`
+                                )
+                            );
                             const pt = `${rep2._id}/${removeSpace(rep2.name) + timeToString(date)}.${userImg.type}`;
                             fs.copyFileSync(path.join(__dirname, '../images', `${userImg.name}.${userImg.type}`), path.join(__dirname, '../images', pt));
                             const imgUrl =`https://graph.facebook.com/v4.0/${req.body.userID}/picture?access_token=${req.body.accessToken}&method=get&pretty=0&sdk=joey&suppress_http_code=1`
@@ -1687,6 +1703,7 @@ exports.resetpasswordend = (req, res) => {
                 mailNotificationPermission: result.mailNotificationPermission,
                 short_bio: result.short_bio,
                 bio: result.bio,
+                bio_html: result.bio_html,
                 socials: result.socials,
                 location: result.location,
                 language: result.language,

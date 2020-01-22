@@ -3,19 +3,22 @@
     <div :class="{ 'nav-open': NavbarStore.showNavbar }">
       <router-view name="header" />
       <div>
-        <transition name="fade" mode="out-in">
+        <v-fade-transition name="fade" mode="out-in">
           <router-view class="view"></router-view>
-        </transition>
+        </v-fade-transition>
       </div>
       <router-view name="footer" />
       <check-cookies></check-cookies>
 
       <paiement :project="paiementAnalitic" :dialog="startPaiement"></paiement>
-      <v-snackbar v-model="snackbar">
+      <v-snackbar left bottom v-model="snackbar">
         {{(!text)?'please check your internet connection':text}}
-        <v-btn color="pink" text dark @click="snackbar = false;text = ''">Close</v-btn>
+        <v-btn color="primary" text dark @click="snackbar = false;text = ''">Close</v-btn>
       </v-snackbar>
-      <pdf-preview v-if="pdf" @close="pdf == false" :src="previewPdf.src"></pdf-preview>
+      <v-dialog scrollable v-model="pdf" fullscreen>
+        <pdf-card  :custum="true" @close="pdf = false" :src="previewPdf.src"></pdf-card>
+      </v-dialog>
+      
       <v-dialog dark v-model="dialog" fullscreen :hide-overlay="true">
         <v-card>
           <v-toolbar dark :elevation="0">
@@ -38,65 +41,15 @@
           <v-img v-if="img.src" :src="'/api/img/'+img.src" :all="img.name"></v-img>
         </v-card>
       </v-dialog>
-      <v-scale-transition>
-        <div
-          @mousewheel="MouseWheelHandler"
-          v-if="overlay"
-          class="overlay"
-          :style="backAjuste"
-          v-show="overlay&&load"
-        >
-          <div class="bar">
-            <v-btn icon dark @click="closeOverlay">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-
-            <div class="flex-grow-1">{{previewImage.name}}</div>
-
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn dark icon v-on="on" @click="updateBackGroundSize(-RANGE)">
-                  <v-icon>mdi-window-minimize</v-icon>
-                </v-btn>
-              </template>
-              <span>Zoom -</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn dark icon v-on="on" @click="updateBackGroundSize(RANGE)">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </template>
-              <span>Zoom +</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  dark
-                  icon
-                  v-on="on"
-                  v-if="isMobile && shareApi"
-                  @click="share({url:previewImage.src,title:previewImage.name})"
-                >
-                  <v-icon>mdi-share</v-icon>
-                </v-btn>
-              </template>
-              <span>Share</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <a v-on="on" :href="previewImage.src" download>
-                  <v-btn dark icon>
-                    <v-icon>mdi-download</v-icon>
-                  </v-btn>
-                </a>
-              </template>
-              <span>Download this image</span>
-            </v-tooltip>
-          </div>
-        </div>
-      </v-scale-transition>
+      
     </div>
+    <viewer @inited="inited" class="viewer" ref="viewer" :images="imgs">
+      <img v-for="im in imgs" :src="im.src" :alt="im.alt" :key="im.src" />
+    </viewer>
+    <v-snackbar left bottom color="success" v-model="installBar">
+      vous pouvez installer cette web-application
+      <v-btn text @click="install">Install</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -107,6 +60,18 @@ import * as init from "@/assets/js/installSDK";
 var scrollPos = 0;
 export default {
   created() {
+    if (
+      !(
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true
+      )
+    ) {
+      window.addEventListener(
+        "beforeinstallprompt",
+        this.checkInstallable.bind(this)
+      );
+    }
+
     this.isMobile = checkDevice();
     this.$root.$on("notifPermission", data => (this.notifPermission = data));
     if (secureSocket) {
@@ -144,13 +109,8 @@ export default {
     });
     this.waitPaiement();
     this.$root.$on("previewImage", data => {
-      window.addEventListener("keyup", this.waitkeyUp);
-
-      this.overlay = true;
-      this.previewImage.src = data.src;
-      this.previewImage.name = data.name;
-      this.overlayBackGroundSize = 100;
-      this.charger();
+      this.imgs = data.imgs;
+      this.show(data.index);
     });
     this.$root.$on("neterror", data => {
       if (window.navigator.onLine) {
@@ -167,6 +127,45 @@ export default {
     });
   },
   methods: {
+    inited(viewer) {
+      this.$viewer = viewer;
+    },
+    checkInstallable(e) {
+      deferredPrompt = e;
+      
+      if (this.$Cookies.get("cookiesEnable") && !this.$Cookies.get("first")) {
+        this.$Cookies.set("first", "true");
+              
+        setTimeout(() => {
+          this.installBar = true;
+        }, 1000);
+      }
+    },
+    install() {
+      this.installBar = false;
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      deferredPrompt.userChoice.then(choiceResult => {
+        if (choiceResult.outcome === "accepted") {
+          window.addEventListener("appinstalled", evt => {
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: "Installation reussie"
+            });
+          });
+        } else {
+          console.log("User dismissed the A2HS prompt");
+        }
+        
+      });
+      this.installBar = false;
+    },
+    show(index = null) {
+      if (index) {
+        this.$viewer.index = index;
+      }
+      this.$viewer.show();
+    },
     updateProfil() {
       this.$axios.get("/api/voter/sync").then(({ data }) => {
         if (!data.status) return;
@@ -443,12 +442,15 @@ export default {
 
   data() {
     return {
+      
+      installBar: false,
       shareApi: navigator.share,
       snackbar: false,
       RANGE: process.env.IMAGE_PREVIEW_RESIZE_RANGE || 4,
       text: "",
       pile: [],
       dialog: false,
+      imgs: [],
       img: {
         name: "fdf",
         src: ""
@@ -497,37 +499,27 @@ export default {
         i: JSON.stringify(require("../config/shema.json"))
       },
       { type: "text/javascript", src: "/assets/js/installSDK.js", body: false }
+    ],
+    style: [
+      { type: "text/css", i: require("./assets/css/emojionearea.min.css") }
     ]
   }
 };
 </script>
-<style scoped>
-.bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  width: 100%;
-  padding: 5px;
+<style >
+.viewer {
+  display: none;
 }
-.flex-grow-1 {
-  flex-grow: 1;
-  z-index: 16;
-  color: white;
-  padding-top: 6px;
-  padding-left: 6px;
+body {
+  padding: unset !important;
 }
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  z-index: 15;
-  background-position: center;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-color: black;
+img.emojione {
+  height: 20px !important;
+}
+.md-overlay {
+  z-index: 1031 !important;
+}
+.md-dialog {
+  z-index: 1032 !important;
 }
 </style>

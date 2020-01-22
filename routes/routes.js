@@ -10,9 +10,37 @@ const like = require("../controllers/like");
 const notification = require("../controllers/notification");
 const poll = require("../controllers/poll");
 const paiement = require("../controllers/paiement");
-const upload = multer();
+const ssr = require("../controllers/ssr");
+const push = require("../controllers/push");
+const froala = require("../controllers/froala");
 
+const upload = multer();
 module.exports = app => {
+    app.post("/api/flroala/upload_image", froala.upload_image);
+
+    app.post("/api/flroala/upload_video", froala.upload_video);
+
+    app.post("/api/flroala/upload_image_resize", froala.upload_image_resize);
+
+    app.post(
+        "/api/flroala/upload_image_validation",
+        froala.upload_image_validation
+    );
+
+    app.post("/api/flroala/upload_file", froala.upload_file);
+
+    app.post(
+        "/api/flroala/upload_file_validation",
+        froala.upload_file_validation
+    );
+
+    app.post("/api/flroala/delete_image", froala.delete_image);
+    app.post("/api/flroala/delete_video", froala.delete_video);
+
+    app.post("/api/flroala/delete_file", froala.delete_file);
+
+    app.get("/api/flroala/load_images", froala.load_images);
+
     // eslint-disable-next-line global-require
     app.get("/api/notification/start", notification.findAllStart);
     app.post("/api/notification/startAtDate", notification.findAllStartAtDate);
@@ -52,6 +80,8 @@ module.exports = app => {
     app.get("/api/event/startAt", event.findAllStartAt);
     app.get("/api/event/start", event.findAllStart);
     app.post("/api/event/next", event.findAllNext);
+    app.delete("/api/event/:id", event.deleteEvent);
+    app.put("/api/event", event.updateEvent);
     app.get("/api/event/:id", event.findById);
     app.post("/api/event/add", event.postEvent);
     app.get("/api/voter/:id", voter.findById);
@@ -84,6 +114,9 @@ module.exports = app => {
         }
     });
 
+    app.get("/api/pushNotification/vapidPublicKey", push.getVapidKey);
+    app.post("/api/pushNotification/register", push.register);
+    app.post("/api/pushNotification/send", push.send);
     // project api
     app.get("/api/project", project.findAll);
     app.get("/api/project/my/nb", project.numMyProject);

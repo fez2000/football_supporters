@@ -16,42 +16,84 @@
 
 /* eslint-env browser */
 
+function urlBase64ToUint8Array(base64String) {
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
 
-if ('serviceWorker' in navigator) {
-  // Your service-worker.js *must* be located at the top-level directory relative to your site.
-  // It won't be able to control pages unless it's located at the same level or higher than them.
-  // *Don't* register service worker file in, e.g., a scripts/ sub-directory!
-  // See https://github.com/slightlyoff/ServiceWorker/issues/468
-  navigator.serviceWorker.register('/service-worker.js').then((reg) => {
-    // updatefound is fired if service-worker.js changes.
-    reg.onupdatefound = function () {
-      // The updatefound event implies that reg.installing is set; see
-      // https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-container-updatefound-event
-      let installingWorker = reg.installing;
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
 
-      installingWorker.onstatechange = function () {
-        switch (installingWorker.state) {
-          case 'installed':
-            if (navigator.serviceWorker.controller) {
-              // At this point, the old content will have been purged and the fresh content will
-              // have been added to the cache.
-              // It's the perfect time to display a "New content is available; please refresh."
-              // message in the page's interface.
-              console.log('New or updated content is available.');
-            } else {
-              // At this point, everything has been precached.
-              // It's the perfect time to display a "Content is cached for offline use." message.
-              console.log('Content is now available offline!');
-            }
-            break;
-
-          case 'redundant':
-            console.error('The installing service worker became redundant.');
-            break;
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+}
+function getCookie(cname, cookie) {
+    const decodedCookie = cookie || "";
+    const ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+            c = c.substring(1);
         }
-      };
-    };
-  }).catch((e) => {
-    console.error('Error during service worker registration:', e);
-  });
+        if (c.indexOf(`${encodeURIComponent(cname)}=`) == 0) {
+            return decodeURIComponent(
+                c.substring(`${encodeURIComponent(cname)}=`.length, c.length)
+            );
+        }
+    }
+    return "";
+}
+if ("serviceWorker" in navigator) {
+    // Your service-worker.js *must* be located at the top-level directory relative to your site.
+    // It won't be able to control pages unless it's located at the same level or higher than them.
+    // *Don't* register service worker file in, e.g., a scripts/ sub-directory!
+    // See https://github.com/slightlyoff/ServiceWorker/issues/468
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(reg => {
+                if ("PushManager" in window) {
+                    reg.pushManager
+                        .getSubscription()
+                        .then(async sub => {
+                            if (sub) {
+                                return sub;
+                            }
+                            const response = await fetch(
+                                "/api/pushNotification/vapidPublicKey"
+                            );
+                            const vapidPublicKey = await response.text();
+                            const convertedVapidKey = urlBase64ToUint8Array(
+                                vapidPublicKey
+                            );
+
+                            return reg.pushManager.subscribe({
+                                userVisibleOnly: true,
+                                applicationServerKey: convertedVapidKey
+                            });
+                        })
+                        .then(subscription => {
+                            fetch("/api/pushNotification/register", {
+                                method: "post",
+                                headers: {
+                                    "Content-type": "application/json",
+                                    "CSRF-Token": getCookie(
+                                        "XSRF-TOKEN",
+                                        document.cookie
+                                    )
+                                },
+                                body: JSON.stringify({
+                                    subscription
+                                })
+                            });
+                        });
+                }
+            })
+            .catch(registrationError => {
+                console.log("SW registration failed: ", registrationError);
+            });
+    });
 }

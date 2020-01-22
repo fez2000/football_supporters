@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const PostSchema = new Schema(
     {
-        creator_id: { type: Schema.Types.ObjectId },
+        creator_id: { type: Schema.Types.ObjectId, ref: 'Voter' },
         text: { type: String, trim: true },
         title: { type: String, trim: true },
         documents: [{ type: Schema.Types.ObjectId, ref: "Doc" }],

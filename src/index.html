@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8" />
         <meta
@@ -9,21 +9,26 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <meta name="theme-color" content="#FFF" />
         <meta name="google" content="notranslate" />
+        <meta name="keywords" content="Jesus King, " />
+        <!-- disable format-detection from safari -->
+        <meta name="format-detection" content="telephone=no" />
 
         <!-- Add to homescreen for Chrome on Android -->
         <meta name="mobile-web-app-capable" content="yes" />
-        <!-- fallback for manifest.json -->
 
         <!-- Add to homescreen for Safari on iOS -->
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="#FFF" />
-        <meta name="google-site-verification" content="dfU1JAQUMvLA3FjdiTemAiIybVPHa2xhksW57iLS8O4" />
+        <meta
+            name="google-site-verification"
+            content="dfU1JAQUMvLA3FjdiTemAiIybVPHa2xhksW57iLS8O4"
+        />
         <!-- Homescreen icons. -->
-        <link rel="shortcut icon" href="/favicon.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <link
             rel="apple-touch-icon"
             sizes="76x76"
-            href="/favicon.png"
+            href="/assets/favicons/apple-icon.png"
         />
         <link
             rel="apple-touch-icon"
@@ -45,7 +50,7 @@
             sizes="192x192"
             href="/assets/img/png/homescreen-192.png"
         />
-        <link href="/assets/css/emoji.css" rel="stylesheet" />
+        <link rel="alternate" href="https:jesusking.me" hreflang="x-default" />
         <!-- Tile icon for Win8 (144x144 + tile color) -->
         <meta
             name="msapplication-TileImage"
@@ -53,131 +58,84 @@
         />
         <meta name="msapplication-TileColor" content="#FFF" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <!--  Fonts and icons     -->
+
+        <!-- fallback for manifest.json -->
         <link rel="manifest" href="/manifest.json" />
+        <!--  Fonts and icons     -->
         <link
+            crossorigin="anonymous"
             rel="stylesheet"
-            href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
+            type="text/css"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
         />
         <link
+            crossorigin="anonymous"
             rel="stylesheet"
-            href="//fonts.googleapis.com/icon?family=Material+Icons"
+            type="text/css"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
         />
         <link
-            href="//use.fontawesome.com/releases/v5.0.8/css/all.css"
+            crossorigin="anonymous"
             rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <link
+            crossorigin="anonymous"
+            rel="stylesheet"
+            type="text/css"
+            href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
         />
         <script
+            crossorigin="anonymous"
             src="https://apis.google.com/js/client:platform.js?onload=start"
             async
             defer
         ></script>
         <script>
             var secureSocket = null;
+            var deferredPrompt = null;
             function start() {
                 gapi.load("auth2", function() {
                     window.auth2 = gapi.auth2.init({
                         client_id:
                             "16265415928-d547h0ua7d1b8t24mdm83bj5n2t79epr.apps.googleusercontent.com"
-                        // Scopes to request in addition to 'profile' and 'email'
-                        //scope: 'additional_scope'
                     });
                 });
             }
         </script>
-        <link
-            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
-            rel="stylesheet"
-        />
     </head>
-
     <body>
         <noscript>
             You need to enable JavaScript to run this app.
         </noscript>
-
         <div id="app"></div>
-
-        <!-- built files will be auto injected -->
         <script src="/assets/js/jquery.min.js"></script>
-        <script src="/assets/js/config.js"></script>
-        <script src="/assets/js/util.js"></script>
-        <script src="/assets/js/jquery.emojiarea.js"></script>
-        <script src="/assets/js/emoji-picker.js"></script>
-        <script type="text/javascript" src="/sw-precache.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
         <script
+            type="text/javascript"
+            src="/assets/js/emojionearea.min.js"
+            async
+            defer
+        ></script>
+        <script type="text/javascript" src="/assets/js/util.js"></script>
+        <script
+            type="text/javascript"
+            async
+            type="text/javascript"
+            src="/sw-precache.js"
+        ></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script
+            async
+            defer
+            crossorigin="anonymous"
             type="text/javascript"
             src="https://fr.monetbil.com/widget/v2/monetbil.min.js"
         ></script>
         <script
+            async
+            defer
+            type="text/javascript"
             src="https://www.paypal.com/sdk/js?client-id=ATPOXO5gEo-aL7_mCsyHbXmRvZ574dJxl7iJbvYvzrRR_0pvDW4eh09naeVMWbjOGE8MfvvwDGg7K5Ma"
-        >
-            // Required. Replace SB_CLIENT_ID with your sandbox client ID.
-        </script>
-        <script type="application/ld+json">
-            {
-                "@context": "http://schema.org",
-                "@type": "Organization",
-                "url": "https://jesusking.me",
-                "ethicsPolicy": "https://jesusking.me/terms/comunity",
-                "slogan": "Nul na le droit detre heureux tout seul.",
-                "contactPoint": [
-                    {
-                        "@type": "ContactPoint",
-                        "telephone": "+237-697-898-466",
-                        "contactType": "customer service",
-                        "contactOption": "TollFree",
-                        "areaServed": ["CM"],
-                        "availableLanguage": ["English", "French"]
-                    },
-                    {
-                        "@type": "ContactPoint",
-                        "telephone": "+237-697-898-466",
-                        "contactType": "technical support",
-                        "contactOption": "TollFree",
-                        "areaServed": ["CM"],
-                        "availableLanguage": ["English", "French"]
-                    },
-                    {
-                        "@type": "ContactPoint",
-                        "telephone": "+237-697-898-466",
-                        "contactType": "bill payment",
-                        "contactOption": "TollFree",
-                        "areaServed": ["US", "CA", "FR", "CM"],
-                        "availableLanguage": ["English", "French"]
-                    }
-                ],
-                "member": [
-                    {
-                        "@type": "Organization"
-                    },
-                    {
-                        "@type": "Organization"
-                    }
-                ],
-                "funder": {
-                    "@type": "Person",
-                    "name": "Jack Dan"
-                },
-                "image": "https://jesusking.me/assets/img/caf_logo.png",
-                "logo": "https://jesusking.me/assets/img/favicon.png",
-                "alternateName": "JK",
-                "description": "Aider les couches les plus vulnerables à avoir accès à l'éducation, à la sante, à leau potable, à lenergie , à une alimentation saine et au bien être gratuitement ou à vil prix. Tel est notre leitmotiv",
-                "alumni": [
-                    {
-                        "@type": "Person",
-                        "name": "Tsasse élisée"
-                    },
-                    {
-                        "@type": "Person",
-                        "name": "Bertrand"
-                    }
-                ],
-                "telephone": "+237-697-898-466",
-                "email": "jesusking.jk.groups@gmail.com",
-                "name": "jesusKing"
-            }
-        </script>
+        ></script>
     </body>
 </html>

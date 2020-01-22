@@ -1,4 +1,4 @@
-import { Picker } from 'emoji-mart-vue';
+
 import LinkPrevue from 'link-prevue';
 import pdf from './components/pdf/vuePdfSss.vue';
 import DropDown from './components/Dropdown.vue';
@@ -16,7 +16,6 @@ const GlobalComponents = {
   install(Vue) {
     Vue.component('drop-down', DropDown);
     Vue.component('l-input', LInput);
-    Vue.component('emojis-picker', Picker);
     Vue.component('link-preview', LinkPrevue);
     Vue.component('feed-back-reaction', VueFeedbackReaction);
     Vue.component('pdf-preview', pdf);

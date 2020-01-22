@@ -1,14 +1,18 @@
 import "babel-polyfill";
 import "core-js";
+import "es6-promise/auto";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import VueHead from "vue-head";
 import Chartist from "chartist";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "viewerjs/dist/viewer.css";
+import Viewer from "v-viewer";
 
+import emojione from "emojione";
+import "emojione/extras/css/emojione.min.css";
 import VueI18n from "vue-i18n";
-
 
 import VuePlyr from "vue-plyr";
 import SocialSharing from "vue-social-sharing";
@@ -24,13 +28,21 @@ import GlobalDirectives from "./globalDirectives";
 import Notifications from "./components/NotificationPlugin";
 
 // MaterialDashboard plugin
-import MaterialDashboard from "./material-dashboard";
+//import MaterialDashboard from "./material-dashboard";
 import MaterialKit from "./plugins/material-kit";
 import "vue-plyr/dist/vue-plyr.css";
-import "emojione/extras/css/emojione.min.css";
-import * as emojione from "emojione"
 import "intersection-observer";
+import "froala-editor/js/plugins.pkgd.min.js";
+//Import third party plugins
+import "froala-editor/js/third_party/embedly.min";
+import "froala-editor/js/third_party/font_awesome.min";
+import "froala-editor/js/third_party/spell_checker.min";
+import "froala-editor/js/third_party/image_tui.min";
+// Import Froala Editor css files.
+import "froala-editor/css/froala_editor.pkgd.min.css";
 
+// Import and use Vue Froala lib.
+import VueFroala from "vue-froala-wysiwyg";
 // configure router
 const router = new VueRouter({
     mode: "history",
@@ -67,20 +79,20 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$Cookies = Cookies;
 Vue.prototype.$socket = socket;
 Vue.prototype.$emojione = emojione;
-
-
+// show the short-name as a `title` attribute for css/img emoji
 
 Vue.use(VueRouter);
 Vue.use(VueHead);
 Vue.use(MaterialKit);
-Vue.use(MaterialDashboard);
+Vue.use(VueFroala);
+//Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 Vue.use(VuePlyr);
 Vue.use(VueI18n);
 Vue.use(SocialSharing);
-
+Vue.use(Viewer);
 Vue.mixin({
     data() {
         return {
@@ -100,9 +112,6 @@ new Vue({
     data: {
         Chartist
     },
-    methods: {
-        axios,
-        Cookies
-    },
+    methods: {},
     head: {}
 });

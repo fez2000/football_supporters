@@ -1184,6 +1184,7 @@ exports.add = function (req, res) {
         cathegories,
         short_description: req.body.short_description,
         description: req.body.description || '',
+        description: req.body.description_html || '',
         time_create: date,
         time_update: date,
         voter: mongoose.Types.ObjectId(req.session.auth._id),
@@ -1236,6 +1237,9 @@ exports.update = function (req, res) {
         }
         if (req.body.description) {
             project.description = req.body.description;
+        }
+        if (req.body.description_html) {
+            project.description_html = req.body.description_html;
         }
         if (req.body.short_description) {
             project.short_description = req.body.short_description;

@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const EventSchema = new Schema(
     {
+        creator_id: { type: Schema.Types.ObjectId, ref: "Voter" },
         time_create: { type: Date },
         time_update: { type: Date },
         tags: {

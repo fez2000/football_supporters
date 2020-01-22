@@ -15,6 +15,7 @@ const VoterSchema = new Schema(
         email: { type: String, required: true, unique: true },
         short_bio: { type: String },
         bio: { type: String },
+        bio_html: { type: String, trim: true, default: '' },
         code: { type: String },
         token: { type: String },
         image: { type: Schema.Types.ObjectId, ref: 'Doc' },

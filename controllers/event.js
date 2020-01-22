@@ -78,6 +78,69 @@ exports.findAllStartAt = (req, res) => {
             });
         });
 };
+exports.updateEvent = (req, res) => {
+    if (typeof req.session.auth === "undefined") {
+        return res.send({ status: false, errors: "AuthError" });
+    }
+    if (req.session.auth.type === "VOTER") {
+        return res.send({ status: false, errors: "permission" });
+    }
+    if (!req.body.title || !req.body.text) {
+        return res.send({ status: false, errors: "RequiredFields" });
+    }
+    Event.findByIdAndUpdate(req.body._id, {
+        time_update: new Date(),
+        title: req.body.title,
+        description: req.body.text,
+        tags: req.body.tags
+    })
+        .populate({
+            path: "document",
+            select: "type name src _id cathegorie"
+        })
+        .exec((err, event) => {
+            if (err) {
+                return res.send({ status: false, errors: err });
+            }
+            const post = event.toJSON();
+            post.document = req.body.document;
+            res.send({ status: true, post });
+            io.emit("updatedEvent", post);
+        });
+};
+exports.deleteEvent = (req, res) => {
+    if (typeof req.session.auth === "undefined") {
+        return res.send({ status: false, errors: "AuthError" });
+    }
+    let find = {
+        _id: req.params.id
+    };
+    if (req.session.auth.type === "VOTER") {
+        return res.send({ status: false, errors: "Permission" });
+    }
+    if (!(req.session.auth.type === "SUPERUSER")) {
+        find.creator_id = req.session.auth._id;
+    }
+
+    Event.findOneAndDelete(find)
+        .populate({
+            path: "document",
+            select: "type name src _id cathegorie"
+        })
+        .exec((err, post) => {
+            if (err) {
+                return res.send({ status: false, errors: err });
+            }
+            if (!post) {
+                return res.send({ status: false, errors: "NotFound" });
+            }
+
+            res.send({ status: true, post });
+            setTimeout(() => {
+                io.emit("deletedEvent", post);
+            }, 150);
+        });
+};
 exports.postEvent = (req, res) => {
     if (typeof req.session.auth === "undefined") {
         return res.send({ status: false, errors: "AuthError" });
@@ -96,6 +159,7 @@ exports.postEvent = (req, res) => {
         title: req.body.title,
         description: req.body.text,
         tags: req.body.tags,
+        language: req.session.auth.language,
         type: "post"
     };
 

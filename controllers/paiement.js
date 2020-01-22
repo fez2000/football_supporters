@@ -5,8 +5,7 @@ exports.status = (req, res) => {
 const paypal = require("@paypal/checkout-server-sdk");
 
 // Creating an environment
-const clientId =
-    "ATPOXO5gEo-aL7_mCsyHbXmRvZ574dJxl7iJbvYvzrRR_0pvDW4eh09naeVMWbjOGE8MfvvwDGg7K5Ma";
+const clientId = process.env.PAYPAL_CLIENT_PUBLIC;
 const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
 const environment = new paypal.core.SandboxEnvironment(clientId, clientSecret);
 const client = new paypal.core.PayPalHttpClient(environment);
@@ -30,7 +29,6 @@ exports.payer = (req, res) => {
         ]
     });
 
-    let order;
     try {
         client.execute(request).then(order => {
             res.status(200).json({

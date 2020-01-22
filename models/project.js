@@ -10,6 +10,7 @@ const ProjectSchema = new Schema(
         url: { type: String, required: true },
         name: { type: String, required: true, maxlength: process.env.PROJECT_NAME_MAX_LENGTH },
         description: { type: String, maxlength: process.env.PROJECT_DESCRIPTION_MAX_LENGTH },
+        description_html: { type: String, trim: true },
         pourcentage: {
             type: Number, default: 0, min: 0, max: 100,
         },
