@@ -2,49 +2,8 @@
   <v-container :fluid="true">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
-        <v-col
-          cols="12"
-          md="4"
-          offset-md="1"
-          offset-lg="0"
-          lg="5"
-          :order="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs)?'first':'last'"
-        >
-          <p align="center">{{$t("createproject.f_img")}}</p>
-          <v-row justify="center">
-            <v-img
-              @drop.prevent="addFile"
-              @dragleave.prevent="gradient=''"
-              @dragover.prevent="gradient='to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)'"
-              :lazy-src="previewSrc"
-              :src="previewSrc"
-              max-width="300"
-              max-height="300"
-              :gradient="gradient"
-              @click="getImg"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-          </v-row>
-          <v-row align="center">
-            <label for="editionimg" hidden>
-              <p>{{$t("createproject.f_img")}}</p>
-            </label>
-            <input
-              hidden
-              name="editionimg"
-              id="editionimg"
-              type="file"
-              @input="checkFile"
-              accept="image/*"
-            />
-          </v-row>
-        </v-col>
-        <v-col cols="12" md="6" offset-md="1" offset-lg="1" lg="6">
+        
+        <v-col cols="11" >
           <v-card-text>
             <h2 class="title mt-1 mb-2">{{$t("createproject.f_name")}}:</h2>
             <v-text-field
@@ -55,93 +14,29 @@
               solo
               max-length="150"
             ></v-text-field>
-            <h2 class="title mt-1 mb-2">Theme:</h2>
-            <v-text-field v-model="theme" :label="'Theme'" required solo max-length="150"></v-text-field>
-            <h2 class="title mt-1 mb-2">Slogan:</h2>
-            <v-text-field v-model="slogan" :label="'slogan'" required solo max-length="150"></v-text-field>
-            <v-switch color="primary" :label="$t('pollCreate.startNowLabel')" v-model="startNow"></v-switch>
 
-            <v-dialog
-              ref="startDialog"
-              v-model="startDateModal"
-              :return-value.sync="startDate"
-              persistent
-              v-if="!startNow"
-              max-width="500px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="startDate"
-                  :label="$t('pollCreate.startDate')"
-                  prepend-icon="event"
-                  solo
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="startDate"
-                :allowed-dates="allowedStartDates"
-                :landscape="!$vuetify.breakpoint.xs"
-                scrollable
-              >
-                <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="startDateModal = false"
-                >{{$t("pollCreate.cancel")}}</v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$refs.startDialog.save(startDate)"
-                >{{$t("pollCreate.ok")}}</v-btn>
-              </v-date-picker>
-            </v-dialog>
-            <v-dialog
-              max-width="500px"
-              ref="endDialog"
-              v-model="endDateModal"
-              :return-value.sync="endDate"
-              persistent
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="endDate"
-                  :label="$t('pollCreate.endDate')"
-                  prepend-icon="event"
-                  readonly
-                  solo
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="endDate"
-                :allowed-dates="allowedEndDates"
-                :landscape="!$vuetify.breakpoint.xs"
-                scrollable
-              >
-                <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="endDateModal = false"
-                >{{$t('pollCreate.cancel')}}</v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$refs.endDialog.save(endDate)"
-                >{{$t('pollCreate.ok')}}</v-btn>
-              </v-date-picker>
-            </v-dialog>
             <h2 class="title mt-1 mb-2">{{$t("createproject.description")}}:</h2>
             <froala
               :tag="'textarea'"
               :config="config"
               v-model="description"
-            >Un mot au suject de cette edition</froala>
-
-            <v-btn
-              :disabled="!valid || submiting || !theme || !data_debut || (!startNow&&!startDate) || !endDate   "
+            >Un mot au suject de la competition</froala>
+            <h2 class="title mt-1 mb-2">Regle d'utilisation:</h2>
+            <froala
+              :tag="'textarea'"
+              :config="config"
+              v-model="userules"
+            >Regle d'utilisation de la communaute</froala>
+            <h2 class="title mt-1 mb-2">Philosophie:</h2>
+            <froala
+              :tag="'textarea'"
+              :config="config"
+              v-model="philosophie"
+            >philosophie de la communaute</froala>
+        },
+                    
+        <v-btn
+              :disabled="!valid || submiting || !name   "
               color="blue darken-1"
               text
               @click="save()"
@@ -156,17 +51,17 @@
 <script>
 export default {
   title: {
-    inner: "Creer une Edition",
+    inner: "Creer une competition",
     separator: " | ",
     complement: process.env.APP_NAME
   },
   meta: [
-    { name: "description", content: "pages de creation d'une edition" },
+    { name: "description", content: "pages de creation de la competition" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:creator", content: process.env.twitter_name },
     {
       name: "twitter:title",
-      content: `Creer edition | ${process.env.APP_NAME}`
+      content: `Creer competition | ${process.env.APP_NAME}`
     },
     {
       name: "twitter:description",
@@ -191,17 +86,16 @@ export default {
   mounted() {
     this.voter = JSON.parse(this.$Cookies.get(this.$Cookies.get("voter")));
     this.previewSrc = this.previewDefaultSrc;
+    this.competition();
     this.$root.$emit("loadStatus", { status: false });
   },
   data() {
     return {
       submiting: false,
       voter: {},
-      startDate: null,
-      endDate: null,
-      startNow: true,
-      endDateModal: false,
-      startDateModal: false,
+      userules: '',
+      philosophie: '',
+      id: '',
       config: {
         placeholderText: "Edit Your Content Here!",
         imageUploadURL: "/api/flroala/upload_image",
@@ -283,12 +177,22 @@ export default {
       valid: false,
       gradient: "",
       description: null,
-      theme: "",
-      date_debut: "",
-      date_fint: "",
+      name: "",
+      short_description: "",
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 150) || "Name must be less than 150 characters"
+      ],
+      shortDescriptionRules: [
+        v => !!v || "Short Description is required",
+        v =>
+          (v && v.length <= 150) ||
+          "Short Description must be less than 150 characters"
+      ],
+      descriptionRules: [
+        v => !v || true,
+        v =>
+          !v || v.length <= 2000 || "Descript must be less than 2000 characters"
       ],
       dialog: false,
       cathegoriesList: [],
@@ -322,15 +226,6 @@ export default {
     }
   },
   methods: {
-    allowedStartDates(val) {
-      if (!this.endDate) {
-        return new Date(val) >= new Date();
-      } else {
-        return (
-          new Date(val) >= new Date() && new Date(val) <= new Date(this.endDate)
-        );
-      }
-    },
     addFile(e) {
       let droppedFiles = e.dataTransfer.files;
       if (!droppedFiles) return;
@@ -354,18 +249,34 @@ export default {
         });
       }
     },
-    loadToggle(status) {
-      this.$root.$emit("loadStatus", { status: status });
+    getCompetiton() {
+      this.$axios
+        .get("/api/competition")
+        .then(({ data }) => {
+          if (data.status) {
+            this.id= data.competition._id
+            this.description = data.competition.description;
+            this.userules = data.competition.userules;
+            this.philosophie = data.competition.philosophie;
+          } 
+        })
+        .catch(err => {
+          this.$root.$emit("snackbar", { display: true });
+          this.$root.$emit("neterror", {
+            err: err,
+            callback: this.getCompetiton
+          });
+        });
     },
     save() {
       this.submiting = true;
       let data = {};
       data.name = this.name;
-
       data.description = this.description;
-      data.cathegories = this.cathegories;
+      data.philosophie = this.philosophie;
+      data.philosophie = this.philosophie;
       this.$axios
-        .post("/api/project", data, {
+        .put("/api/competition/"+this.id, data, {
           headers: {
             "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
           }
@@ -378,9 +289,8 @@ export default {
             this.submiting = false;
             this.$root.$emit("snackbar", {
               display: true,
-              text: "competition create whit success."
+              text: "competition infos updated white success."
             });
-            this.$router.push("/dashboard/projects");
           } else {
             this.submiting = false;
             this.valid = false;
@@ -485,7 +395,7 @@ export default {
       }
     },
     getImg() {
-      var e = document.getElementById("editionimg");
+      var e = document.getElementById("projectimg");
       e.click();
     },
     compress(e) {

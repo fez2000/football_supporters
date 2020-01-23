@@ -49,7 +49,7 @@ export function blockHtml(positions, text) {
         }
         return resul;
     }
-    
+    console.log(positions);
     while (i < position.startIndex) {
         if (text.codePointAt(i) > 256) {
             resul += `<em>${text.charAt(i)}</em>`;
@@ -146,11 +146,7 @@ export function traitement_text(text) {
             [endIndex]: "</a>"
         });
     });
-    try {
-        text = this.blockHtml(positions, text);
-    } catch (e) {
-        console.log(e)
-    }
+
     text = this.replaceAllBy("\n", "<br/>", text);
     return text;
 }

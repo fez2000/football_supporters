@@ -13,7 +13,11 @@
           </li>
 
           <li>
-            <a href="#">{{$t("footer.forum")}}</a>
+            <a href="/dashboard/forum">{{$t("footer.forum")}}</a>
+          </li>
+
+          <li>
+            <a href="/projects">projects</a>
           </li>
           <li>
             <router-link to="/terms">{{$t("footer.terms")}}</router-link>
@@ -21,7 +25,7 @@
         </ul>
       </nav>
       <div class="copyright">
-        &copy; 2019, {{$t("footer.made_with")}}
+        &copy; {{new Date().getFullYear()}}, {{$t("footer.made_with")}}
         <md-icon>favorite</md-icon>
         {{$t("footer.by")}}
         <a :href="autorRef" target="_blank">{{autor}}</a>

@@ -28,12 +28,13 @@
             <div class="md-layout-item md-size-66 md-xsmall-size-100 mx-auto">
               <h2 class="title text-center">{{$t("members.philo")}}</h2>
               <h5 class="text-center">{{$t("members.why")}}</h5>
-              <p class="description" style="text-align:justify">{{$t("members.description0")}}</p>
-              <p class="description" style="text-align:justify">
+              <froalaView v-if="philosophie" v-model="philosophie"></froalaView>
+              <p v-if="!philosophie" class="description" style="text-align:justify">{{$t("members.description0")}}</p>
+              <p v-if="!philosophie" class="description" style="text-align:justify">
                 {{$t("members.description1")}}
                 <strong>{{$t("members.slogan")}}</strong>
               </p>
-              <p class="description" style="text-align:justify">{{$t("members.description2")}}</p>
+              <p v-if="!philosophie" class="description" style="text-align:justify">{{$t("members.description2")}}</p>
             </div>
           </div>
         </div>
@@ -178,6 +179,8 @@ export default {
   data() {
     return {
       nb: 0,
+      id: "",
+      philosophie: "",
       voters: [],
       continuer: false
     };
@@ -185,8 +188,27 @@ export default {
   created() {
     this.fetchNb();
     this.getvoterstart();
+    this.getCompetiton();
   },
   methods: {
+        getCompetiton() {
+      this.$axios
+        .get("/api/competition")
+        .then(({ data }) => {
+          if (data.status) {
+            this.id = data.competition._id;
+            this.philosophie = data.competition.philosophie;
+            
+          } 
+        })
+        .catch(err => {
+          this.$root.$emit("snackbar", { display: true });
+          this.$root.$emit("neterror", {
+            err: err,
+            callback: this.getCompetiton
+          });
+        });
+    },
     fetchNb() {
       this.$axios
         .get("/api/voter/nb")

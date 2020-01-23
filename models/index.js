@@ -13,3 +13,5 @@ require("./socialLink");
 require("./post");
 require("./tag");
 require("./subscription");
+require("./edition");
+require("./competition");

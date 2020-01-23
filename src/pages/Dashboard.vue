@@ -195,7 +195,7 @@
     >
       <v-card>
         <v-toolbar elevation="0">
-          <v-toolbar-title>verser du jour</v-toolbar-title>
+          <v-toolbar-title>Flash new</v-toolbar-title>
         </v-toolbar>
         <v-card-text>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-text>
 
@@ -417,7 +417,10 @@
                   <v-icon :color="(event.love)?'red':''">mdi-heart</v-icon>j'aime
                 </v-btn>
                 <v-btn class="col" text v-if="event.type == 'post' || event.type == 'doc'">
-                  <v-icon>mdi-share-variant</v-icon>Partager
+                  <v-icon>mdi-comment-outline</v-icon> Commenter
+                </v-btn>
+                <v-btn class="col" text v-if="event.type == 'post' || event.type == 'doc'">
+                  <v-icon>mdi-arrow-top-right</v-icon> Partager
                 </v-btn>
                 <feed-back-reaction v-if="false"></feed-back-reaction>
               </v-card-actions>

@@ -11,6 +11,8 @@ const notification = require("../controllers/notification");
 const poll = require("../controllers/poll");
 const paiement = require("../controllers/paiement");
 const ssr = require("../controllers/ssr");
+const competition = require("../controllers/competition");
+const edition = require("../controllers/edition");
 const push = require("../controllers/push");
 const froala = require("../controllers/froala");
 
@@ -21,7 +23,12 @@ module.exports = app => {
     app.post("/api/flroala/upload_video", froala.upload_video);
 
     app.post("/api/flroala/upload_image_resize", froala.upload_image_resize);
-
+    app.post("/api/edition", edition.add);
+    app.put("/api/edition/:id", edition.update);
+    app.get("/api/edition/current", edition.getCurrent);
+    app.get("/api/edition", edition.getAll);
+    app.get("/api/competition", competition.findAll);
+    app.put("/api/competition/:id", competition.put);
     app.post(
         "/api/flroala/upload_image_validation",
         froala.upload_image_validation

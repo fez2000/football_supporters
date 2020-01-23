@@ -1019,6 +1019,19 @@ export default {
           ]
         },
         {
+          icon: 'mdi-soccer',
+          text: 'Competition',
+          rolelevel: 2,
+          'icon-alt': 'admin_ico',
+          children: [
+            { icon: 'mdi-infos', text: 'Infos', link: '/dashboard/competition'},
+            { icon: 'mdi-clipboard-list', text: 'Editions', link: '/dashboard/editions'},
+            { icon: 'mdi-account-group', text: 'Equipes', link: '/dashboard/equipes'},
+            { icon: 'mdi-heart-box', text: i18n.tc("dashboardL.poll"), link: '/dashboard/admin/poll'},
+            { icon: 'mdi-wallet', text: i18n.tc("dashboardL.pending_projet"), link: '/dashboard/admin/projects/pending'},
+          ]
+        },
+        {
           icon: 'mdi-wallet-travel',
           text:i18n.tc("dashboardL.projects"),
           rolelevel: 3,

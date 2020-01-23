@@ -9,7 +9,7 @@
       </div>
       <router-view name="footer" />
       <check-cookies></check-cookies>
-
+ 
       <paiement :project="paiementAnalitic" :dialog="startPaiement"></paiement>
       <v-snackbar left bottom v-model="snackbar">
         {{(!text)?'please check your internet connection':text}}
@@ -521,5 +521,8 @@ img.emojione {
 }
 .md-dialog {
   z-index: 1032 !important;
+}
+#logo{
+  display: none;
 }
 </style>

@@ -1,6 +1,5 @@
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config(); // eslint-disable-line
-}
+require("dotenv").config(); // eslint-disable-line
+
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -19,6 +18,7 @@ const minify = require("express-minify");
 const fs = require("fs");
 const i18n = require("i18n");
 const config = require("./config/serverLang");
+const detector = require("spider-detector");
 
 config.directory = `${__dirname}/locales`;
 i18n.configure(config);
@@ -81,12 +81,13 @@ if (process.env.NODE_ENV === "production") {
 } else {
     app.use(logger("combined"));
 }
-
+app.use(detector.middleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false, limit: "20mb" }));
 app.use(cookieParser(token.generate()));
 app.use(session({ secret: token.generate() }));
 app.use(i18n.init);
+
 if (process.env.NODE_ENV !== "test") {
     app.use(csrf({ cookie: true }));
 }
@@ -97,6 +98,7 @@ if (process.env.NODE_ENV === "production") {
 }
 app.use(favicon(path.join(__dirname, "public/favicon.png")));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "uploads")));
 
 app.locals = {
     publicDir: path.resolve(__dirname, "public")

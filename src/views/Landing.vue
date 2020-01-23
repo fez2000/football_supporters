@@ -26,12 +26,13 @@
             <div class="md-layout-item md-size-66 md-xsmall-size-100 mx-auto">
               <h2 class="title text-center">{{$t('landing_lg.m_title')}}</h2>
               <h5 class="text-center">{{$t("landing_lg.j_question")}}</h5>
-              <p class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason1')"></p>
-              <p class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason2')">
+              <froalaView v-if="description" v-model="description"></froalaView>
+              <p v-if="!description" class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason1')"></p>
+              <p v-if="!description" class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason2')">
                 
                 
               </p>
-              <p class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason3')"></p>
+              <p v-if='!description' class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason3')"></p>
             </div>
           </div>
           <div class="features text-center">
@@ -292,6 +293,10 @@ export default {
         require("../assets/img/can_background_1.jpeg")
       ],
       header1: "",
+      id: "",
+      description: "",
+      philosophie: "",
+      userules: "",
       index: 0,
       stop: false,
       name: null,
@@ -311,8 +316,27 @@ export default {
   },
   created() {
     this.setBackground();
+    this.getCompetiton();
   },
   methods: {
+    getCompetiton() {
+      this.$axios
+        .get("/api/competition")
+        .then(({ data }) => {
+          if (data.status) {
+            this.id = data.competition._id
+            this.description = data.competition.description;
+            
+          } 
+        })
+        .catch(err => {
+          this.$root.$emit("snackbar", { display: true });
+          this.$root.$emit("neterror", {
+            err: err,
+            callback: this.getCompetiton
+          });
+        });
+    },
     clean() {
       this.message = "";
       this.subject = "";

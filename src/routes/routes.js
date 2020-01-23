@@ -1,4 +1,9 @@
 import DashboardLayout from '@/pages/Layout/DashboardLayout.vue';
+import ClassementsLayout from '@/pages/Layout/ClassementsLayout.vue';
+import ClassementAll from '@/pages/ClassementAll.vue';
+import ClassementEquipes from '@/pages/ClassementEquipes.vue';
+import ClassementJoueurs from '@/pages/ClassementJoueurs.vue';
+import Competition from '@/pages/Competition.vue';
 
 import Dashboard from '@/pages/Dashboard.vue';
 import UserProfile from '@/pages/UserProfile.vue';
@@ -62,6 +67,34 @@ const routes = [
     path: '/verifyemail',
     name: 'Verify Email',
     component: VerifyEmail,
+  },
+  {
+    path: '/classement',
+    name: 'Classements Layout',
+    components: {
+      default: ClassementsLayout, header: MainNavbar, footer: MainFooter,
+    },
+    props: {
+      header: { colorOnScroll: 400 },
+      footer: { backgroundColor: 'black' },
+    },
+    children: [
+      {
+        path: '',
+        name: 'Classement list',
+        component: ClassementAll,
+      },
+      {
+        path: 'equipes',
+        name: 'Classement equipes',
+        component: ClassementEquipes,
+      },
+      {
+        path: 'joueurs',
+        name: 'Classement joueurs',
+        component: ClassementJoueurs,
+      }
+    ],
   },
   {
     path: '/home',
@@ -175,6 +208,27 @@ const routes = [
         path: '',
         name: i18n.tc('dashboardL.dashboard'),
         component: Dashboard,
+      },
+      {
+        path: 'competition',
+        name: 'Competition',
+        component: Competition,
+      },
+      {
+        path: 'editions',
+        component: EditionsLayout,
+        children: [
+          {
+            path: '',
+            name: 'Editions',
+            component: EditionsList,
+          },
+          {
+            path: 'create',
+            name: 'Creation d\'une Editions',
+            component: EditionsCreate,
+          },
+        ],
       },
       {
         path: 'projects/inprocess',

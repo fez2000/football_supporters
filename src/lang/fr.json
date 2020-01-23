@@ -26,7 +26,6 @@
         "d_qualification": "La formule choisie pour la phase de groupe est analogue à l'Euro 2016 : six groupes de quatre équipes, les deux premières qualifiées pour les huitièmes de finale, ainsi que les quatre meilleurs troisièmes.",
         "t_lieux": "Villes et stades",
         "d_lieux": "La compétition doit se dérouler dans quatre villes : Alexandrie, Le Caire, Ismaïlia et Suez. Trois stades sont retenus au Caire. Les stades retenus pour accueillir la CAN en Égypte: <a href='/stade/stade_international_du_caire'>Stade international du Caire</a>, <a href='/stade/stade_du_30_juin'>Stade du 30 Juin</a>, <a href='/stade/stade_al_salam'>Stade Al Salam</a>, <a href='/stade/stade_de_suez'>Stade de Suez</a>, <a href='/stade/stade_d_ismaïlia'>Stade d'Ismaïlia</a> and <a href='/stade/stade_d_alexandrie'>Stade d'Alexandrie</a>"
-
     },
     "login": {
         "i_incorrect": "Prénom/email ou mot de passe incorrect",
@@ -78,6 +77,13 @@
         "oldPassword": "Votre ancien mot de passe"
     },
     "navbar": {
+        "events": "Evenement",
+        "eventsAll": "Tous les evenement",
+        "eventsRencontre": "Rencontres",
+        "eventsAutre": "Autres",
+        "classementEquipes": "Equipes",
+        "classementJoueurs": "Joueurs",
+        "classement": "Classement",
         "language": "fr",
         "lang": "Changer la langue du site",
         "linkedin_title": "Suivez nous sur Linkedin",

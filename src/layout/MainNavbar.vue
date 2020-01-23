@@ -60,32 +60,26 @@
                         class="md-button md-button-link md-white md-simple dropdown-toggle"
                         data-toggle="dropdown"
                       >
-                        <v-icon>mdi-wallet-travel</v-icon>
-                        <p>{{$t("navbar.projet")}}</p>
+                        <v-icon>mdi-soccer</v-icon>
+                        <p>{{$t("navbar.classement")}}</p>
                       </md-button>
                       <ul style="overflow: visible;" class="dropdown-menu dropdown-with-icons">
                         <li>
-                          <router-link to="/projects">
+                          <router-link to="/classement">
                             <i class="material-icons">list_alt</i>
-                            <p>{{$t("navbar.projetAll")}}</p>
+                            <p>Apercu</p>
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/projects/finished">
-                            <i class="material-icons">content_paste</i>
-                            <p>{{$t("navbar.projetEnd")}}</p>
+                          <router-link to="/classement/equipes">
+                            <v-icon>mdi-account-group-outline</v-icon>
+                            <p>{{$t("navbar.classementEquipes")}}</p>
                           </router-link>
                         </li>
                         <li>
-                          <router-link to="/projects/current">
-                            <i class="material-icons">layers</i>
-                            <p>{{$t("navbar.projetCurrent")}}</p>
-                          </router-link>
-                        </li>
-                        <li>
-                          <router-link to="/projects/future">
-                            <i class="material-icons">ballot</i>
-                            <p>{{$t("navbar.projetNext")}}</p>
+                          <router-link to="/classement/joueurs">
+                            <v-icon>mdi-account</v-icon>
+                            <p>{{$t("navbar.classementJoueurs")}}</p>
                           </router-link>
                         </li>
                       </ul>
@@ -93,7 +87,45 @@
                   </div>
                 </a>
               </li>
-
+              <li class="md-list-item">
+                <a
+                  href="javascript:void(0)"
+                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                >
+                  <div class="md-list-item-content">
+                    <drop-down direction="down">
+                      <md-button
+                        slot="title"
+                        class="md-button md-button-link md-white md-simple dropdown-toggle"
+                        data-toggle="dropdown"
+                      >
+                        <v-icon>mdi-calendar-blank-outline</v-icon>
+                        <p>{{$t("navbar.events")}}</p>
+                      </md-button>
+                      <ul style="overflow: visible;" class="dropdown-menu dropdown-with-icons">
+                        <li>
+                          <router-link to="/events">
+                            <i class="material-icons">list_alt</i>
+                            <p>{{$t("navbar.eventsAll")}}</p>
+                          </router-link>
+                        </li>
+                        <li>
+                          <router-link to="/events/recontre">
+                            <i class="material-icons">content_paste</i>
+                            <p>{{$t("navbar.eventsRencontre")}}</p>
+                          </router-link>
+                        </li>
+                        <li>
+                          <router-link to="/events/autre">
+                            <i class="material-icons">content_paste</i>
+                            <p>{{$t("navbar.eventsAutre")}}</p>
+                          </router-link>
+                        </li>
+                      </ul>
+                    </drop-down>
+                  </div>
+                </a>
+              </li>
               <li v-if="!login" class="md-list-item">
                 <a
                   href="javascript:void(0)"
