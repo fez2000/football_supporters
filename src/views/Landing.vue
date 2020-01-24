@@ -4,7 +4,8 @@
       <div class="container">
         <div class="md-layout">
           <div class="md-layout-item md-size-50 md-small-size-70 md-xsmall-size-100">
-            <h1 class="title">{{ $t("landing_lg.h_title") }}</h1>
+            <h1 class="title" v-if="!edition&&!edition.slogan">{{ $t("landing_lg.h_title") }}</h1>
+            <h1 v-else class="title">{{edition.slogan}}</h1>
             <h4>{{ $t("landing_lg.h_description") }}</h4>
             <br />
             <md-button
@@ -24,18 +25,33 @@
         <div class="container">
           <div class="md-layout">
             <div class="md-layout-item md-size-66 md-xsmall-size-100 mx-auto">
-              <h2 class="title text-center">{{$t('landing_lg.m_title')}}</h2>
+              <h2
+                class="title text-center"
+              >{{(!edition&&!edition.name)?$t('landing_lg.m_title'): edition.name}}</h2>
               <h5 class="text-center">{{$t("landing_lg.j_question")}}</h5>
               <froalaView v-if="description" v-model="description"></froalaView>
-              <p v-if="!description" class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason1')"></p>
-              <p v-if="!description" class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason2')">
-                
-                
-              </p>
-              <p v-if='!description' class="description" style="text-align:justify" v-html="$t('landing_lg.j_reason3')"></p>
+              <p
+                v-if="!description"
+                class="description"
+                style="text-align:justify"
+                v-html="$t('landing_lg.j_reason1')"
+              ></p>
+              <p
+                v-if="!description"
+                class="description"
+                style="text-align:justify"
+                v-html="$t('landing_lg.j_reason2')"
+              ></p>
+              <p
+                v-if="!description"
+                class="description"
+                style="text-align:justify"
+                v-html="$t('landing_lg.j_reason3')"
+              ></p>
             </div>
           </div>
-          <div class="features text-center">
+          <froalaView v-if="edition&&edition.description" v-model="edition.description"></froalaView>
+          <div v-if="!edition&&!edition.description" class="features text-center">
             <div class="md-layout">
               <div class="md-layout-item md-medium-size-33 md-small-size-100">
                 <div class="info">
@@ -43,10 +59,7 @@
                     <md-icon>flash_on</md-icon>
                   </div>
                   <h4 class="info-title" v-t="'landing_lg.t_format'"></h4>
-                  <p v-html="$t('landing_lg.d_format')">
-                    
-                    
-                  </p>
+                  <p v-html="$t('landing_lg.d_format')"></p>
                 </div>
               </div>
               <div class="md-layout-item md-medium-size-33 md-small-size-100">
@@ -55,9 +68,7 @@
                     <md-icon>nature</md-icon>
                   </div>
                   <h4 class="info-title" v-t="'landing_lg.t_qualification'"></h4>
-                  <p v-html="$t('landing_lg.d_qualification')">
-                   
-                  </p>
+                  <p v-html="$t('landing_lg.d_qualification')"></p>
                 </div>
               </div>
               <div class="md-layout-item md-medium-size-33 md-small-size-100">
@@ -69,7 +80,6 @@
                   <p v-html="$t('landing_lg.d_lieux')"></p>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>
@@ -293,6 +303,7 @@ export default {
         require("../assets/img/can_background_1.jpeg")
       ],
       header1: "",
+      edition: "",
       id: "",
       description: "",
       philosophie: "",
@@ -317,17 +328,31 @@ export default {
   created() {
     this.setBackground();
     this.getCompetiton();
+    this.getCurrent();
   },
   methods: {
+    getCurrent() {
+      this.$axios
+        .get("/api/edition/current")
+        .then(({ data }) => {
+          this.$root.$emit("loadStatus", { status: false });
+          if (data.status) {
+            this.edition = data.edition;
+          }
+        })
+        .catch(err => {
+          this.$root.$emit("snackbar", { display: true });
+          this.$root.$emit("neterror", { err: err, callback: this.getCurrent });
+        });
+    },
     getCompetiton() {
       this.$axios
         .get("/api/competition")
         .then(({ data }) => {
           if (data.status) {
-            this.id = data.competition._id
+            this.id = data.competition._id;
             this.description = data.competition.description;
-            
-          } 
+          }
         })
         .catch(err => {
           this.$root.$emit("snackbar", { display: true });

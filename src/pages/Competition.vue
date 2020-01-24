@@ -2,8 +2,7 @@
   <v-container :fluid="true">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
-        
-        <v-col cols="11" >
+        <v-col cols="11">
           <v-card-text>
             <h2 class="title mt-1 mb-2">{{$t("createproject.f_name")}}:</h2>
             <v-text-field
@@ -33,9 +32,8 @@
               :config="config"
               v-model="philosophie"
             >philosophie de la communaute</froala>
-        },
-                    
-        <v-btn
+
+            <v-btn
               :disabled="!valid || submiting || !name   "
               color="blue darken-1"
               text
@@ -86,16 +84,16 @@ export default {
   mounted() {
     this.voter = JSON.parse(this.$Cookies.get(this.$Cookies.get("voter")));
     this.previewSrc = this.previewDefaultSrc;
-    this.competition();
+    this.getCompetition();
     this.$root.$emit("loadStatus", { status: false });
   },
   data() {
     return {
       submiting: false,
       voter: {},
-      userules: '',
-      philosophie: '',
-      id: '',
+      userules: "",
+      philosophie: "",
+      id: "",
       config: {
         placeholderText: "Edit Your Content Here!",
         imageUploadURL: "/api/flroala/upload_image",
@@ -110,11 +108,11 @@ export default {
           id: "my_editor"
         },
         toolbarInline: false,
-        toolbarSticky: true,
+        toolbarSticky: false,
         // theme: "dark",
         fullPage: false,
         language: "fr",
-        placeholderText: "Placeholder",
+        placeholderText: "ecrire",
         fileMaxSize: 1024 * 1024 * 10,
         imageManagerLoadURL: "/api/flroala/load_images",
         imageManagerDeleteURL: "/api/flroala/delete_image",
@@ -249,16 +247,17 @@ export default {
         });
       }
     },
-    getCompetiton() {
+    getCompetition() {
       this.$axios
         .get("/api/competition")
         .then(({ data }) => {
           if (data.status) {
-            this.id= data.competition._id
+            this.name = data.competition.name;
+            this.id = data.competition._id;
             this.description = data.competition.description;
             this.userules = data.competition.userules;
             this.philosophie = data.competition.philosophie;
-          } 
+          }
         })
         .catch(err => {
           this.$root.$emit("snackbar", { display: true });
@@ -276,7 +275,7 @@ export default {
       data.philosophie = this.philosophie;
       data.philosophie = this.philosophie;
       this.$axios
-        .put("/api/competition/"+this.id, data, {
+        .put("/api/competition/" + this.id, data, {
           headers: {
             "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
           }

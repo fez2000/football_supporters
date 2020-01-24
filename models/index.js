@@ -15,3 +15,4 @@ require("./tag");
 require("./subscription");
 require("./edition");
 require("./competition");
+require("./edition");

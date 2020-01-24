@@ -4,33 +4,36 @@ const { Schema } = mongoose;
 
 const EditionSchema = new Schema(
     {
-        time_create: { type: Date, default: new Date() },
-        time_update: { type: Date, default: new Date() },
-        date: {
+        name: {
             type: String,
             trim: true,
-            required: true,
-            lowercase: true
-        },
-        time_start: {
-            type: Date,
             required: true
         },
-        time_end: {
-            type: Date,
-            required: true
+        slogan: {
+            type: String,
+            trim: true
         },
-        number_team: {
+        description: {
+            type: String,
+            trim: true
+        },
+        nombre_participant: {
             type: Number,
+            trim: true
+        },
+        date_debut: {
+            type: Date,
+            trim: true,
+            required: true
+        },
+        date_fin: {
+            type: Date,
+            trim: true,
             required: true
         },
         is_end: {
             type: Boolean,
             default: false
-        },
-        rules: {
-            type: String,
-            required: true
         }
     },
     { sparse: true, unique: true, index: true }

@@ -25,6 +25,7 @@ module.exports = app => {
     app.post("/api/flroala/upload_image_resize", froala.upload_image_resize);
     app.post("/api/edition", edition.add);
     app.put("/api/edition/:id", edition.update);
+    app.delete("/api/edition/:id", edition.delete)
     app.get("/api/edition/current", edition.getCurrent);
     app.get("/api/edition", edition.getAll);
     app.get("/api/competition", competition.findAll);

@@ -2,49 +2,7 @@
   <v-container :fluid="true">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
-        <v-col
-          cols="12"
-          md="4"
-          offset-md="1"
-          offset-lg="0"
-          lg="5"
-          :order="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs)?'first':'last'"
-        >
-          <p align="center">{{$t("createproject.f_img")}}</p>
-          <v-row justify="center">
-            <v-img
-              @drop.prevent="addFile"
-              @dragleave.prevent="gradient=''"
-              @dragover.prevent="gradient='to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)'"
-              :lazy-src="previewSrc"
-              :src="previewSrc"
-              max-width="300"
-              max-height="300"
-              :gradient="gradient"
-              @click="getImg"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-          </v-row>
-          <v-row align="center">
-            <label for="editionimg" hidden>
-              <p>{{$t("createproject.f_img")}}</p>
-            </label>
-            <input
-              hidden
-              name="editionimg"
-              id="editionimg"
-              type="file"
-              @input="checkFile"
-              accept="image/*"
-            />
-          </v-row>
-        </v-col>
-        <v-col cols="12" md="6" offset-md="1" offset-lg="1" lg="6">
+        <v-col cols="11">
           <v-card-text>
             <h2 class="title mt-1 mb-2">{{$t("createproject.f_name")}}:</h2>
             <v-text-field
@@ -55,10 +13,17 @@
               solo
               max-length="150"
             ></v-text-field>
-            <h2 class="title mt-1 mb-2">Theme:</h2>
-            <v-text-field v-model="theme" :label="'Theme'" required solo max-length="150"></v-text-field>
             <h2 class="title mt-1 mb-2">Slogan:</h2>
             <v-text-field v-model="slogan" :label="'slogan'" required solo max-length="150"></v-text-field>
+            <h2 class="title mt-1 mb-2">Participants:</h2>
+            <v-text-field
+              :label="'nombre'"
+              v-model="nombre_participant"
+              single-line
+              solo
+              type="number"
+              style="width: 60px"
+            ></v-text-field>
             <v-switch color="primary" :label="$t('pollCreate.startNowLabel')" v-model="startNow"></v-switch>
 
             <v-dialog
@@ -141,7 +106,7 @@
             >Un mot au suject de cette edition</froala>
 
             <v-btn
-              :disabled="!valid || submiting || !theme || !data_debut || (!startNow&&!startDate) || !endDate   "
+              :disabled="!valid || submiting  || !name || !nombre_participant || (!startNow&&!startDate) || !endDate   "
               color="blue darken-1"
               text
               @click="save()"
@@ -195,10 +160,13 @@ export default {
   },
   data() {
     return {
+      name: "",
+      slogan: "",
       submiting: false,
       voter: {},
       startDate: null,
       endDate: null,
+      date_debut: "",
       startNow: true,
       endDateModal: false,
       startDateModal: false,
@@ -216,7 +184,7 @@ export default {
           id: "my_editor"
         },
         toolbarInline: false,
-        toolbarSticky: true,
+        toolbarSticky: false,
         // theme: "dark",
         fullPage: false,
         language: "fr",
@@ -283,9 +251,10 @@ export default {
       valid: false,
       gradient: "",
       description: null,
-      theme: "",
+      theme2: "",
       date_debut: "",
-      date_fint: "",
+      date_fin: "",
+      nombre_participant: 0,
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 150) || "Name must be less than 150 characters"
@@ -331,6 +300,16 @@ export default {
         );
       }
     },
+    allowedEndDates(val) {
+      if (!this.startDate) {
+        return new Date(val) >= new Date();
+      } else {
+        return (
+          new Date(val) >= new Date() &&
+          new Date(val) >= new Date(this.startDate)
+        );
+      }
+    },
     addFile(e) {
       let droppedFiles = e.dataTransfer.files;
       if (!droppedFiles) return;
@@ -361,27 +340,31 @@ export default {
       this.submiting = true;
       let data = {};
       data.name = this.name;
-
+      data.nombre_participant = this.nombre_participant;
+      data.slogan = this.slogan;
+      data.date_debut = this.startDate;
+      data.date_fin = this.endDate;
       data.description = this.description;
-      data.cathegories = this.cathegories;
+
       this.$axios
-        .post("/api/project", data, {
+        .post("/api/edition", data, {
           headers: {
             "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
           }
         })
         .then(({ data }) => {
           if (data.status) {
-            if (this.projectimg) {
-              return this.sendImage(data.project._id);
-            }
             this.submiting = false;
             this.$root.$emit("snackbar", {
               display: true,
-              text: "competition create whit success."
+              text: "Edition create whit success."
             });
-            this.$router.push("/dashboard/projects");
+            this.$router.push("/dashboard/editions");
           } else {
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: data.errors
+            });
             this.submiting = false;
             this.valid = false;
           }

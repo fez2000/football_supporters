@@ -3,22 +3,42 @@ const mongoose = require("mongoose");
 const Voter = mongoose.model("Voter");
 const Doc = mongoose.model("Doc");
 const Competition = mongoose.model("Competition");
-//const Edition = mongoose.model('Edition');
+const Edition = mongoose.model("Edition");
 
 const path = require("path");
 const fs = require("fs");
 
 const { removeSpace, timeToString } = require("./fonctions");
 const { userImg } = require("../config/defaultImg");
-const Dcompetition = require("../controllers/competition");
+const Dcompetition = require("../config/competition");
+const Dedition = require("../config/edition");
 const SOCIALS = require("../config/socials");
 
 const SocialLink = mongoose.model("SocialLink");
 
+function addEdition() {
+    Edition.find({}).exec(async (err, comp) => {
+        if (comp.length == 0) {
+            Edition.create(Dedition)
+                .then(ready => {})
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+            console.log("Edition existe");
+        }
+    });
+}
 function addCompetition() {
     Competition.find({}).exec(async (err, comp) => {
         if (comp.length == 0) {
-            await Competition.create(Dcompetition);
+            Competition.create(Dcompetition)
+                .then(ready => {})
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+            console.log("competition existe");
         }
     });
 }
@@ -142,4 +162,5 @@ exports.init = () => {
     addAmin();
     addCathegorie();
     addCompetition();
+    addEdition();
 };
