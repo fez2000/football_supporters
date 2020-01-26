@@ -84,18 +84,18 @@
               :clear="clearL"
               labelClass="title"
               placeholder="Entrez le titre de votre post"
-              :init="title"
-              @value="getTitle"
+              
+              v-model="title"
             ></l-input>
             <l-input
               class="mt-4"
               label="Description: "
               :clear="clearL"
               :inline="false"
-              :init="message"
+              
               labelClass="title"
               placeholder="Entrez la description de votre post"
-              @value="getDescription"
+              v-model="message"
             ></l-input>
             <v-combobox
               class="mt-5"

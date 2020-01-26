@@ -9,6 +9,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import "viewerjs/dist/viewer.css";
 import Viewer from "v-viewer";
+import VuetifyGoogleAutocomplete from "vuetify-google-autocomplete";
 
 import emojione from "emojione";
 import "emojione/extras/css/emojione.min.css";
@@ -40,7 +41,17 @@ import "froala-editor/js/third_party/spell_checker.min";
 import "froala-editor/js/third_party/image_tui.min";
 // Import Froala Editor css files.
 import "froala-editor/css/froala_editor.pkgd.min.css";
-
+import "froala-editor/css/third_party/embedly.min.css";
+import "froala-editor/css/third_party/image_tui.min.css";
+import "froala-editor/css/third_party/spell_checker.min.css";
+import "froala-editor/css/third_party/font_awesome.min.css";
+// Import languages
+import "froala-editor/js/languages/fr";
+import "froala-editor/js/languages/en_gb";
+import "froala-editor/js/languages/de";
+// Import theme
+import "froala-editor/css/themes/dark.min.css";
+import "froala-editor/css/themes/royal.min.css";
 // Import and use Vue Froala lib.
 import VueFroala from "vue-froala-wysiwyg";
 // configure router
@@ -93,6 +104,9 @@ Vue.use(VuePlyr);
 Vue.use(VueI18n);
 Vue.use(SocialSharing);
 Vue.use(Viewer);
+Vue.use(VuetifyGoogleAutocomplete, {
+    apiKey: "AIzaSyAvlLMUVmUidnbwKgAIzbqJ21jvMpLBcUM" // Can also be an object. E.g, for Google Maps Premium API, pass `{ client: <YOUR-CLIENT-ID> }`
+});
 Vue.mixin({
     data() {
         return {

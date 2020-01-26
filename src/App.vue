@@ -494,6 +494,7 @@ export default {
       { name: "apple-mobile-web-app-title", content: `${process.env.APP_NAME}` }
     ],
     script: [
+      
       {
         t: "application/ld+json",
         i: JSON.stringify(require("../config/shema.json"))

@@ -15,7 +15,7 @@ const competition = require("../controllers/competition");
 const edition = require("../controllers/edition");
 const push = require("../controllers/push");
 const froala = require("../controllers/froala");
-
+const equipe = require("../controllers/equipe");
 const upload = multer();
 module.exports = app => {
     app.post("/api/flroala/upload_image", froala.upload_image);
@@ -25,9 +25,14 @@ module.exports = app => {
     app.post("/api/flroala/upload_image_resize", froala.upload_image_resize);
     app.post("/api/edition", edition.add);
     app.put("/api/edition/:id", edition.update);
-    app.delete("/api/edition/:id", edition.delete)
+    app.delete("/api/edition/:id", edition.delete);
     app.get("/api/edition/current", edition.getCurrent);
     app.get("/api/edition", edition.getAll);
+    app.post("/api/equipe", equipe.add);
+    app.put("/api/equipe/:id", equipe.update);
+    app.delete("/api/equipe/:id", equipe.delete);
+    
+    app.get("/api/equipe", equipe.getAll);
     app.get("/api/competition", competition.findAll);
     app.put("/api/competition/:id", competition.put);
     app.post(

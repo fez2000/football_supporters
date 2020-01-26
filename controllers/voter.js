@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 
 const axios = require('axios');
 
-const Edition = mongoose.model("Edition");
 const Doc = mongoose.model('Doc');
 const Event = mongoose.model('Event');
 const Voter = mongoose.model('Voter');
@@ -220,7 +219,7 @@ exports.add = function (req, res) {
             if (results) {
                 Voter.updateOne({ _id: results._id }, {
                     socials,
-                    url: removeSpace(req.body.name) + mintoken.generate(),
+                    url: removeSpace(req.body.name) + results._id + mintoken.generate(),
                     name: req.body.name,
                     email: req.body.email,
                     code: mintoken.generate(),
@@ -827,7 +826,7 @@ exports.logout = function (req, res) {
 exports.googleLogin = (req, res) => {
     verify(req.body.Zi.id_token).then((doc) => {
         if (doc) {
-            const url = `https://oauth2.googleapis.com/tokeninfo?id_token=${req.body.Zi.id_token}`;
+            const url = `https://oauth2.googleapis.com/tokeninfo?id_token=${(req.body.Zi)?req.body.Zi.id_token:req.body.uc.id_token}`;
             axios.get(url).then((rep) => {
 
                 if (!rep.data.email_verified) return res.send({ status: false });
@@ -908,10 +907,15 @@ exports.googleLogin = (req, res) => {
                                     };
                                     fs.mkdirSync(path.join(__dirname, '../images', `${rep2._id}`));
                                     fs.mkdirSync(path.join(__dirname, '../uploads', `${rep2._id}`));
-                                    const pt = `${rep2._id}/${removeSpace(rep2.name) + timeToString(date)}.${userImg.type}`;
-
+                                    let type = userImg.type;
+                                    if (rep.data.picture) {
+                                        type = 'png';
+                                    }
+                                    const pt = `${rep2._id}/${removeSpace(rep2.name) + timeToString(date)}.${type}`;
+                                        
                                     fs.copyFileSync(path.join(__dirname, '../images', `${userImg.name}.${userImg.type}`), path.join(__dirname, '../images', pt));
-                                    if (rep.data.picture) downloadImage(rep.data.picture,path.join(__dirname,'../images',pt));
+                                    
+                                    if (rep.data.picture) downloadImage(rep.data.picture, path.join(__dirname, '../images', pt));
                                     Doc.create({
                                         time_create: date,
                                         time_update: date,

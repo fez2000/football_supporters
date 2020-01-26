@@ -126,6 +126,39 @@
                   </div>
                 </a>
               </li>
+              <li class="md-list-item">
+                <a
+                  href="javascript:void(0)"
+                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                >
+                  <div class="md-list-item-content">
+                    <drop-down direction="down">
+                      <md-button
+                        slot="title"
+                        class="md-button md-button-link md-white md-simple dropdown-toggle"
+                        data-toggle="dropdown"
+                      >
+                        
+                        <p>Autre</p>
+                      </md-button>
+                      <ul style="overflow: visible;" class="dropdown-menu dropdown-with-icons">
+                        <li>
+                          <router-link to="/editions">
+                            <i class="material-icons">list_alt</i>
+                            <p>Editions</p>
+                          </router-link>
+                        </li>
+                        <li>
+                          <router-link to="/curequipe">
+                            <i class="material-icons">list_alt</i>
+                            <p>Equipe</p>
+                          </router-link>
+                        </li>
+                      </ul>
+                    </drop-down>
+                  </div>
+                </a>
+              </li>
               <li v-if="!login" class="md-list-item">
                 <a
                   href="javascript:void(0)"
@@ -172,13 +205,6 @@
                 <md-tooltip
                   :md-direction="($vuetify.breakpoint.xs)?'left':'bottom'"
                 >{{$t("navbar.twitter")}}</md-tooltip>
-              </md-list-item>
-              <md-list-item :href="linkedin" target="_blank" v-if="!login">
-                <i class="fab fa-linkedin"></i>
-                <p class="hidden-lg">Linkedin</p>
-                <md-tooltip
-                  :md-direction="($vuetify.breakpoint.xs)?'left':'bottom'"
-                >{{$t('navbar.linkedin_title')}}</md-tooltip>
               </md-list-item>
               <md-list-item href="/dashboard/notifications" v-if="login">
                 <v-badge

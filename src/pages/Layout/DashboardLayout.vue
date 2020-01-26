@@ -128,7 +128,7 @@
         <v-icon>mdi-magnify</v-icon>
 
       </v-btn>
-      <v-btn v-if="custumnav.active" icon  @click="previewImg({name:custumnav.imgName, src: custumnav.src })"> <v-icon> mdi-rounded-corner </v-icon></v-btn>
+      <v-btn v-if="custumnav.active" icon  @click="previewImg({ imgs:[{name:custumnav.imgName, src: custumnav.src }],index:0})"> <v-icon> mdi-rounded-corner </v-icon></v-btn>
       <v-menu
         bottom
         left
@@ -287,7 +287,7 @@
           <v-card>
             <v-list dense>
               <v-list-item>
-                <v-list-item-avatar @click="previewImg({ src:'/api/img/'+voter.image.src, name: voter.image.name })">
+                <v-list-item-avatar @click="previewImg({imgs:[{ src:'/api/img/'+voter.image.src, name: voter.image.name }],index: 0})">
                   <v-img v-if="voter.image.src" :src="'/api/img/'+voter.image.src" :alt="voter.image.src">
                   </v-img>
                 </v-list-item-avatar>

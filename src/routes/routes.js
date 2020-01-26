@@ -4,6 +4,8 @@ import ClassementAll from "@/pages/ClassementAll.vue";
 import ClassementEquipes from "@/pages/ClassementEquipes.vue";
 import ClassementJoueurs from "@/pages/ClassementJoueurs.vue";
 import Competition from "@/pages/Competition.vue";
+import PrevEdition from "@/pages/PrevEdition.vue";
+import CurEquipe from "@/pages/CurEquipe.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
@@ -53,7 +55,7 @@ import EditionsLayout from "@/pages/Layout/EditionsLayout.vue";
 import EditionsList from "@/pages/EditionsList.vue";
 import EditionsCreate from "@/pages/EditionsCreate.vue";
 import EditionsModifier from "@/pages/EditionsModifier.vue";
-import EquipesLayout from "@/pages/EquipesLayout.vue";
+import EquipesLayout from "@/pages/Layout/EquipesLayout.vue";
 import EquipesList from "@/pages/EquipesList.vue";
 import EquipesCreate from "@/pages/EquipesCreate.vue";
 import EquipesModifier from "@/pages/EquipesModifier.vue";
@@ -67,6 +69,22 @@ const routes = [
         path: "/verifyemail",
         name: "Verify Email",
         component: VerifyEmail
+    },
+    {
+        path: "/editions",
+        components: {
+            default: PrevEdition,
+            header: MainNavbar,
+            footer: MainFooter
+        }
+    },
+    {
+        path: "/curequipe",
+        components: {
+            default: CurEquipe,
+            header: MainNavbar,
+            footer: MainFooter
+        }
     },
     {
         path: "/classement",
@@ -256,6 +274,28 @@ const routes = [
                 component: MeProfil
             },
             {
+                path: "equipes",
+                name: "Equipes",
+                component: EquipesLayout,
+                children: [
+                    {
+                        path: "",
+                        name: "Equipes liste",
+                        component: EquipesList
+                    },
+                    {
+                        path: "create",
+                        name: "Creer Equipe",
+                        component: EquipesCreate
+                    },
+                    {
+                        path: ":name",
+                        name: "Modifier equipe",
+                        component: EquipesModifier
+                    }
+                ]
+            },
+            {
                 path: "admin",
                 component: AdminPanel,
                 children: [
@@ -264,50 +304,7 @@ const routes = [
                         name: i18n.tc("dashboardL.manage_users"),
                         component: ManageUsers
                     },
-                    {
-                        path: "editions",
-                        name: "Editions",
-                        component: EditionsLayout,
-                        children: [
-                            {
-                                path: "",
-                                name: "Equipes list",
-                                component: EditionsList
-                            },
-                            {
-                                path: "create",
-                                name: "Creer Equipe",
-                                component: EditionsCreate
-                            },
-                            {
-                                path: ":name",
-                                name: "Modifier equipe",
-                                component: EditionsModifier
-                            }
-                        ]
-                    },
-                    {
-                        path: "equipes",
-                        name: "Equipes",
-                        component: EquipesLayout,
-                        children: [
-                            {
-                                path: "",
-                                name: "Equipes list",
-                                component: EquipesList
-                            },
-                            {
-                                path: "create",
-                                name: "Creer Equipe",
-                                component: EquipesCreate
-                            },
-                            {
-                                path: ":name",
-                                name: "Modifier equipe",
-                                component: EquipesModifier
-                            }
-                        ]
-                    },
+
                     {
                         path: "projects/submit",
                         name: i18n.tc("dashboardL.manage_projets"),

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-if="(donthaveedition&&!edition) || (edition&& edition.is_end)" cols="12">
+      <v-col v-if="(donthaveedition) || (edition&& edition.is_end)" cols="12">
         <md-empty-state
           md-icon="soccer"
           :md-label="'Pas d\'edition courante'"
@@ -331,19 +331,21 @@ export default {
         });
     },
     sup() {
-      this.$axios.delete("/api/edition/" + this.edition._id).then(data => {
-        if (data.status) {
-          this.$root.$emit("snackbar", {
-            display: true,
-            text: "Edition create whit success."
-          });
-        } else {
-          this.$root.$emit("snackbar", {
-            display: true,
-            text: JSON.stringify(data.errors)
-          });
-        }
-      });
+      this.$axios
+        .delete("/api/edition/" + this.edition._id)
+        .then(({ data }) => {
+          if (data.status) {
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: "Edition delete white success."
+            });
+          } else {
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: "Edition delete failled."
+            });
+          }
+        });
     },
     getCurrent() {
       this.$axios
@@ -351,11 +353,13 @@ export default {
         .then(({ data }) => {
           this.$root.$emit("loadStatus", { status: false });
           if (data.status) {
-            this.donthaveedition = true;
+            
             this.edition = data.edition;
 
             this.edition.date_debut = "";
             this.edition.date_fin = "";
+          }else{
+            this.donthaveedition = true;
           }
         })
         .catch(err => {

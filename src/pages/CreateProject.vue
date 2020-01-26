@@ -10,7 +10,7 @@
                   <v-row justify="center">
 
                       <v-img @drop.prevent="addFile" @dragleave.prevent="gradient=''" @dragover.prevent="gradient='to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)'"
-                        lazy-src="https://picsum.photos/id/11/100/60"
+                        :lazy-src="previewSrc"
                         :src="previewSrc"
                         max-width="300"
                         max-height="300"
@@ -100,7 +100,8 @@
 
 <script>
 export default {
-  title: {
+  head: {
+    title: {
         inner: 'Create projects' ,
         separator: ' | ',
         complement: process.env.APP_NAME
@@ -121,6 +122,7 @@ export default {
         { property: "og:image:type", content: "image/png" },
         { name: "author", content:`${process.env.AUTOR},${process.env.AUTOR2}` }
     ],
+  },
     mounted() {
       this.voter = JSON.parse(this.$Cookies.get(this.$Cookies.get('voter')));
       this.previewSrc = this.previewDefaultSrc;
@@ -199,6 +201,18 @@ export default {
         }
 
       },
+      file(file) {
+      this.projectimg = file;
+      
+      var reader = new FileReader();
+      reader.onload = () => {
+        setTimeout(() => {
+          this.previewSrc = reader.result;
+          
+        }, 500);
+      };
+      reader.readAsDataURL(file);
+    },
       getCathegories(){
         this.$axios.get('/api/cathegorie')
         .then(({data})=>{

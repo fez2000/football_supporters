@@ -26,11 +26,11 @@ i18n.configure(config);
 const app = express();
 const indexRouter = require("./routes/index");
 
-let mongoUri = process.env.DB_URL;
+let mongoUri = process.env.DB_URL + process.env.DB_NAME;
 const token = new TokenGenerator(256);
 
 if (process.env.NODE_ENV === "test") {
-    mongoUri = process.env.DB_TEST_URL;
+    mongoUri = process.env.DB_TEST_URL + process.env.DB_NAME;
 }
 mongoose.connect(mongoUri, { autoIndex: false, useNewUrlParser: true });
 const db = mongoose.connection;
@@ -43,11 +43,11 @@ db.on("error", err => {
 require("./models/index");
 
 // supprimer la db
-/*db.dropDatabase("voteapp", err => {
+/*db.dropDatabase(process.env.DB_NAME, err => {
     // eslint-disable-next-line no-console
     console.log(err);
-});*/
-
+});
+*/
 const { init } = require("./util/dbInit");
 
 init();

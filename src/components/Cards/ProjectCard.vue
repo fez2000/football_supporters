@@ -308,10 +308,10 @@ export default {
             this.$root.$emit('loadStatus',{ status: status });
         },
         previewImage(e){
-          let image = {
+          let image = {imgs:[{
             name: e.image.name || 'default image',
             src: e.form.src
-          }
+          }], index: 0};
           this.$root.$emit('previewImage', image);
         }
         ,checkDevice

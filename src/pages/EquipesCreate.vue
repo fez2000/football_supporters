@@ -55,98 +55,30 @@
               solo
               max-length="150"
             ></v-text-field>
-            <h2 class="title mt-1 mb-2">Theme:</h2>
-            <v-text-field v-model="theme" :label="'Theme'" required solo max-length="150"></v-text-field>
-            <h2 class="title mt-1 mb-2">Slogan:</h2>
-            <v-text-field v-model="slogan" :label="'slogan'" required solo max-length="150"></v-text-field>
-            <v-switch color="primary" :label="$t('pollCreate.startNowLabel')" v-model="startNow"></v-switch>
+            <h2 class="title mt-1 mb-2">Pays:</h2>
+            <l-location-input v-model="pays" id="map" :label="'Pays'" types="country" solo></l-location-input>
 
-            <v-dialog
-              ref="startDialog"
-              v-model="startDateModal"
-              :return-value.sync="startDate"
-              persistent
-              v-if="!startNow"
-              max-width="500px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="startDate"
-                  :label="$t('pollCreate.startDate')"
-                  prepend-icon="event"
-                  solo
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="startDate"
-                :allowed-dates="allowedStartDates"
-                :landscape="!$vuetify.breakpoint.xs"
-                scrollable
-              >
-                <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="startDateModal = false"
-                >{{$t("pollCreate.cancel")}}</v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$refs.startDialog.save(startDate)"
-                >{{$t("pollCreate.ok")}}</v-btn>
-              </v-date-picker>
-            </v-dialog>
-            <v-dialog
-              max-width="500px"
-              ref="endDialog"
-              v-model="endDateModal"
-              :return-value.sync="endDate"
-              persistent
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="endDate"
-                  :label="$t('pollCreate.endDate')"
-                  prepend-icon="event"
-                  readonly
-                  solo
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="endDate"
-                :allowed-dates="allowedEndDates"
-                :landscape="!$vuetify.breakpoint.xs"
-                scrollable
-              >
-                <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="endDateModal = false"
-                >{{$t('pollCreate.cancel')}}</v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$refs.endDialog.save(endDate)"
-                >{{$t('pollCreate.ok')}}</v-btn>
-              </v-date-picker>
-            </v-dialog>
+            <h2 class="title mt-1 mb-2">Ville:</h2>
+            <v-text-field v-model="ville" :rules="nameRules" :label="'Ville'" solo max-length="150"></v-text-field>
+            <h2 class="title mt-1 mb-2">Coach:</h2>
+            <v-text-field v-model="coach" :rules="nameRules" :label="'Coach'" solo max-length="150"></v-text-field>
             <h2 class="title mt-1 mb-2">{{$t("createproject.description")}}:</h2>
             <froala
               :tag="'textarea'"
               :config="config"
               v-model="description"
             >Un mot au suject de cette edition</froala>
-
+          </v-card-text>
+          <v-card-actions>
+            <v-btn to="/dashboard/equipes/" text color="red">Annuler</v-btn>
+            <v-spacer></v-spacer>
             <v-btn
-              :disabled="!valid || submiting || !theme || !data_debut || (!startNow&&!startDate) || !endDate   "
+              :disabled="!valid || submiting || !name  "
               color="blue darken-1"
               text
               @click="save()"
             >{{(submiting)?$t("createproject.f_runbutton"):$t("createproject.f_button")}}</v-btn>
-          </v-card-text>
+          </v-card-actions>
         </v-col>
       </v-row>
     </v-form>
@@ -155,39 +87,41 @@
 
 <script>
 export default {
-  title: {
-    inner: "Creer une Edition",
-    separator: " | ",
-    complement: process.env.APP_NAME
+  head: {
+    title: {
+      inner: "Creer une Equipe",
+      separator: " | ",
+      complement: process.env.APP_NAME
+    },
+    meta: [
+      { name: "description", content: "pages de creation d'une edition" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:creator", content: process.env.twitter_name },
+      {
+        name: "twitter:title",
+        content: `Creer edition | ${process.env.APP_NAME}`
+      },
+      {
+        name: "twitter:description",
+        content: "pages de creation de la competition"
+      },
+      { name: "twitter:image", content: "/assets/img/apple-icon.png" },
+      { property: "fb:app_id", content: "123456789" },
+      {
+        property: "og:title",
+        content: `Creer competition | ${process.env.APP_NAME}`
+      },
+      { property: "og:site_name", content: `${process.env.APP_NAME}` },
+      {
+        property: "og:url",
+        content: `${process.env.BASE_URL || ""}/dashboard/competition/create`
+      },
+      { property: "og:description", content: "description" },
+      { property: "og:image", content: "/assets/img/apple-icon.png" },
+      { property: "og:image:type", content: "image/png" },
+      { name: "author", content: `${process.env.AUTOR},${process.env.AUTOR2}` }
+    ]
   },
-  meta: [
-    { name: "description", content: "pages de creation d'une edition" },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:creator", content: process.env.twitter_name },
-    {
-      name: "twitter:title",
-      content: `Creer edition | ${process.env.APP_NAME}`
-    },
-    {
-      name: "twitter:description",
-      content: "pages de creation de la competition"
-    },
-    { name: "twitter:image", content: "/assets/img/apple-icon.png" },
-    { property: "fb:app_id", content: "123456789" },
-    {
-      property: "og:title",
-      content: `Creer competition | ${process.env.APP_NAME}`
-    },
-    { property: "og:site_name", content: `${process.env.APP_NAME}` },
-    {
-      property: "og:url",
-      content: `${process.env.BASE_URL || ""}/dashboard/competition/create`
-    },
-    { property: "og:description", content: "description" },
-    { property: "og:image", content: "/assets/img/apple-icon.png" },
-    { property: "og:image:type", content: "image/png" },
-    { name: "author", content: `${process.env.AUTOR},${process.env.AUTOR2}` }
-  ],
   mounted() {
     this.voter = JSON.parse(this.$Cookies.get(this.$Cookies.get("voter")));
     this.previewSrc = this.previewDefaultSrc;
@@ -197,11 +131,9 @@ export default {
     return {
       submiting: false,
       voter: {},
-      startDate: null,
-      endDate: null,
-      startNow: true,
-      endDateModal: false,
-      startDateModal: false,
+      name: "",
+      search: "",
+      valid: false,
       config: {
         placeholderText: "Edit Your Content Here!",
         imageUploadURL: "/api/flroala/upload_image",
@@ -283,9 +215,9 @@ export default {
       valid: false,
       gradient: "",
       description: null,
-      theme: "",
-      date_debut: "",
-      date_fint: "",
+      pays: "",
+      ville: "",
+      coach: "",
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 150) || "Name must be less than 150 characters"
@@ -308,7 +240,8 @@ export default {
       ],
       loading: false,
       previewDefaultSrc: require("@/assets/img/defaultPreview.svg"),
-      previewSrc: ""
+      previewSrc: "",
+      id: ""
     };
   },
   props: {
@@ -357,15 +290,58 @@ export default {
     loadToggle(status) {
       this.$root.$emit("loadStatus", { status: status });
     },
+    updateImage(id) {
+      let formData = new FormData();
+      formData.append("document", this.projectimg);
+      formData.append("cathegorie", "image");
+      formData.append("name", `${this.name}_project`);
+      formData.append("type", this.projectimg.type.replace("image/", ""));
+      formData.append("_id", id);
+
+      this.$axios
+        .put("/api/doc", formData, {
+          headers: {
+            "CSRF-Token": this.$Cookies.get("XSRF-TOKEN"),
+            enctype: "multipart/form-data"
+          }
+        })
+        .then(({ data }) => {
+          if (data.status) {
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: "l'equipe  a ete creer avec succes"
+            });
+            this.loadToggle(true);
+            this.$router.push("/dashboard/equipes");
+          } else {
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: JSON.stringify(data.errors)
+            });
+          }
+        })
+        .catch(err => {
+          this.submiting = false;
+          this.$root.$emit("snackbar", {
+            display: true
+          });
+          this.$root.$emit("neterror", {
+            err: err,
+            callback: this.sendImage,
+            data: projectId
+          });
+        });
+    },
     save() {
       this.submiting = true;
       let data = {};
       data.name = this.name;
+      data.pays = this.pays;
+      data.ville = this.ville;
 
       data.description = this.description;
-      data.cathegories = this.cathegories;
       this.$axios
-        .post("/api/project", data, {
+        .post("/api/equipe", data, {
           headers: {
             "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
           }
@@ -373,17 +349,24 @@ export default {
         .then(({ data }) => {
           if (data.status) {
             if (this.projectimg) {
-              return this.sendImage(data.project._id);
+              this.id = data.equipe._id;
+              return this.updateImage(data.equipe.image._id);
             }
-            this.submiting = false;
+
+            this.loadToggle(true);
+
             this.$root.$emit("snackbar", {
               display: true,
-              text: "competition create whit success."
+              text: "equipe creer avec succes."
             });
-            this.$router.push("/dashboard/projects");
+            this.$router.push("/dashboard/equipes");
           } else {
             this.submiting = false;
             this.valid = false;
+            this.$root.$emit("snackbar", {
+              display: true,
+              text: JSON.stringify(data.errors)
+            });
           }
         })
         .catch(err => {
@@ -413,7 +396,20 @@ export default {
         })
         .then(({ data }) => {
           if (data.status) {
-            this.updateImgRef(data.document._id, projectId);
+            this.$axios
+              .put(
+                "/api/equipe/" + projectId,
+                { image: data.document._id },
+                {
+                  headers: {
+                    "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
+                  }
+                }
+              )
+              .then(() => {
+                this.submiting = false;
+              })
+              .catch(() => {});
           } else {
             this.$root.$emit("snackbar", {
               display: true,
@@ -434,32 +430,7 @@ export default {
           });
         });
     },
-    updateImgRef(docId, projectId) {
-      this.$axios
-        .get(`/api/project/${projectId}/${docId}`)
-        .then(({ data }) => {
-          this.submiting = false;
-          if (data.status) {
-            this.$root.$emit("snackbar", {
-              display: true,
-              text: "Project create whit success."
-            });
-            this.$router.push("/dashboard/projects");
-          } else {
-          }
-        })
-        .catch(err => {
-          this.submiting = false;
-          this.$root.$emit("snackbar", {
-            display: true
-          });
-          this.$root.$emit("neterror", {
-            err: err,
-            callback: this.updateImgRef,
-            data: { docId, projectId }
-          });
-        });
-    },
+
     file(file) {
       this.projectimg = file;
       this.previewLoad = true;

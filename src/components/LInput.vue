@@ -10,6 +10,7 @@
         :style="pStyle"
         :class="pClass"
         :placeholder="placeholder"
+        v-on:input="updateValue($event.target.value)"
       ></textarea>
     </div>
   </div>
@@ -17,11 +18,7 @@
 
 <script>
 import { util } from "@/fonctions/emojis";
-import {
-  replaceAllBy,
-  insertTextAtIndices,
-  traitement_text
-} from "@/fonctions/post";
+
 export default {
   name: "l-input",
   props: {
@@ -58,6 +55,7 @@ export default {
       type: String,
       default: ""
     },
+
     emptyStyle: {
       type: String,
       default: `flex-grow:1;width:auto; font-size: 14px; color: '#888'; display: inline-flex`
@@ -82,14 +80,13 @@ export default {
     };
   },
   methods: {
-    insertTextAtIndices,
-
+    updateValue: function(value) {
+      this.$emit("input", value);
+    },
     enterUpdate(o) {
-      this.$emit("value", this.$refs.p.innerText);
+      this.$emit("input", this.$refs.p.innerText);
       //  this.text = o.target.innerText   ;
     },
-
-    replaceAllBy,
     desable() {
       this.$refs.p.emojioneArea.desable();
     },
@@ -98,22 +95,8 @@ export default {
     }
   },
   watch: {
-    clear() {
-      this.first = true;
-      this.$refs.p.emojioneArea.setText("");
-    },
-    init() {
-      if (this.first) {
-        this.first = false;
-        if (this.$refs.p.emojioneArea) {
-          this.$refs.p.emojioneArea.setText(this.init);
-        } else {
-          this.a = this.init;
-        }
-      }
-    },
     text() {
-      this.$emit("value", this.text);
+      this.$emit("input", this.text);
     },
     disabled() {
       if (this.disabled) {
@@ -124,15 +107,13 @@ export default {
     }
   },
 
-  created() {
-    this.text = this.value;
-  },
+  created() {},
   computed: {
     pClass() {
-      return this.value ? this.$Attr.class : this.emptyClass;
+      return this.value ? this.class : this.emptyClass;
     },
     pStyle() {
-      return this.value ? this.$Attr.style : this.emptyStyle;
+      return this.value ? this.style : this.emptyStyle;
     }
   },
 
@@ -157,22 +138,16 @@ export default {
       },
       events: {
         keyup: (editor, event) => {
-          this.$emit("value", this.$refs.p.emojioneArea.getText());
+          this.$emit("input", this.$refs.p.emojioneArea.getText());
         },
         paste: (editor, event) => {
-          this.$emit("value", this.$refs.p.emojioneArea.getText());
+          this.$emit("input", this.$refs.p.emojioneArea.getText());
         },
         change: (editor, event) => {
-          this.$emit("value", this.$refs.p.emojioneArea.getText());
+          this.$emit("input", this.$refs.p.emojioneArea.getText());
         }
       }
     });
-
-    if (this.$refs.p.emojioneArea) {
-      this.$refs.p.emojioneArea.setText(this.init);
-    } else {
-      this.a = this.init;
-    }
   },
   beforeDestroy() {}
 };
