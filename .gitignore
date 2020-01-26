@@ -8,6 +8,7 @@ node_modules
 **/*.log
 *.log
 images/*/**/*
+uploads/*
 public
 public/**/*
 bin/ngrok
