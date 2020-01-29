@@ -13,6 +13,7 @@
         "dev": "DEBUG=vuexpressbp:* CONTEXT=unsecure nodemon ./bin/www --config nodemon.json -e js & webpack --mode=development",
         "dev:secure": "DEBUG=vuexpressbp:* CONTEXT=secure nodemon ./bin/www --config nodemon.json -e js & webpack --mode=development",
         "prestart": "webpack --mode=production",
+        "build": "webpack --mode=production",
         "start": "node ./bin/www",
         "test": "mocha --timeout 10000",
         "test:browser": "mocha --timeout 10000  --reporter mocha-simple-html-reporter/index.js --reporter-options output=./test/index.html && open-cli  ./test/index.html || xdg-open ./test/index.html"
