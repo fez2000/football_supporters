@@ -10,8 +10,8 @@ const autoprefixer = require("autoprefixer");
 const { VuetifyProgressiveModule } = require("vuetify-loader");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-//const PrerenderSPAPlugin = require("prerender-spa-plugin");
-//const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
+const PrerenderSPAPlugin = require("prerender-spa-plugin");
+const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 
 const isDev = process.env.mode === "developpement";
 const SRC_DIR = path.resolve(__dirname, "src");
@@ -304,9 +304,9 @@ module.exports = {
             importWorkboxFrom:
                 process.env.mode === "production" ? "cdn" : "local"
             //    maximumFileSizeToCacheInBytes: 7 * 1024 * 1024
-        })
+        }) /*,
 
-        /*new PrerenderSPAPlugin({
+        new PrerenderSPAPlugin({
             // Required - The path to the webpack-outputted app to prerender.
             staticDir: path.join(__dirname, "public"),
 
@@ -371,7 +371,7 @@ module.exports = {
             // Available renderers: https://github.com/Tribex/prerenderer/tree/master/renderers
             renderer: new Renderer({
                 // Optional - The name of the property to add to the window object with the contents of `inject`.
-                injectProperty: "__PRERENDER_INJECTED",
+                //injectProperty: "__PRERENDER_INJECTED",
                 // Optional - Any values you'd like your app to have access to via `window.injectProperty`.
                 //inject: {
                 //    foo: "bar"
@@ -380,22 +380,22 @@ module.exports = {
                 // Optional - defaults to 0, no limit.
                 // Routes are rendered asynchronously.
                 // Use this to limit the number of routes rendered in parallel.
-                maxConcurrentRoutes: 4,
+                maxConcurrentRoutes: 2,
 
                 // Optional - Wait to render until the specified event is dispatched on the document.
                 // eg, with `document.dispatchEvent(new Event('custom-render-trigger'))`
-                renderAfterDocumentEvent: "load",
-
+                //renderAfterDocumentEvent: "load",
+                timeout: 0,
                 // Optional - Wait to render until the specified element is detected using `document.querySelector`
-                renderAfterElementExists: "#material-ki",
+                //renderAfterElementExists: "#material-kit",
 
                 // Optional - Wait to render until a certain amount of time has passed.
                 // NOT RECOMMENDED
-                //renderAfterTime: 5000, // Wait 5 seconds.
-
+                renderAfterTime: 15000 // Wait 5 seconds.
+                //renderAfterElementExists: '[data-view]',
                 // Other puppeteer options.
                 // (See here: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
-                headless: false // Display the browser window when rendering. Useful for debugging.
+                //headless: false // Display the browser window when rendering. Useful for debugging.
             })
         })*/
     ]

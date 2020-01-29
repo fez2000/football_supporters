@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const { removeSpace, timeToString } = require("../util/fonctions");
 const Edition = mongoose.model("Edition");
+const Joueur = mongoose.model("Joueur");
 const { get, getDynamic } = require("./socketmanage");
 const io = get();
 //const Voter = mongoose.model('Edition');
@@ -28,10 +29,10 @@ exports.add = (req, res) => {
             return res.send({ status: false, errors: "creez une competition" });
         }
         Equipe.count({ edition: re._id }, (err, nb) => {
-            if (nb > re.nombre_participant) {
+            if (nb >= re.nombre_participant) {
                 return res.send({
                     status: false,
-                    errors: "nombre de equipe depasse"
+                    errors: "nombre maximal d'equipe atteind"
                 });
             }
             req.body.edition = re._id;
@@ -143,11 +144,48 @@ exports.getAll = (req, res) => {
         if (re) {
             Equipe.find({ edition: re._id })
                 .populate("image")
-                .exec((err, e) => {
-                    res.send(e);
+                .exec(async (err, e) => {
+                    if (!e) return res.send([]);
+                    let r = [];
+                    function* getE() {
+                        for (let i of e) {
+                            yield i;
+                        }
+                        res.send(r);
+                    }
+
+                    for await (let eq of getE()) {
+                        var j = eq.toJSON();
+                        j.joueurs = await Joueur.find({
+                            equipe: eq._id
+                        }).populate("image");
+                        r.push(j);
+                    }
                 });
         } else {
             res.send([]);
         }
     });
+};
+exports.getByEdition = (req, res) => {
+    Equipe.find({ edition: req.params.id })
+        .populate("image")
+        .exec(async (err, e) => {
+            if (!e) return res.send([]);
+            let r = [];
+            function* getE() {
+                for (let i of e) {
+                    yield i;
+                }
+                res.send(r);
+            }
+
+            for await (let eq of getE()) {
+                var j = eq.toJSON();
+                j.joueurs = await Joueur.find({ equipe: eq._id }).populate(
+                    "image"
+                );
+                r.push(j);
+            }
+        });
 };

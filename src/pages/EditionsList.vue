@@ -98,6 +98,7 @@
                     :allowed-dates="allowedEndDates"
                     :landscape="!$vuetify.breakpoint.xs"
                     scrollable
+                  
                   >
                     <v-spacer></v-spacer>
                     <v-btn

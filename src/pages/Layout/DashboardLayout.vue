@@ -31,7 +31,7 @@
         <template v-for="(item, key) in items" v-if="voter.roleLevel <= item.rolelevel">
           <v-list-item  :class="($route.name === item.text )?selectedColor:''" @click="navigateTo(item.link)" v-if="!item.children" :key="key+'d'">
           <v-list-item-icon>
-            <v-icon :color="themeColor">{{item.icon}}</v-icon>
+            <v-icon :color="iconcolor">{{item.icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -1022,7 +1022,7 @@ export default {
           icon: 'mdi-soccer',
           text: 'Competition',
           rolelevel: 2,
-          'icon-alt': 'admin_ico',
+          'icon-alt': 'Competition_ico',
           children: [
             { icon: 'mdi-infos', text: 'Infos', link: '/dashboard/competition'},
             { icon: 'mdi-clipboard-list', text: 'Editions', link: '/dashboard/editions'},
@@ -1030,7 +1030,12 @@ export default {
             { icon: 'mdi-heart-box', text: i18n.tc("dashboardL.poll"), link: '/dashboard/admin/poll'},
             { icon: 'mdi-wallet', text: i18n.tc("dashboardL.pending_projet"), link: '/dashboard/admin/projects/pending'},
           ]
-        },
+        },{
+          icon: 'mdi-wallet-travel',
+          text: 'Projects',
+          rolelevel: 3,
+          children: [
+            
         {
           icon: 'mdi-wallet-travel',
           text:i18n.tc("dashboardL.projects"),
@@ -1053,6 +1058,8 @@ export default {
           'icon-alt': 'admin_ico',
           'link': '/dashboard/projects/inprocess',
           'icon-alt': 'project_ico',
+        }
+          ]
         },
         { icon: 'mdi-message-text', text: i18n.tc("dashboardL.forum"), link: '/dashboard/chat', rolelevel: 3 },
         { icon: 'mdi-help', text: i18n.tc("dashboardL.help"), link: '/dashboard/help', rolelevel: 3 },

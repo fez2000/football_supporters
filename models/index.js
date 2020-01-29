@@ -16,4 +16,7 @@ require("./subscription");
 require("./edition");
 require("./competition");
 require("./edition");
-require('./equipe');
+require("./equipe");
+require("./joueur");
+require("./rencontre");
+require("./match");

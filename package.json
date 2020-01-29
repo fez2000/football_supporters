@@ -1,5 +1,5 @@
 {
-    "name": "vue-express-webpack-4-fez2000",
+    "name": "football",
     "version": "2.0.0",
     "private": false,
     "engines": {
@@ -79,6 +79,7 @@
         "pdfjs-dist": "^2.2.228",
         "postcss-flexbugs-fixes": "^3.3.1",
         "postcss-loader": "^2.1.6",
+        "prerender-spa-plugin": "^3.4.0",
         "public-ip": "^3.2.0",
         "sass": "^1.22.10",
         "sass-resources-loader": "^2.0.1",

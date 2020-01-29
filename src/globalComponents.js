@@ -1,11 +1,12 @@
 import LinkPrevue from "link-prevue";
+import VueDocPreview, { vueDocPreview } from "vue-doc-preview";
 import pdf from "./components/pdf/vuePdfSss.vue";
 import DropDown from "./components/Dropdown.vue";
 import LInput from "./components/LInput.vue";
 import LLocationInput from "./components/LLocationInput.vue";
+import EditJoueurs from "./components/EditJoueurs.vue";
 import VueFeedbackReaction from "@/components/VueFeedbackReaction.vue";
 import PdfCard from "@/components/Cards/PdfCard.vue";
-import VueDocPreview from "vue-doc-preview";
 import SocialsLinks from "@/components/SocialsLinks.vue";
 import Paiement from "./components/Paiement.vue";
 /**
@@ -14,6 +15,7 @@ import Paiement from "./components/Paiement.vue";
 
 const GlobalComponents = {
     install(Vue) {
+        Vue.component("edit-joueurs", EditJoueurs);
         Vue.component("drop-down", DropDown);
         Vue.component("l-input", LInput);
         Vue.component("l-location-input", LLocationInput);

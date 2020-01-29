@@ -2,12 +2,8 @@
   <v-container>
     <v-row>
       <v-col v-if="donthaveequipe " cols="12">
-        <md-empty-state
-          md-icon="group"
-          :md-label="'Oups equipes'"
-          :md-description="'creez des equipes!'"
-        >
-          <md-button @click="goToCreateEquipe()" class="md-primary md-raised">creer une equipe</md-button>
+        <md-empty-state md-icon="group" :md-label="'Creez des equipes!'" :md-description="'Creer'">
+          <md-button @click="goToCreateEquipe()" class="md-primary md-raised">Creer une equipe</md-button>
         </md-empty-state>
       </v-col>
       <v-col v-if="donthaveedition " cols="12">
@@ -16,7 +12,7 @@
           :md-label="'Pas d\'edition'"
           :md-description="'Vous n\'avez pas creer d\'edition!'"
         >
-          <md-button @click="goToCreateEdition()" class="md-primary md-raised">creer une competition</md-button>
+          <md-button @click="goToCreateEdition()" class="md-primary md-raised">Creer une competition</md-button>
         </md-empty-state>
       </v-col>
       <v-col cols="12">
@@ -41,7 +37,7 @@
               <v-toolbar-title>Equipes</v-toolbar-title>
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
-              <v-dialog v-model="dialog" max-width="500px" scrollable>
+              <v-dialog v-model="dialog" fullscreen scrollable>
                 <template v-slot:activator="{ on }">
                   <v-btn color="primary" dark class="mb-2" v-on="on" text>Ajout minimal</v-btn>
                 </template>
@@ -65,7 +61,7 @@
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field v-model="editedItem.coach" label="Coach"></v-text-field>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" md="6" offset-md="3" lg="6" offset-lg="3">
                           <v-img
                             @drop.prevent="addFile"
                             @dragleave.prevent="gradient=''"
@@ -87,6 +83,13 @@
                             accept="image/*"
                           />
                         </v-col>
+                        <v-col>
+                          <edit-joueurs
+                            v-if="mode == 'edit'"
+                            :id="editedItem._id"
+                            v-model="editedItem.joueurs"
+                          ></edit-joueurs>
+                        </v-col>
                       </v-row>
                     </v-container>
                   </v-card-text>
@@ -106,11 +109,12 @@
               <v-img :src="item.image.src" :alt="item.image.name"></v-img>
             </v-avatar>
           </template>
+          <template v-slot:item.joueurs="{ item }">{{item.joueurs.length}}</template>
           <template v-slot:item.action="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
             <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
           </template>
-          <template v-slot:no-data>
+          <template v-if="false" v-slot:no-data>
             <v-btn color="primary" @click="initialize" text>Reset</v-btn>
           </template>
         </v-data-table>
@@ -196,6 +200,7 @@ export default {
           text: "",
           align: "left",
           filterable: false,
+          sortable: false,
           value: "image"
         },
         {
@@ -216,13 +221,18 @@ export default {
           filterable: true,
           value: "ville"
         },
+        {
+          text: "Nombre de joueurs",
+          align: "left",
+          filterable: true,
+          value: "joueurs"
+        },
         { text: "Actions", value: "action", sortable: false }
       ]
     };
   },
   created() {
     this.getCurrent();
-    this.getEquipe();
   },
   mounted() {},
   methods: {
@@ -293,6 +303,7 @@ export default {
         .then(({ data }) => {
           if (data.status) {
             data.equipe.image.src = "/api/img/" + data.equipe.image.src;
+            data.equipe.joueurs = [];
             this.equipes.push(data.equipe);
           } else {
             this.$root.$emit("snackbar", {
@@ -321,10 +332,14 @@ export default {
     },
     getEquipe() {
       this.$axios
-        .get("/api/equipe")
+        .get("/api/equipe/edition/" + this.edition._id)
         .then(({ data }) => {
           for (let e of data) {
             e.image.src = "/api/img/" + e.image.src;
+            e.joueurs.map(v => {
+              v.image.src = "/api/img/" + v.image.src;
+              return v;
+            });
             this.equipes.push(e);
           }
           this.equipes1 = this.equipes;
@@ -402,6 +417,7 @@ export default {
           this.$root.$emit("loadStatus", { status: false });
           if (data.status) {
             this.edition = data.edition;
+            this.getEquipe();
           } else {
             this.donthaveedition = true;
           }

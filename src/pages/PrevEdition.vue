@@ -1,29 +1,62 @@
 <template>
   <div class="wrapper">
     <div class="section page-header header-filter" :style="headerStyle">
+      
+    </div>
+    <div class="main main-raised">
       <div class="container">
-        <div class="md-layout">
-          <v-card>
-            <v-card-title>
-              <v-text-field
-                v-model="search"
-                append-icon="search"
-                label="Search"
-                single-line
-                hide-details
-              ></v-text-field>
-            </v-card-title>
-            <v-data-table :headers="headers" :items="editions" :search="search"></v-data-table>
-          </v-card>
-        </div>
+        
+          <v-card-title>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-card-title>
+          <v-data-table :headers="headers" :items="editions" :search="search"></v-data-table>
+        
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mode_exact} from '@/fonctions'
+import { mode_exact } from "@/fonctions";
 export default {
+  head: {
+    title: {
+      inner: "Toutes les editions",
+      separator: " | ",
+      complement: process.env.APP_NAME
+    },
+    meta: [
+      { name: "description", content: "liste Equipe" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:creator", content: process.env.twitter_name },
+      {
+        name: "twitter:title",
+        content: `Liste equipes | ${process.env.APP_NAME}`
+      },
+      { name: "twitter:description", content: "pages des Equipes" },
+      { name: "twitter:image", content: "/assets/img/apple-icon.png" },
+      { property: "fb:app_id", content: "123456789" },
+      {
+        property: "og:title",
+        content: `Liste equipes | ${process.env.APP_NAME}`
+      },
+      { property: "og:site_name", content: `${process.env.APP_NAME}` },
+      {
+        property: "og:url",
+        content: `${process.env.BASE_URL || ""}/dashboard/contribute`
+      },
+      { property: "og:description", content: "description" },
+      { property: "og:image", content: "/assets/img/apple-icon.png" },
+      { property: "og:image:type", content: "image/png" },
+      { name: "author", content: `${process.env.AUTOR},${process.env.AUTOR2}` }
+    ]
+  },
   props: {
     header: {
       type: String,
@@ -40,7 +73,7 @@ export default {
   created() {
     this.getEdition();
   },
-  bodyClass: "login-page",
+  bodyClass: "landing-page",
   data() {
     return {
       search: "",

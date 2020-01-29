@@ -72,6 +72,10 @@ const routes = [
     },
     {
         path: "/editions",
+        props: {
+            header: { colorOnScroll: 80, backgroundColor: "white" },
+            footer: { backgroundColor: "black" }
+        },
         components: {
             default: PrevEdition,
             header: MainNavbar,
@@ -84,6 +88,10 @@ const routes = [
             default: CurEquipe,
             header: MainNavbar,
             footer: MainFooter
+        },
+        props: {
+            header: { colorOnScroll: 80, backgroundColor: "white" },
+            footer: { backgroundColor: "black" }
         }
     },
     {

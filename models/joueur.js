@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const EquipeSchema = new Schema(
+const JoueurSchema = new Schema(
     {
         name: {
             type: String,
@@ -13,25 +13,31 @@ const EquipeSchema = new Schema(
             type: String,
             trim: true
         },
+        poste: {
+            type: String,
+            trim: true
+        },
         ville: {
             type: String,
             trim: true
         },
-        coach: {
-            type: String,
-            trim: true
+        age: {
+            type: Number,
+            max: 50,
+            min: 1
         },
         description: {
             type: String,
             trim: true
         },
         edition: { type: Schema.Types.ObjectId, ref: "Edition" },
+        equipe: { type: Schema.Types.ObjectId, ref: "Equipe" },
         image: {
             type: Schema.Types.ObjectId,
-            ref: "Doc",
+            ref: "Doc"
         }
     },
     { sparse: true, unique: true, index: true }
 );
 
-mongoose.model("Equipe", EquipeSchema);
+mongoose.model("Joueur", JoueurSchema);

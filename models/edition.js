@@ -34,6 +34,10 @@ const EditionSchema = new Schema(
         is_end: {
             type: Boolean,
             default: false
+        },
+        allerRetour: {
+            type: Boolean,
+            default: false
         }
     },
     { sparse: true, unique: true, index: true }
