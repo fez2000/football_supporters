@@ -5,12 +5,11 @@ const { teamImg } = require("../config/defaultImg");
 const fs = require("fs");
 const path = require("path");
 const { removeSpace, timeToString } = require("../util/fonctions");
-const Edition = mongoose.model("Edition");
-const Joueur = mongoose.model("Joueur");
+const Match = mongoose.model("Match");
 const { get, getDynamic } = require("./socketmanage");
 const io = get();
 //const Voter = mongoose.model('Edition');
-exports.add = (req, res) => {
+exports.add = async (req, res) => {
     if (
         typeof req.session.auth === "undefined" &&
         process.env.NODE_ENV !== "test"
@@ -28,66 +27,14 @@ exports.add = (req, res) => {
         if (!re) {
             return res.send({ status: false, errors: "creez une competition" });
         }
-        Equipe.count({ edition: re._id }, (err, nb) => {
-            if (nb >= re.nombre_participant) {
-                return res.send({
-                    status: false,
-                    errors: "nombre maximal d'equipe atteind"
-                });
-            }
-            req.body.edition = re._id;
-            if (req.body._id) delete req.body._id;
-            req.body.image = new mongoose.Types.ObjectId();
-            Equipe.create(req.body)
-                .then(equipe => {
-                    const pt = `${req.session.auth._id}/${removeSpace(
-                        equipe.name
-                    ) + timeToString(new Date())}.${teamImg.type}`;
-                    fs.copyFileSync(
-                        path.join(
-                            __dirname,
-                            "../images",
-                            `${teamImg.name}.${teamImg.type}`
-                        ),
-                        path.join(__dirname, "../images", pt)
-                    );
-                    let date = new Date();
-                    Doc.create(
-                        {
-                            time_create: date,
-                            time_update: date,
-                            name: req.body.name,
-                            src: pt,
-                            state: "public",
-                            type: teamImg.type,
-                            voter: req.session.auth._id,
-                            cathegorie: "image"
-                        },
-                        (err2, good2) => {
-                            if (good2) {
-                                Equipe.updateOne(
-                                    { _id: equipe._id },
-                                    { image: good2._id },
-                                    (err, ok) => {
-                                        if (err) console.log(err);
-                                        equipe.image = good2;
-                                        res.send({
-                                            status: true,
-                                            equipe: equipe
-                                        });
-                                    }
-                                );
-                            } else {
-                                res.send({ status: true, equipe });
-                            }
-                        }
-                    );
-                })
-                .catch(err1 => {
-                    console.log(err1);
-                    res.send({ status: false, errors: err1 });
-                });
-        });
+        let equipe1 = Equipe.findOne({
+            _id: req.body.equipe1,
+            edition: re._id
+        }).exec();
+        let equipe2 = Equipe.findOne({
+            _id: req.body.equipe2,
+            edition: re._id
+        }).exec();
     });
 };
 
@@ -170,18 +117,12 @@ exports.getAll = (req, res) => {
 exports.getEquipe = (req, res) => {
     Equipe.findOne({ _id: req.params.id })
         .populate("image")
-        .lean(true)
-        .exec((err, equipe) => {
+        .exec(async (err, equipe) => {
             if (!equipe) return res.send({ status: false, errors: "NotFound" });
-            Joueur.find({ equipe: req.params.id })
+            equipe.joueurs = await Joueur.find({ equipe: equipe._id })
                 .populate("image")
-                .lean(true)
-                .exec((err, jo) => {
-                    let x = equipe;
-                    x.joueurs = jo;
-                    console.log(x);
-                    res.send({ status: true, equipe: x });
-                });
+                .exec();
+            res.send({ status: true, equipe });
         });
 };
 exports.getByEdition = (req, res) => {

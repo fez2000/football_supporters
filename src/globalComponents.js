@@ -9,12 +9,14 @@ import VueFeedbackReaction from "@/components/VueFeedbackReaction.vue";
 import PdfCard from "@/components/Cards/PdfCard.vue";
 import SocialsLinks from "@/components/SocialsLinks.vue";
 import Paiement from "./components/Paiement.vue";
+import PreviewJoueurs from "@/components/PreviewJoueurs.vue";
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
 
 const GlobalComponents = {
     install(Vue) {
+        Vue.component("preview-joueurs", PreviewJoueurs);
         Vue.component("edit-joueurs", EditJoueurs);
         Vue.component("drop-down", DropDown);
         Vue.component("l-input", LInput);

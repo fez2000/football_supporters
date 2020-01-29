@@ -10,88 +10,12 @@
       <v-toolbar flat color="white">
         <v-toolbar-title>Joueurs</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="500px" scrollable>
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on" text>Ajout minimal</v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="name"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.pays" label="Pays"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.vile" label="Ville"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.age" type="number" label="Age"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.poste" label="Poste"></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <froala
-                      :tag="'textarea'"
-                      :config="config"
-                      v-model="editedItem.description"
-                    >Un mot au suject de cette edition</froala>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-img
-                      @drop.prevent="addFile"
-                      @dragleave.prevent="gradient=''"
-                      @dragover.prevent="gradient='to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)'"
-                      max-height="300px"
-                      max-width="400px"
-                      :lazy-src="a"
-                      :src="a"
-                      :alt="editedItem.image.name"
-                      :gradient="gradient"
-                      @click="getImg"
-                    ></v-img>
-                    <input
-                      hidden
-                      name="projectimg"
-                      id="projectimg1"
-                      type="file"
-                      @input="checkFile"
-                      accept="image/*"
-                    />
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Annuler</v-btn>
-              <v-btn color="blue darken-1" text v-if="mode === 'save'" @click="save">Creer</v-btn>
-              <v-btn text v-if="mode === 'edit'" @click="editItemSave">Edit</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </v-toolbar>
     </template>
     <template v-slot:item.image="{ item }">
       <v-avatar @click="previewImage(item)" size="30">
-        <v-img :src="item.image.src" :alt="item.image.name"></v-img>
+        <v-img :src="'/api/img/'+item.image.src" :alt="item.image.name"></v-img>
       </v-avatar>
-    </template>
-    <template v-slot:item.action="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-      <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-    </template>
-    <template v-if="false" v-slot:no-data>
-      <v-btn color="primary" @click="initialize" text>Reset</v-btn>
     </template>
   </v-data-table>
 </template>

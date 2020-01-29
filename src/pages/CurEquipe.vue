@@ -32,6 +32,11 @@
               <v-img :src="item.image.src" :alt="item.image.name"></v-img>
             </v-avatar>
           </template>
+          <template v-slot:item.name="{ item }">
+            <router-link :to="'/profil/equipe/'+item._id+'/'+item.name" size="30">
+             {{item.name}}
+            </router-link>
+          </template>
           <template v-slot:item.joueurs="{ item }">{{item.joueurs.length}}</template>
 
           <template v-if="false" v-slot:no-data>
@@ -189,5 +194,8 @@ export default {
 <style scoped>
   .page-header {
     height: 9vh!important;
+    }
+    .container{
+      margin-top: 92px;
     }
 </style>

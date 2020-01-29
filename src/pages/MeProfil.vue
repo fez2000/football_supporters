@@ -2,7 +2,7 @@
   <v-row justify="center" align="center">
       <v-col cols="12" md="4" lg="4" xl="4"  :order="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs)?'first':'last'" >
             <v-img @drop.prevent="addFile" @dragleave.prevent="gradient=''" @dragover.prevent="gradient='to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)'"
-                lazy-src="https://picsum.photos/id/11/100/60"
+                :lazy-src="previewSrc"
                 :src="previewSrc"
                 max-width="300"
                 max-height="300"

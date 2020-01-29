@@ -10,6 +10,16 @@ const Edition = mongoose.model("Edition");
 const { get, getDynamic } = require("./socketmanage");
 const io = get();
 //const Voter = mongoose.model('Edition');
+exports.getJoueur = (req, res) => {
+    Equipe.findOne({ _id: req.params.id })
+        .populate("image")
+        .lean(true)
+        .exec((err, joueur) => {
+            if (!joueur) return res.send({ status: false, errors: "NotFound" });
+            res.send({ status: true, joueur });
+            
+        });
+};
 exports.add = (req, res) => {
     if (
         typeof req.session.auth === "undefined" &&

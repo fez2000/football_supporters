@@ -6,6 +6,7 @@ import ClassementJoueurs from "@/pages/ClassementJoueurs.vue";
 import Competition from "@/pages/Competition.vue";
 import PrevEdition from "@/pages/PrevEdition.vue";
 import CurEquipe from "@/pages/CurEquipe.vue";
+import EquipeProfil from "@/pages/EquipeProfil.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
@@ -202,6 +203,15 @@ const routes = [
             header: MainNavbar,
             footer: MainFooter
         },
+        props: {
+            header: { colorOnScroll: 400 },
+            footer: { backgroundColor: "black" }
+        }
+    }, {
+        
+        path: "/profil/equipe/:url/:name",
+        name: "equipe profil",
+        components: { default: EquipeProfil, header: MainNavbar, footer: MainFooter },
         props: {
             header: { colorOnScroll: 400 },
             footer: { backgroundColor: "black" }

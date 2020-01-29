@@ -83,7 +83,14 @@
                             accept="image/*"
                           />
                         </v-col>
-                        <v-col>
+                        <v-col cols="12">
+                          <froala
+                            :tag="'textarea'"
+                            :config="config"
+                            v-model="editedItem.description"
+                          >Un mot au suject de cette edition</froala>
+                        </v-col>
+                        <v-col cols="12">
                           <edit-joueurs
                             v-if="mode == 'edit'"
                             :id="editedItem._id"
@@ -175,6 +182,7 @@ export default {
         pays: "",
         ville: "",
         coach: "",
+        description: "",
         image: {
           _id: "",
           src: "",
@@ -182,12 +190,91 @@ export default {
         },
         imgsrc: ""
       },
+      config: {
+        placeholderText: "Edit Your Content Here!",
+        imageUploadURL: "/api/flroala/upload_image",
+        imageUploadParams: {
+          id: "my_editor"
+        },
+        requestHeaders: {
+          "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
+        },
+        fileUploadURL: "/api/flroala/upload_file",
+        fileUploadParams: {
+          id: "my_editor"
+        },
+        toolbarInline: false,
+        toolbarSticky: true,
+        // theme: "dark",
+        fullPage: false,
+        language: "fr",
+        placeholderText: "Placeholder",
+        fileMaxSize: 1024 * 1024 * 10,
+        imageManagerLoadURL: "/api/flroala/load_images",
+        imageManagerDeleteURL: "/api/flroala/delete_image",
+        imageManagerDeleteMethod: "POST",
+        videoUploadURL: "/api/flroala/upload_video",
+        events: {
+          "image.removed": (e, editor, $img) => {
+            this.$axios
+              .post(
+                "/api/flroala/delete_image",
+                {
+                  src: $img.attr("src")
+                },
+                {
+                  headers: {
+                    "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
+                  }
+                }
+              )
+              .then(({ data }) => {})
+              .catch(err => {});
+          },
+          "image.resize": (e, editor, $img) => {
+            console.log($img);
+          },
+          "video.removed": (e, editor, $video) => {
+            this.$axios
+              .post(
+                "/api/flroala/delete_video",
+                {
+                  src: $video.attr("src")
+                },
+                {
+                  headers: {
+                    "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
+                  }
+                }
+              )
+              .then(({ data }) => {})
+              .catch(err => {});
+          },
+          "file.unlink": function(e, editor, link) {
+            this.$axios
+              .post(
+                "/api/flroala/delete_file",
+                {
+                  src: link.getAttribute("href")
+                },
+                {
+                  headers: {
+                    "CSRF-Token": this.$Cookies.get("XSRF-TOKEN")
+                  }
+                }
+              )
+              .then(({ data }) => {})
+              .catch(err => {});
+          }
+        }
+      },
       gradient: "",
       defaultItem: {
         name: "",
         pays: "",
         ville: "",
         coach: "",
+        description: "",
         image: {
           _id: "",
           src: require("@/assets/img/defaultPreview.svg"),

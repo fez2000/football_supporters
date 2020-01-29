@@ -110,5 +110,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  .page-header {
+    height: 9vh!important;
+    }
+    .container{
+      margin-top: 92px;
+    }
 </style>
