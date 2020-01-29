@@ -12,6 +12,11 @@
         <v-divider class="mx-4" inset vertical></v-divider>
       </v-toolbar>
     </template>
+    <template v-slot:item.name="{ item }">
+            <router-link :to="'/profil/joueur/'+item._id+'/'+item.name" size="30">
+             {{item.name}}
+            </router-link>
+          </template>
     <template v-slot:item.image="{ item }">
       <v-avatar @click="previewImage(item)" size="30">
         <v-img :src="'/api/img/'+item.image.src" :alt="item.image.name"></v-img>

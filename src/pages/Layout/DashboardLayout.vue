@@ -1061,7 +1061,7 @@ export default {
         }
           ]
         },
-        { icon: 'mdi-message-text', text: i18n.tc("dashboardL.forum"), link: '/dashboard/chat', rolelevel: 3 },
+        { icon: 'mdi-message-text', text: i18n.tc("dashboardL.forum"), link: '/dashboard/forum', rolelevel: 3 },
         { icon: 'mdi-help', text: i18n.tc("dashboardL.help"), link: '/dashboard/help', rolelevel: 3 },
       ],
     }),

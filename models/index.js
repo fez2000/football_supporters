@@ -7,6 +7,7 @@ require("./project");
 require("./vote");
 require("./voter");
 require("./event");
+require("./eventpost");
 require("./like");
 require("./notification");
 require("./socialLink");

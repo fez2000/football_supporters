@@ -5,6 +5,7 @@ const voter = require("../controllers/voter");
 const project = require("../controllers/project");
 const doc = require("../controllers/doc");
 const event = require("../controllers/event");
+const eventpost = require("../controllers/eventpost");
 const cathegorie = require("../controllers/cathegorie");
 const like = require("../controllers/like");
 const notification = require("../controllers/notification");
@@ -105,6 +106,16 @@ module.exports = app => {
     app.put("/api/event", event.updateEvent);
     app.get("/api/event/:id", event.findById);
     app.post("/api/event/add", event.postEvent);
+
+    app.get("/api/eventpost", eventpost.findAll);
+    app.get("/api/eventpost/startAt", eventpost.findAllStartAt);
+    app.get("/api/eventpost/start", eventpost.findAllStart);
+    app.post("/api/eventpost/next", eventpost.findAllNext);
+    app.delete("/api/eventpost/:id", eventpost.deleteEventPost);
+    app.put("/api/eventpost", eventpost.updateEventPost);
+    app.get("/api/eventpost/:id", eventpost.findById);
+    app.post("/api/eventpost/add", eventpost.postEventPost);
+
     app.get("/api/voter/:id", voter.findById);
     app.post("/api/voter/login/google", voter.googleLogin);
     app.get("/api/voter/testurl/:url", voter.testurl);

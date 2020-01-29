@@ -77,8 +77,8 @@ const dynamicNsp = io.of(/^\/voter\/.*/).on("connect", socket => {
     socket.on("createTag", name => {
         Tag.findOne({ name }).exec((err, tag) => {
             if (!tag) {
-                Tag.create({ name },()=>{
-                    console.log('tags: ',name, ' created')
+                Tag.create({ name }, () => {
+                    console.log("tags: ", name, " created");
                 });
             }
         });
@@ -119,6 +119,24 @@ const dynamicNsp = io.of(/^\/voter\/.*/).on("connect", socket => {
                 });
             });
     });
+    socket.on("getLikeOf1", context => {
+        Like.findOne({ target_id: context.id })
+            .populate("voters")
+            .exec((err, like) => {
+                if (like) {
+                    return socket.emit("likeOf1", {
+                        _id: context.id,
+                        nb: like.voters.length,
+                        context
+                    });
+                }
+                socket.emit("likeOf1", {
+                    _id: context.id,
+                    nb: 0,
+                    context
+                });
+            });
+    });
     socket.on("checkLikeStatus", context => {
         Like.findOne({ target_id: context.id })
             .populate("voters")
@@ -141,7 +159,28 @@ const dynamicNsp = io.of(/^\/voter\/.*/).on("connect", socket => {
                 });
             });
     });
-
+    socket.on("checkLikeStatus1", context => {
+        Like.findOne({ target_id: context.id })
+            .populate("voters")
+            .exec((err, like) => {
+                if (like) {
+                    for (let v of like.voters) {
+                        if (`${v._id}` == context.myId) {
+                            return socket.emit("likeStatus1", {
+                                _id: context.id,
+                                status: true,
+                                context
+                            });
+                        }
+                    }
+                }
+                socket.emit("likeStatus1", {
+                    _id: context.id,
+                    status: false,
+                    context
+                });
+            });
+    });
     socket.on("getNotifs", () => {
         Notification.find({ target: id })
             .populate({

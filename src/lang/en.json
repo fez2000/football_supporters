@@ -1,3 +1,316 @@
-{
-    
+﻿{
+    "links": {
+        "login": "/connexion",
+        "signup": "/rejoin",
+        "members": "/members",
+        "home": "/Home"
+    },
+    "landing_lg": {
+        "title": "home",
+        "h_title": "Can 2019 Who Will Win? Follow and comment on the news live",
+        "h_description": "The last edition won by Cameroon was very exciting and full of surprises. Will this edition do better? in any case it has everything for.",
+        "m_title": "Can 2019",
+        "h_button": "Vision",
+        "f_name": "Your Name",
+        "f_email": "Your Email",
+        "f_message": "Your Message",
+        "f_button": "Send",
+        "f_contact": "Divide the details of your product or work into several parts. Write a few lines on each of them and contact us for further collaboration. We will get back to you in a few hours.",
+        "j_question": "ABOUT THE COMPETITION",
+        "j_reason1": "The <strong> African Football Confederation </strong>, also known by the acronym <strong>CAF</strong>, is the body which brings together, under the aegis of the <a href='https://www.fifa.com/'target='_ blank'rel ='nofollow noopener'>FIFA</a>, the football federations of the African continent.",
+        "j_reason2": "African Cup of Nations football <strong>Total 2019</strong>is the 32nd edition of the African Cup of Nations, which takes place in <a href='https://fr.wikipedia.org/wiki/%C3%89gypte' rel='nofollow  noopener' target='_blank'>Égypte</a> from June 21 to July 19, 20191. It is the first organized with 24 participating teams to take place in summer.",
+        "j_reason3": "The qualification phase is held between <a href='/planning'>mars 2017</a> et <a href='/planning'>mars 2019</a>. The tournament was originally scheduled for <a href='https://fr.wikipedia.org/wiki/Cameroun' rel='nofollow  noopener' target='_blank'>Cameroon</a>, but the African Football Confederation decided to withdraw the organization from him on <strong>November 30, 2018</strong>, due to delays in construction and insecurity in several regions.",
+        "t_format": "New competition format",
+        "d_format": "During the CAF symposium in Rabat in 2017, CAF decided (decree of July 20) to increase the number of teams in the final phase from sixteen to <strong>twenty four</strong>. This increase in the number of participants leads to an increase in the number of matches to 52 (compared to 32 in 2017), the duration of the competition and the number of stadiums which goes from four to six.",
+        "t_qualification": "Qualification mode",
+        "d_qualification": "The formula chosen for the group phase is similar to Euro 2016: six groups of four teams, the first two qualified for the knockout stages, as well as the best four thirds.",
+        "t_lieux": "Cities and stadiums",
+        "d_lieux": "The competition is to take place in four cities: Alexandria, Cairo, Ismailia and Suez. Three stadiums are selected in Cairo. Stadiums selected to host CAN in Egypt: <a href='/stade/stade_international_du_caire'>Cairo International Stadium</a>, <a href='/stade/stade_du_30_juin'>June 30 stadium</a>, <a href='/stade/stade_al_salam'>Al stadium Salam</a>, <a href='/stade/stade_de_suez'>Suez stadium</a>, <a href='/stade/stade_d_ismaïlia'>Ismailia stadium</a> and <a href='/stade/stade_d_alexandrie'>Alexandria stadium</a>"
+
+    },
+    "login": {
+        "i_incorrect": "Incorrect first name / email or password",
+        "head_title": "Login",
+        "title": "Log in",
+        "user": "Username or Email...",
+        "password": "Password...",
+        "description": "Welcome!",
+        "resetpassword": "Forgot your password ?",
+        "button": "Log in"
+    },
+    "signup": {
+        "n_invalide": "Invalid name, minimum length",
+        "p_invalide": "Invalid password, minimum length ",
+        "e_taked": ", the email does not exist or is taken by another user",
+        "a_login": "Please login to your account",
+        "r_page": "Please check your connection then reload the page",
+        "i_email": "Invalid email",
+        "m_length": "Minimum length",
+        "head_title": "Subscribe",
+        "title": "Register",
+        "first_name": "Name ...",
+        "email": "Email ...",
+        "password": "Password ...",
+        "description": "Welcome!",
+        "rule": "I accept the rules",
+        "ruleAnd": "and the",
+        "ruleEnd": "from the community.",
+        "terms": "terms of use",
+        "datapolicy": "data policy",
+        "resetpassword": "password forgotten?",
+        "button": "Start",
+        "invalid_password": "Invalid password"
+    },
+    "settings": {
+        "title": "General settings",
+        "active": "Activate",
+        "deactive": "Deactivate",
+        "notification": "top notifications",
+        "account": "Account settings",
+        "profile": "Render your profile",
+        "private": "Private",
+        "public": "Public",
+        "mailNotification": "Mail notification",
+        "newPassword": "Your new password",
+        "confirmPassword": "Confirm your new password",
+        "btnChange": "Modify",
+        "changePassword": "Change your password",
+        "oldPassword": "Your old password"
+    },
+    "navbar": {
+        "language": "fr",
+        "lang": "Change the site language",
+        "linkedin_title": "Follow us on Linkedin",
+        "members": "Members",
+        "notification_title": "You have no notification",
+        "notification_title1": "You have {n} notification (s)",
+        "notification": "Notification",
+        "about": "Home",
+        "dashboard": "My Wall",
+        "project": "Teams",
+        "end project": "List",
+        "currentCurrent": "Ranking",
+        "projectNext": "Draw",
+        "projectAll": "All projects",
+        "community": "Community",
+"login": "Identify",
+        "signup": "Join",
+        "twitter": "Follow us on Twitter",
+        "facebook": "Like us on facebook",
+        "Instagram": "Follow us on Instagram",
+        "forum": "Forum"
+    },
+    "footer": {
+        "forum": "Forum",
+        "terms": "Termes",
+        "made_with": "fait avec",
+        "by": "par",
+        "and": "et"
+    },
+    "dashboard": {
+        "profile": "Profile",
+        "getmore": "Learn more"
+    },
+    "dashboardL": {
+        "member": "Menbre (s)",
+        "profile": "Profile",
+        "notification": "Notifications",
+        "logout": "Log out",
+        "full_sceeen": "Full screen",
+        "settings": "Settings",
+        "dashboard": "Wall",
+        "contribute": "Contribute",
+        "admin": "Administration",
+        "poll": "Poll",
+        "pending_projet": "Pending project",
+        "state_projet": "Project status",
+        "process_projet": "Project in progress",
+        "check_submit_projet": "Projects submitted",
+        "manage_users": "User Management",
+        "manage_projets": "Project Management",
+        "projects": "Projects",
+        "forum": "Forum",
+        "help": "Help",
+        "search": "Search ...",
+        "activateDarktheme": "activate dark theme",
+        "deactivateDarktheme": "deactivate dark theme",
+        "onlineMenber": "Member (s) online"
+    },
+    "createproject": {
+      "f_img": "cover image",
+        "f_name": "Name",
+        "f_desc": "short description",
+        "f_cat": "choose a category",
+        "description": "description",
+        "f_button": "Save",
+        "f_runbutton": "Registration ...",
+        "title": "Create a project",
+        "project_overview": "project overview"
+    },
+    "projects": {
+        "title": "Create your first project",
+        "label": "Create a new project",
+        "newProjet": "New project",
+        "decline": "Reject",
+        "description": "By creating a project, you can share it and collaborate with the community.",
+        "create_button": "Create a first project",
+        "noPendingprojet": "No projects pending",
+        "noProjetToCheck": "No projects submitted",
+        "projectInProcess": "Projects in progress",
+        "create_button2": "Create a project",
+        "c_confirmT": "Confirm your action",
+        "c_confirmD": "By clicking on delete this project will be permanently deleted.",
+        "delete_button": "Delete",
+        "f_img": "cover image",
+        "f_name": "Name",
+        "f_desc": "short description",
+        "f_cat": "choose a category",
+        "f_description": "description",
+        "f_button": "Save",
+        "f_runbutton": "Registration ...",
+        "cancel_button": "Cancel",
+        "submit_button": "Submit",
+        "explore_button": "Explore",
+        "save_button": "Save",
+        "document_button": "Attachment (s)",
+        "edit": "edit",
+        "check_button": "Check",
+        "love": "I like this project",
+        "unlove": "I don't like this project",
+        "wait": "Wait",
+        "start": "Start",
+        "approval": "Approve",
+        "sendToValidation": "Submit",
+        "waitSelection": "Waiting for selection",
+        "selection": "selected"
+    },
+    "poll": {
+        "title": "create your first survey",
+        "description": "By creating a survey, you can improve your support for your project.",
+        "button": "Create a survey",
+        "question": "Your question"
+    },
+    "pollCreate": {
+        "questionLabel": "Question",
+        "startNowLabel": "Start now",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "cancel": "Cancel",
+        "ok": "Validate",
+        "project": "projects",
+        "addProject": "Add projects",
+        "save": "Save",
+        "saving": "Registration",
+        "delete": "Delete",
+        "stop": "Suspend",
+        "minProject": "Minimum number of projects: 2"
+    },
+    "profilPublic": {
+        "notFound": "Profile not found",
+        "connectedProfil": "you must be logged in to view this profile, Join us",
+        "join": "join",
+        "joinComunity": "has joined the community",
+        "updatePicture": "updated their profile picture",
+        "on": "on",
+        "moreWeAre": "the more we are the more we can ...",
+        "joinUser": "Profile not found, join other users of",
+        "betterWorld": "to make a better world"
+    },
+    "profil": {
+        "w_site": "website",
+        "n_match": "this URL {url} does not match any profile"
+    },
+    "notification": {
+        "reads": "All Mark as read",
+        "read": "Mark as read",
+        "getmoreBtn": "More",
+        "welcome": "Welcome to the community",
+        "like": "Like",
+        "see": "See",
+        "comments": "Comments",
+        "rd": "read"
+    },
+    "verifyEmail": {
+        "confirm": "Confirm your email",
+        "description": "By confirming your email, you activate your account and can start creating projects and participating in community activities.",
+        "btn_resend": "Resend the confirmation message",
+        "btn_sending": "Sending ...",
+        "back": "Back"
+    },
+    "project_overview": {
+        "about": "About",
+        "time_line": "Lifeline",
+        "documents": "Document"
+    },
+    "termscommunity": {
+        "title": "terms of use"
+    },
+    "termsNavBar": {
+        "cookies": "COOKIES",
+        "community": "COMMUNITY",
+        "privacy": "PRIVACY POLICY",
+        "terms": "Terms"
+    },
+    "resetpassword": {
+        "title": "Reset password",
+        "description": "I have a code",
+        "text": "reset your password",
+        "method": "Choose a method",
+        "code": "Enter your code",
+        "email": "Check your email",
+        "label": "Email ...",
+        "labelcode": "code ...",
+        "password": "password",
+        "confirm": "Confirm your password",
+        "log": "Reset successful",
+        "sendcode": "Send me a reset code",
+        "sendlink": "Send me a reset link",
+        "next": "Next",
+        "submit": "Submit ...",
+        "prev": "Prev"
+    },
+    "finishedprojet": {
+        "title": "Completed projects ..."
+    },
+    "futurprojet": {
+       "title": "Future projects ..."
+    },
+    "currentprojet": {
+        "title": "Projects in progress ..."
+    },
+    "allprojet": {
+        "title": "All projects"
+    },
+    "donate": {
+        "title": "Make a donation",
+        "object": "IT MUST ACT",
+        "why": "Why ...?",
+        "header": "Projects",
+        "description0": "While some very well-off layers have the means to be treated internally as well as externally and to move at will, most and the vast majority of our populations struggle to have a meal a day, to be entitled to education, to have access to health care, to drinking water, to electricity and even to travel. ",
+        "description1": "We all have a large percentage of our family members who suffer from it in a corner of this country. This <strong> non-political </strong> and non-denominational project aims at a simple mechanism to achieve that we can assume at lower cost. ",
+        "slogan": "No one has the right to be happy alone."
+    },
+    "members": {
+        "h_title": "Members",
+        "title": "member (s)",
+        "header": "Thank you for being with us, you are blessed",
+        "button": "Join",
+        "philosophy": "Philosophy",
+        "why": "WHY ...?",
+        "description0": "While some very well-off layers have the means to be treated internally as well as externally and to move at will, most and the vast majority of our populations struggle to have a meal a day, to be entitled to education, to have access to health care, to drinking water, to electricity and even to travel. ",
+        "description1": "We all have a large percentage of the members of our families who suffer from it in a corner of this country. This apolitical and non-denominational project aims by a simple mechanism to realize that we can assume at lower cost.",
+        "slogan": "No one has the right to be happy alone.",
+        "description2": "By your weekly participation, you can give a smile to a family, salvation to a lost soul, hope to a desperate soul, etc.",
+        "ourMembers": "Our members"
+    },
+    "fonctions": {
+        "projectUpdate": "Project update successfully.",
+        "projectSubmit": "Your project has been successfully submitted"
+    },
+    "check_cookie": {
+        "title": "Authorization to use cookies",
+        "text": "This site uses cookies, please accept before continuing, for more details, see our",
+        "link_text": "cookie policy",
+        "action": "Accept"
+    }
 }
