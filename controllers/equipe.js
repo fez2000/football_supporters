@@ -200,12 +200,12 @@ exports.getByEdition = (req, res) => {
             }
 
             //for await (let eq of getE()) {
-               // var j = eq.toJSON();
-                //j.joueurs = await Joueur.find({ equipe: eq._id }).populate(
-                 //   "image"
-              //  );
-               
+            // var j = eq.toJSON();
+            //j.joueurs = await Joueur.find({ equipe: eq._id }).populate(
+            //   "image"
+            //  );
+
             //}
-            r.push(j);
+            res.send(r);
         });
 };
