@@ -10,6 +10,7 @@ import EquipeProfil from "@/pages/EquipeProfil.vue";
 import JoueurProfil from "@/pages/JoueurProfil.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
+import DashboardPost from "@/pages/DashboardPost.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import Notifications from "@/pages/Notifications.vue";
 import Landing from "@/views/Landing.vue";
