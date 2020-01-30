@@ -199,12 +199,13 @@ exports.getByEdition = (req, res) => {
                 res.send(r);
             }
 
-            for await (let eq of getE()) {
-                var j = eq.toJSON();
-                j.joueurs = await Joueur.find({ equipe: eq._id }).populate(
-                    "image"
-                );
-                r.push(j);
-            }
+            //for await (let eq of getE()) {
+               // var j = eq.toJSON();
+                //j.joueurs = await Joueur.find({ equipe: eq._id }).populate(
+                 //   "image"
+              //  );
+               
+            //}
+            r.push(j);
         });
 };
