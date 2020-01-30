@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Equipe = mongoose.model("Equipe");
+const Edition = mongoose.model("Edition");
 const Doc = mongoose.model("Doc");
 const { teamImg } = require("../config/defaultImg");
 const fs = require("fs");
@@ -35,6 +36,16 @@ exports.add = async (req, res) => {
             _id: req.body.equipe2,
             edition: re._id
         }).exec();
+        if (!equipe1 || !equipe2) {
+            return res.send({ status: false, errors: "equipes non trouver" });            
+        }
+        req.body.edition = re._id;
+        Match.create(req.body).then((err, cool) => {
+            if (err) {
+                return res.send({ status: false, errors: err });
+            }
+            res.send({ status: true, errors: cool });
+        });
     });
 };
 
@@ -50,10 +61,10 @@ exports.update = (req, res) => {
         return res.send({ status: null, errors: { auth: "PermissionDeniet" } });
     }
     if (req.body._id) delete req.body._id;
-    if (req.body.image)
-        req.body.image = new mongoose.Types.ObjectId(req.body.image);
-    Equipe.updateOne(
-        { _id: req.params.id, is_end: false },
+    //if (req.body.image)
+    //    req.body.image = new mongoose.Types.ObjectId(req.body.image);
+    Match.updateOne(
+        { _id: req.params.id },
         req.body,
         (err, ok) => {
             if (err) return res.send({ status: false, errors: err });
@@ -74,7 +85,7 @@ exports.delete = (req, res) => {
     }
     Edition.findOne({ is_end: false }).exec((err, re) => {
         if (re) {
-            Equipe.deleteOne(
+            Match.deleteOne(
                 { _id: req.params.id, edition: re._id },
                 (err, e) => {
                     if (err) return res.send({ status: false, errors: err });
@@ -89,7 +100,7 @@ exports.delete = (req, res) => {
 exports.getAll = (req, res) => {
     Edition.findOne({ is_end: false }).exec((err, re) => {
         if (re) {
-            Equipe.find({ edition: re._id })
+            Match.find({ edition: re._id })
                 .populate("image")
                 .exec(async (err, e) => {
                     if (!e) return res.send([]);
@@ -114,36 +125,26 @@ exports.getAll = (req, res) => {
         }
     });
 };
-exports.getEquipe = (req, res) => {
-    Equipe.findOne({ _id: req.params.id })
-        .populate("image")
-        .exec(async (err, equipe) => {
-            if (!equipe) return res.send({ status: false, errors: "NotFound" });
-            equipe.joueurs = await Joueur.find({ equipe: equipe._id })
-                .populate("image")
-                .exec();
-            res.send({ status: true, equipe });
+exports.getMatch = (req, res) => {
+    Match.findOne({ _id: req.params.id })
+        .populate("equipe1")
+        .populate("equipe2")
+        .populate("equipe2.image")
+        .populate("equipe2.image")
+        .exec(async (err, matchs) => {
+            if (!matchs) return res.send({ status: false, errors: "NotFound" });
+            
+            res.send({ status: true, matchs });
         });
 };
 exports.getByEdition = (req, res) => {
-    Equipe.find({ edition: req.params.id })
-        .populate("image")
+    Match.find({ edition: req.params.id })
+        .populate("equipe1")
+        .populate("equipe2")
+        .populate("equipe2.image")
+        .populate("equipe2.image")
         .exec(async (err, e) => {
             if (!e) return res.send([]);
-            let r = [];
-            function* getE() {
-                for (let i of e) {
-                    yield i;
-                }
-                res.send(r);
-            }
-
-            for await (let eq of getE()) {
-                var j = eq.toJSON();
-                j.joueurs = await Joueur.find({ equipe: eq._id }).populate(
-                    "image"
-                );
-                r.push(j);
-            }
+            res.send(e);
         });
 };

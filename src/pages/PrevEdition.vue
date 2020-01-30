@@ -1,12 +1,10 @@
 <template>
   <div class="wrapper">
-    <div class="section page-header header-filter" :style="headerStyle">
-      
-    </div>
+    <div class="section page-header header-filter" :style="headerStyle"></div>
     <div class="main main-raised">
       <div class="container">
-        
-          <v-card-title>
+        <v-row>
+          <v-col class="mb-2" cols="12">
             <v-text-field
               v-model="search"
               append-icon="search"
@@ -14,9 +12,11 @@
               single-line
               hide-details
             ></v-text-field>
-          </v-card-title>
-          <v-data-table :headers="headers" :items="editions" :search="search"></v-data-table>
-        
+          </v-col>
+          <v-col cols="12">
+            <v-data-table :headers="headers" :items="editions" :search="search"></v-data-table>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </div>
@@ -111,10 +111,10 @@ export default {
 </script>
 
 <style scoped>
-  .page-header {
-    height: 9vh!important;
-    }
-    .container{
-      margin-top: 92px;
-    }
+.page-header {
+  height: 9vh !important;
+}
+.container {
+  margin-top: 92px;
+}
 </style>

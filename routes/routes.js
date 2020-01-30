@@ -18,6 +18,7 @@ const push = require("../controllers/push");
 const froala = require("../controllers/froala");
 const equipe = require("../controllers/equipe");
 const joueur = require("../controllers/joueur");
+const match = require("../controllers/match");
 const upload = multer();
 module.exports = app => {
     app.post("/api/flroala/upload_image", froala.upload_image);
@@ -30,13 +31,21 @@ module.exports = app => {
     app.delete("/api/edition/:id", edition.delete);
     app.get("/api/edition/current", edition.getCurrent);
     app.get("/api/edition", edition.getAll);
+
     app.post("/api/equipe", equipe.add);
     app.put("/api/equipe/:id", equipe.update);
     app.delete("/api/equipe/:id", equipe.delete);
-
     app.get("/api/equipe", equipe.getAll);
     app.get("/api/equipe/only/:id", equipe.getEquipe);
     app.get("/api/equipe/edition/:id", equipe.getByEdition);
+
+    app.post("/api/match", match.add);
+    app.put("/api/match/:id", match.update);
+    app.delete("/api/match/:id", match.delete);
+    app.get("/api/match", match.getAll);
+    app.get("/api/match/only/:id", match.getMatch);
+    app.get("/api/match/edition/:id", match.getByEdition);
+
     app.delete("/api/joueur/:id", joueur.delete);
     app.post("/api/joueur", joueur.add);
     app.put("/api/joueur/:id", joueur.update);

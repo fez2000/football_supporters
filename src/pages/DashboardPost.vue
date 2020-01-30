@@ -852,8 +852,15 @@ export default {
             item.openOptions = false;
             item.loveSubmit = false;
             item.loveToggle = loveToggle.bind(this, item);
-
-            this.events.unshift(item);
+            let trouver = false;
+            for (let event of this.events) {
+          if (event._id == data._id) {
+            let trouver = true;
+          }
+        } if(!trouver){
+          this.events.unshift(item);
+        }
+            
             secureSocket.emit("getLikeOf1", { id: item._id });
             secureSocket.emit("checkLikeStatus1", {
               id: item._id,
@@ -1185,7 +1192,7 @@ export default {
           )
           .then(({ data }) => {
             if (data.status) {
-              for (let item of data.events) {
+              for (let item of data.eventPosts) {
                 item.isLoading = false;
                 item.love = false;
                 item.openOptions = false;
@@ -1248,7 +1255,7 @@ export default {
               if (data.continue) {
                 this.currentE = 20;
               }
-              for (let item of data.events) {
+              for (let item of data.eventPosts) {
                 item.isLoading = false;
                 item.love = false;
                 item.openOptions = false;

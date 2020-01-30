@@ -1029,6 +1029,7 @@ export default {
             { icon: 'mdi-account-group', text: 'Equipes', link: '/dashboard/equipes'},
             { icon: 'mdi-heart-box', text: i18n.tc("dashboardL.poll"), link: '/dashboard/admin/poll'},
             { icon: 'mdi-wallet', text: i18n.tc("dashboardL.pending_projet"), link: '/dashboard/admin/projects/pending'},
+            { icon: 'mdi-infos', text: 'Match', link: '/dashboard/match'}
           ]
         },{
           icon: 'mdi-wallet-travel',

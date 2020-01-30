@@ -60,6 +60,7 @@ import EditionsCreate from "@/pages/EditionsCreate.vue";
 import EditionsModifier from "@/pages/EditionsModifier.vue";
 import EquipesLayout from "@/pages/Layout/EquipesLayout.vue";
 import EquipesList from "@/pages/EquipesList.vue";
+import MatchList from "@/pages/MatchList.vue";
 import EquipesCreate from "@/pages/EquipesCreate.vue";
 import EquipesModifier from "@/pages/EquipesModifier.vue";
 
@@ -288,6 +289,11 @@ const routes = [
                 path: "competition",
                 name: "Competition",
                 component: Competition
+            },
+            {
+                path: "match",
+                name: "Match",
+                component: MatchList
             },
             {
                 path: "editions",
