@@ -280,7 +280,7 @@ const routes = [
                 component: Dashboard
             },
             {
-                path: "",
+                path: "forum",
                 name: "Forum",
                 component: DashboardPost
             },
