@@ -304,7 +304,7 @@ module.exports = {
             importWorkboxFrom:
                 process.env.mode === "production" ? "cdn" : "local"
             //    maximumFileSizeToCacheInBytes: 7 * 1024 * 1024
-        }) ,
+        })/* ,
 
         new PrerenderSPAPlugin({
             // Required - The path to the webpack-outputted app to prerender.
@@ -397,6 +397,6 @@ module.exports = {
                 // (See here: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions)
                 //headless: false // Display the browser window when rendering. Useful for debugging.
             })
-        })
+        })*/
     ]
 };
