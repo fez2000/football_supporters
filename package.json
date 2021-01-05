@@ -23,7 +23,7 @@
         "@mdi/font": "^4.2.95",
         "@paypal/checkout-server-sdk": "^1.0.2",
         "autoprefixer": "^8.6.5",
-        "axios": "^0.19.0",
+        "axios": "^0.21.1",
         "babel-core": "^6.26.3",
         "babel-eslint": "^8.2.6",
         "babel-jest": "^23.6.0",
